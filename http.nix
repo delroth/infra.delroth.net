@@ -19,7 +19,7 @@
       "mon.delroth.net" = {
         forceSSL = true; enableACME = true;
         locations."/" = {
-          proxyPass = "http://localhost:3000";
+          proxyPass = "http://localhost:${toString config.services.grafana.port}";
         };
       };
 
