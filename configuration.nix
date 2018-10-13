@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./dns.nix
     ./email.nix
     ./hardware-configuration.nix
     ./http.nix
