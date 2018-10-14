@@ -6,6 +6,7 @@
     ./email.nix
     ./hardware-configuration.nix
     ./http.nix
+    ./ipfs.nix
     ./monitoring.nix
     ./networking.nix
     ./security.nix
