@@ -10,12 +10,21 @@
     recommendedTlsSettings = true;
 
     virtualHosts = {
+
+      "delroth.net" = {
+        forceSSL = true; enableACME = true;
+        locations."/" = {
+          root = "/srv/http/public";
+        };
+      };
+
       "japan2018.delroth.net" = {
         forceSSL = true; enableACME = true;
         locations."/" = {
           root = "/srv/http/japan2018";
         };
       };
+
       "mon.delroth.net" = {
         forceSSL = true; enableACME = true;
         locations."/" = {
@@ -23,10 +32,24 @@
         };
       };
 
+      # Used to bypass CORS for https://delroth.net/publibike/
+      "publibike-api.delroth.net" = {
+        forceSSL = true; enableACME = true;
+        locations."/" = {
+          proxyPass = "https://api.publibike.ch:443";
+          extraConfig = ''
+            proxy_set_header Host api.publibike.ch;
+            proxy_set_header Origin "";
+            proxy_set_header Referer "";
+          '';
+        };
+      };
+
       # Used for ACME to generate a TLS cert for the MX.
       "${config.networking.hostName}" = {
         forceSSL = true; enableACME = true;
       };
+
     };
   };
 
