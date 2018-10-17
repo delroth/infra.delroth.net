@@ -25,7 +25,7 @@
   time.timeZone = "Europe/Zurich";
 
   environment.systemPackages = with pkgs; [
-    wget vim weechat screen rsync git mailutils openssl
+    wget vim weechat screen rsync git mailutils openssl binutils
   ];
 
   programs.mosh.enable = true;
