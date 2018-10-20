@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  services.nginx = {
+  services.nginx = rec {
     enable = true;
     package = pkgs.nginxMainline;
 
@@ -17,6 +17,13 @@
           port = 8082;
         };
 
+        cookie = {
+          domain = ".delroth.net";
+          expire = 3600 * 24 * 30;
+          secure = true;
+          authentication_key = builtins.readFile ./secrets/sso-key;
+        };
+
         login = {
           title = "login.delroth.net";
           default_method = "simple";
@@ -30,6 +37,15 @@
             users = import ./secrets/sso-users.nix;
           };
         };
+
+        acl = {
+          rule_sets = [
+            {
+              rules = [ { field = "x-application"; present = true; } ];
+              allow = [ "delroth" ];
+            }
+          ];
+        };
       };
     };
 
@@ -38,32 +54,84 @@
         forceSSL = true;
         enableACME = true;
       };
-      localReverseProxy = port: withSsl {
-        locations."/" = {
-          proxyPass = "http://localhost:${toString port}";
+
+      reverseProxyHeaders = ''
+        proxy_set_header X-Original-URL $request_uri;
+        proxy_set_header X-Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+      '';
+
+      withSso = {appName, vhost}: vhost // {
+        extraConfig = (vhost.extraConfig or "") + ''
+          error_page 401 = @error401;
+        '';
+
+        locations."/" = vhost.locations."/" // {
+          extraConfig = (vhost.locations."/".extraConfig or "") + ''
+            auth_request /sso-auth;
+
+            auth_request_set $username $upstream_http_x_username;
+            proxy_set_header X-User $username;
+
+            auth_request_set $cookie $upstream_http_set_cookie;
+            add_header Set-Cookie $cookie;
+          '';
+        };
+
+        locations."/sso-auth" = {
+          proxyPass = "http://localhost:${toString sso.configuration.listen.port}/auth";
+          extraConfig = ''
+            internal;
+
+            proxy_pass_request_body off;
+            proxy_set_header Content-Length "";
+
+            proxy_set_header X-Application "${appName}";
+            ${reverseProxyHeaders}
+          '';
+        };
+
+        locations."@error401" = {
+          extraConfig = ''
+            return 302 https://login.delroth.net/login?go=$scheme://$http_host$request_uri;
+          '';
         };
       };
-      localReverseProxyAddr = addr: withSsl {
-        locations."/" = {
-          proxyPass = "http://${addr}";
-        };
-      };
+
       localRoot = root: withSsl {
         locations."/" = {
           root = "${root}";
         };
       };
+
+      localReverseProxyAddr = addr: withSsl {
+        locations."/" = {
+          proxyPass = "http://${addr}";
+          extraConfig = reverseProxyHeaders;
+        };
+      };
+      localReverseProxy = port: localReverseProxyAddr "localhost:${toString port}";
     in {
 
       # Used for ACME to generate a TLS cert for the MX.
       "${config.networking.hostName}" = withSsl {};
 
+      "login.delroth.net" = localReverseProxy sso.configuration.listen.port;
+
       "delroth.net" = localRoot "/srv/http/public";
       "japan2018.delroth.net" = localRoot "/srv/http/japan2018";
 
       "mon.delroth.net" = localReverseProxy config.services.grafana.port;
-      "am.delroth.net" = localReverseProxy config.services.prometheus.alertmanager.port;
-      "prom.delroth.net" = localReverseProxyAddr config.services.prometheus.listenAddress;
+      "am.delroth.net" = withSso {
+        appName = "alertmanager";
+        vhost = localReverseProxy config.services.prometheus.alertmanager.port;
+      };
+      "prom.delroth.net" = withSso {
+        appName = "prometheus";
+        vhost = localReverseProxyAddr config.services.prometheus.listenAddress;
+      };
 
       # Used to bypass CORS for https://delroth.net/publibike/
       "publibike-api.delroth.net" = withSsl {
