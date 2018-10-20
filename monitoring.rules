@@ -1,0 +1,17 @@
+ALERT JobDown
+  IF up == 0
+  FOR 5m
+  LABELS { severity = "page" }
+  ANNOTATIONS {
+    summary = "Job {{ $labels.down }} unreachable",
+    description = "Job {{ $labels.job }} on {{ $labels.instance }} has been down for more than 5 minutes.",
+  }
+
+ALERT UnitFailed
+  IF node_systemd_unit_state{state="failed"} == 1
+  FOR 5m
+  LABELS { severity = "page" }
+  ANNOTATIONS {
+    summary = "systemd unit {{ $labels.name }} failed",
+    description = "The systemd unit {{ $labels.name }} on {{ $labels.instance }} has been down for more than 5 minutes.",
+  }

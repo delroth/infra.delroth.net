@@ -64,6 +64,8 @@
       };
     };
     alertmanagerURL = [ "http://${alertmanager.listenAddress}:${toString alertmanager.port}" ];
+
+    ruleFiles = [ ./monitoring.rules ];
   };
 
   services.grafana = {
