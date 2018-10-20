@@ -4,6 +4,11 @@
   services.prometheus = rec {
     enable = true;
 
+    listenAddress = "127.0.0.1:9090";
+    extraFlags = [
+      "-web.external-url=https://prom.delroth.net"
+    ];
+
     exporters.node = {
       enable = true;
       enabledCollectors = [ "interrupts" "systemd" "tcpstat" ];

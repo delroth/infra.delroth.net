@@ -19,6 +19,11 @@
           proxyPass = "http://localhost:${toString port}";
         };
       };
+      localReverseProxyAddr = addr: withSsl {
+        locations."/" = {
+          proxyPass = "http://${addr}";
+        };
+      };
       localRoot = root: withSsl {
         locations."/" = {
           root = "${root}";
@@ -34,6 +39,7 @@
 
       "mon.delroth.net" = localReverseProxy config.services.grafana.port;
       "am.delroth.net" = localReverseProxy config.services.prometheus.alertmanager.port;
+      "prom.delroth.net" = localReverseProxyAddr config.services.prometheus.listenAddress;
 
       # Used to bypass CORS for https://delroth.net/publibike/
       "publibike-api.delroth.net" = withSsl {
