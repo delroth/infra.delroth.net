@@ -5,9 +5,7 @@
     enable = true;
 
     listenAddress = "127.0.0.1:9090";
-    extraFlags = [
-      "-web.external-url=https://prom.delroth.net"
-    ];
+    webExternalUrl = "https://prom.delroth.net/";
 
     exporters.node = {
       enable = true;
