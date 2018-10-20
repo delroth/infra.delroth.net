@@ -35,6 +35,8 @@
     alertmanager = {
       enable = true;
 
+      listenAddress = "127.0.0.1";
+      port = 9093;
       webExternalUrl = "https://am.delroth.net";
 
       # AM clustering doesn't like when the machine doesn't have an RFC1918 IP.
@@ -61,6 +63,7 @@
         ];
       };
     };
+    alertmanagerURL = [ "http://${alertmanager.listenAddress}:${toString alertmanager.port}" ];
   };
 
   services.grafana = {
