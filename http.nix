@@ -9,6 +9,30 @@
     recommendedOptimisation = true;
     recommendedTlsSettings = true;
 
+    sso = {
+      enable = true;
+      configuration = {
+        listen = {
+          addr = "127.0.0.1";
+          port = 8082;
+        };
+
+        login = {
+          title = "login.delroth.net";
+          default_method = "simple";
+          names = {
+            simple = "Username / Password";
+          };
+        };
+
+        providers = {
+          simple = {
+            users = import ./secrets/sso-users.nix;
+          };
+        };
+      };
+    };
+
     virtualHosts = let
       withSsl = vhost: vhost // {
         forceSSL = true;
