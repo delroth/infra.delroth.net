@@ -123,7 +123,10 @@
       "delroth.net" = localRoot "/srv/http/public";
       "japan2018.delroth.net" = localRoot "/srv/http/japan2018";
 
-      "mon.delroth.net" = localReverseProxy config.services.grafana.port;
+      "mon.delroth.net" = withSso {
+        appName = "grafana";
+        vhost = localReverseProxy config.services.grafana.port;
+      };
       "am.delroth.net" = withSso {
         appName = "alertmanager";
         vhost = localReverseProxy config.services.prometheus.alertmanager.port;
