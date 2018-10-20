@@ -27,7 +27,7 @@
   environment.systemPackages = with pkgs; [
     wget weechat screen rsync git mailutils openssl binutils ncdu
 
-    (import ./vim.nix)
+    (import ./pkgs/vim.nix)
   ];
 
   programs.mosh.enable = true;
