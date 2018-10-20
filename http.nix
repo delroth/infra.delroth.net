@@ -35,6 +35,7 @@
         providers = {
           simple = {
             users = import ./secrets/sso-users.nix;
+            groups = import ./secrets/sso-groups.nix;
           };
         };
 
@@ -42,7 +43,11 @@
           rule_sets = [
             {
               rules = [ { field = "x-application"; present = true; } ];
-              allow = [ "delroth" ];
+              allow = [ "@root" ];
+            }
+            {
+              rules = [ { field = "x-application"; equals = "grafana"; } ];
+              allow = [ "@dashboard" ];
             }
           ];
         };
