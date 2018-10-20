@@ -11,6 +11,8 @@
     ./networking.nix
     ./security.nix
     ./tor.nix
+
+    ./services/nginx-sso.nix
   ];
 
   boot.loader.grub.enable = true;
