@@ -32,6 +32,8 @@
     (import ./pkgs/vim.nix)
   ];
 
+  nix.autoOptimiseStore = true;
+
   programs.mosh.enable = true;
 
   services.openssh.enable = true;
