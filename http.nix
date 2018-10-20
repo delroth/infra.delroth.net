@@ -9,39 +9,34 @@
     recommendedOptimisation = true;
     recommendedTlsSettings = true;
 
-    virtualHosts = {
-
-      "delroth.net" = {
-        forceSSL = true; enableACME = true;
+    virtualHosts = let
+      withSsl = vhost: vhost // {
+        forceSSL = true;
+        enableACME = true;
+      };
+      localReverseProxy = port: withSsl {
         locations."/" = {
-          root = "/srv/http/public";
+          proxyPass = "http://localhost:${toString port}";
         };
       };
-
-      "japan2018.delroth.net" = {
-        forceSSL = true; enableACME = true;
+      localRoot = root: withSsl {
         locations."/" = {
-          root = "/srv/http/japan2018";
+          root = "${root}";
         };
       };
+    in {
 
-      "mon.delroth.net" = {
-        forceSSL = true; enableACME = true;
-        locations."/" = {
-          proxyPass = "http://localhost:${toString config.services.grafana.port}";
-        };
-      };
+      # Used for ACME to generate a TLS cert for the MX.
+      "${config.networking.hostName}" = withSsl {};
 
-      "am.delroth.net" = {
-        forceSSL = true; enableACME = true;
-        locations."/" = {
-          proxyPass = "http://localhost:${toString config.services.prometheus.alertmanager.port}";
-        };
-      };
+      "delroth.net" = localRoot "/srv/http/public";
+      "japan2018.delroth.net" = localRoot "/srv/http/japan2018";
+
+      "mon.delroth.net" = localReverseProxy config.services.grafana.port;
+      "am.delroth.net" = localReverseProxy config.services.prometheus.alertmanager.port;
 
       # Used to bypass CORS for https://delroth.net/publibike/
-      "publibike-api.delroth.net" = {
-        forceSSL = true; enableACME = true;
+      "publibike-api.delroth.net" = withSsl {
         locations."/" = {
           proxyPass = "https://api.publibike.ch:443";
           extraConfig = ''
@@ -50,11 +45,6 @@
             proxy_set_header Referer "";
           '';
         };
-      };
-
-      # Used for ACME to generate a TLS cert for the MX.
-      "${config.networking.hostName}" = {
-        forceSSL = true; enableACME = true;
       };
 
     };
