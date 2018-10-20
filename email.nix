@@ -21,6 +21,7 @@
       MAILER-DAEMON: postmaster
       operator: postmaster
       abuse: postmaster
+      alerts: postmaster
 
       me: delroth
       delroth: delroth@gmail.com

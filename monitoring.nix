@@ -31,6 +31,34 @@
         ];
       }
     ];
+
+    alertmanager = {
+      enable = true;
+
+      # AM clustering doesn't like when the machine doesn't have an RFC1918 IP.
+      extraFlags = [
+        "--cluster.listen-address=''"
+      ];
+
+      configuration = {
+        global = {
+          smtp_smarthost = "127.0.0.1:25";
+          smtp_from = "alerts@chaos.delroth.net";
+          smtp_require_tls = false;
+        };
+
+        route = {
+          receiver = "email";
+        };
+
+        receivers = [
+          {
+            name = "email";
+            email_configs = [ { to = "delroth+chaos-alerts@gmail.com"; } ];
+          }
+        ];
+      };
+    };
   };
 
   services.grafana = {
