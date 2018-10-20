@@ -42,7 +42,8 @@ in {
       wantedBy = [ "multi-user.target" ];
       script = ''
         ${pkg.bin}/bin/nginx-sso \
-          --config ${configYml}
+          --config ${configYml} \
+          --frontend-dir ${pkg.bin}/share/frontend
       '';
       serviceConfig = {
         User = cfg.user;
