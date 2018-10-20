@@ -32,6 +32,13 @@
         };
       };
 
+      "am.delroth.net" = {
+        forceSSL = true; enableACME = true;
+        locations."/" = {
+          proxyPass = "http://localhost:${toString config.services.prometheus.alertmanager.port}";
+        };
+      };
+
       # Used to bypass CORS for https://delroth.net/publibike/
       "publibike-api.delroth.net" = {
         forceSSL = true; enableACME = true;

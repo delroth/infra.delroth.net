@@ -35,6 +35,8 @@
     alertmanager = {
       enable = true;
 
+      webExternalUrl = "https://am.delroth.net";
+
       # AM clustering doesn't like when the machine doesn't have an RFC1918 IP.
       extraFlags = [
         "--cluster.listen-address=''"
