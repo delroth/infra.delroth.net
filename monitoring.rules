@@ -15,3 +15,12 @@ ALERT UnitFailed
     summary = "systemd unit {{ $labels.name }} failed",
     description = "The systemd unit {{ $labels.name }} on {{ $labels.instance }} has been down for more than 5 minutes.",
   }
+
+ALERT TorUnreachable
+  IF tor_network_liveness == 0
+  FOR 1h
+  LABELS { severity = "ticket" }
+  ANNOTATIONS {
+    summary = "tor network unreachable",
+    description = "The Tor node on {{ $labels.instance }} has been unreachable for more than 1h.",
+  }
