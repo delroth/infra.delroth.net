@@ -27,7 +27,7 @@
   time.timeZone = "Europe/Zurich";
 
   environment.systemPackages = with pkgs; [
-    wget weechat screen rsync git mailutils openssl binutils ncdu
+    wget weechat screen rsync git mailutils openssl binutils ncdu youtube-dl
 
     (import ./pkgs/vim.nix)
   ];
