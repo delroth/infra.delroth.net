@@ -10,6 +10,7 @@
     ./monitoring.nix
     ./networking.nix
     ./security.nix
+    ./syncthing.nix
     ./tor.nix
 
     ./services/nginx-sso.nix
@@ -27,7 +28,7 @@
   time.timeZone = "Europe/Zurich";
 
   environment.systemPackages = with pkgs; [
-    wget weechat screen rsync git mailutils openssl binutils ncdu youtube-dl
+    wget weechat screen rsync git mailutils openssl binutils ncdu youtube-dl whois
 
     (import ./pkgs/vim.nix)
   ];

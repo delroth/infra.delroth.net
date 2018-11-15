@@ -140,6 +140,10 @@
         appName = "prometheus";
         vhost = localReverseProxyAddr config.services.prometheus.listenAddress;
       };
+      "syncthing.delroth.net" = withSso {
+        appName = "syncthing";
+        vhost = localReverseProxy 8384;
+      };
 
       # Used to bypass CORS for https://delroth.net/publibike/
       "publibike-api.delroth.net" = withSsl {
