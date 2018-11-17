@@ -14,6 +14,7 @@
     ./tor.nix
 
     ./services/nginx-sso.nix
+    ./services/syncthing-relay.nix
   ];
 
   boot.loader.grub.enable = true;
