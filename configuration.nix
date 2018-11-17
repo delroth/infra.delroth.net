@@ -35,6 +35,10 @@
   ];
 
   nix.autoOptimiseStore = true;
+  nix.nixPath = [
+    "nixpkgs=/home/delroth/nixpkgs"
+    "nixos-config=/etc/nixos/configuration.nix"
+  ];
 
   programs.mosh.enable = true;
 
