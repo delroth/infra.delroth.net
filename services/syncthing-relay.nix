@@ -22,7 +22,7 @@ in {
 
     listenAddress = mkOption {
       type = types.str;
-      default = "0.0.0.0";
+      default = "";
       description = ''
         Address to listen on for relay traffic.
       '';
@@ -38,7 +38,7 @@ in {
 
     statusListenAddress = mkOption {
       type = types.str;
-      default = "0.0.0.0";
+      default = "";
       description = ''
         Address to listen on for serving the relay status API.
       '';
