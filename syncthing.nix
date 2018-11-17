@@ -10,7 +10,8 @@
 
     relay = {
       enable = true;
-      openFirewall = true;
+      port = 22067;
+      statusPort = 22070;
 
       providedBy = "delroth";
 
@@ -18,4 +19,9 @@
       perSessionRateBps = 5 * 1024 * 1024;  # 5MB/s
     };
   };
+
+  networking.firewall.allowedTCPPorts = [
+    config.services.syncthing.relay.port
+    config.services.syncthing.relay.statusPort
+  ];
 }

@@ -7,56 +7,55 @@ let
 
   dataDirectory = "/var/lib/syncthing-relay";
 
-  relayOptions = [
-    "--keys=${dataDirectory}"
-    "--listen=${cfg.listenAddress}:${toString cfg.port}"
-    "--status-srv=${cfg.statusListenAddress}:${toString cfg.statusPort}"
-    "--provided-by=${escapeShellArg cfg.providedBy}"
-    (optionalString (cfg.pools != null) "--pools=${escapeShellArg (concatStringsSep "," cfg.pools)}")
-    (optionalString (cfg.globalRateBps != null) "--global-rate=${toString cfg.globalRateBps}")
-    (optionalString (cfg.perSessionRateBps != null) "--per-session-rate=${toString cfg.perSessionRateBps}")
-  ];
+  relayOptions =
+    [
+      "--keys=${dataDirectory}"
+      "--listen=${cfg.listenAddress}:${toString cfg.port}"
+      "--status-srv=${cfg.statusListenAddress}:${toString cfg.statusPort}"
+      "--provided-by=${escapeShellArg cfg.providedBy}"
+    ]
+    ++ optional (cfg.pools != null) "--pools=${escapeShellArg (concatStringsSep "," cfg.pools)}"
+    ++ optional (cfg.globalRateBps != null) "--global-rate=${toString cfg.globalRateBps}"
+    ++ optional (cfg.perSessionRateBps != null) "--per-session-rate=${toString cfg.perSessionRateBps}";
 in {
+  ###### interface
+
   options.services.syncthing.relay = {
     enable = mkEnableOption "Syncthing relay service";
 
     listenAddress = mkOption {
       type = types.str;
       default = "";
+      example = "1.2.3.4";
       description = ''
         Address to listen on for relay traffic.
       '';
     };
 
     port = mkOption {
-      type = types.int;
+      type = types.port;
       default = 22067;
       description = ''
-        Port to listen on for relay traffic.
+        Port to listen on for relay traffic. This port should be added to
+        <literal>networking.firewall.allowedTCPPorts</literal>.
       '';
     };
 
     statusListenAddress = mkOption {
       type = types.str;
       default = "";
+      example = "1.2.3.4";
       description = ''
         Address to listen on for serving the relay status API.
       '';
     };
 
     statusPort = mkOption {
-      type = types.int;
+      type = types.port;
       default = 22070;
       description = ''
-        Port to listen on for serving the relay status API.
-      '';
-    };
-
-    openFirewall = mkOption {
-      type = types.bool;
-      default = false;
-      description = ''
-        Whether to open the relay and status API ports in the firewall.
+        Port to listen on for serving the relay status API. This port should be
+        added to <literal>networking.firewall.allowedTCPPorts</literal>.
       '';
     };
 
@@ -93,11 +92,9 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
-    networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [ cfg.port cfg.statusPort ];
-    };
+  ###### implementation
 
+  config = mkIf cfg.enable {
     systemd.services.syncthing-relay = {
       description = "Syncthing relay service";
       wantedBy = [ "multi-user.target" ];
@@ -105,7 +102,7 @@ in {
 
       serviceConfig = {
         DynamicUser = true;
-        StateDirectory = builtins.baseNameOf dataDirectory;
+        StateDirectory = baseNameOf dataDirectory;
 
         Restart = "on-failure";
         ExecStart = "${pkgs.syncthing-relay}/bin/strelaysrv ${concatStringsSep " " relayOptions}";
