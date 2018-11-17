@@ -11,8 +11,8 @@ let
     "--keys=${dataDirectory}"
     "--listen=${cfg.listenAddress}:${toString cfg.port}"
     "--status-srv=${cfg.statusListenAddress}:${toString cfg.statusPort}"
-    "--pools=${escapeShellArg (concatStringsSep "," cfg.pools)}"
     "--provided-by=${escapeShellArg cfg.providedBy}"
+    (optionalString (cfg.pools != null) "--pools=${escapeShellArg (concatStringsSep "," cfg.pools)}")
     (optionalString (cfg.globalRateBps != null) "--global-rate=${toString cfg.globalRateBps}")
     (optionalString (cfg.perSessionRateBps != null) "--per-session-rate=${toString cfg.perSessionRateBps}")
   ];
@@ -61,10 +61,10 @@ in {
     };
 
     pools = mkOption {
-      type = types.listOf types.str;
-      default = [];
+      type = types.nullOr (types.listOf types.str);
+      default = null;
       description = ''
-        Relay pools to join. If empty, uses the default global pool.
+        Relay pools to join. If null, uses the default global pool.
       '';
     };
 
