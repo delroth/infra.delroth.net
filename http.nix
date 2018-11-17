@@ -153,6 +153,7 @@
             proxy_set_header Host api.publibike.ch;
             proxy_set_header Origin "";
             proxy_set_header Referer "";
+            add_header Access-Control-Allow-Origin "https://delroth.net";
           '';
         };
       };
