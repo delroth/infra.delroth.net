@@ -38,9 +38,9 @@ in {
 
     statusListenAddress = mkOption {
       type = types.str;
-      default = "127.0.0.1";
+      default = "0.0.0.0";
       description = ''
-        Address to listen on for serving the relay status dashboard.
+        Address to listen on for serving the relay status API.
       '';
     };
 
@@ -48,7 +48,7 @@ in {
       type = types.int;
       default = 22070;
       description = ''
-        Port to listen on for serving the relay status dashboard.
+        Port to listen on for serving the relay status API.
       '';
     };
 
@@ -56,7 +56,7 @@ in {
       type = types.bool;
       default = false;
       description = ''
-        Whether to open the relay port in the firewall.
+        Whether to open the relay and status API ports in the firewall.
       '';
     };
 
@@ -95,7 +95,7 @@ in {
 
   config = mkIf cfg.enable {
     networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [ cfg.port ];
+      allowedTCPPorts = [ cfg.port cfg.statusPort ];
     };
 
     systemd.services.syncthing-relay = {
