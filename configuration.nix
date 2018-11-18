@@ -40,6 +40,13 @@
     "nixos-config=/etc/nixos/configuration.nix"
   ];
 
+  documentation = {
+    doc.enable = false;
+    info.enable = false;
+    man.enable = true;
+    nixos.enable = false;
+  };
+
   programs.mosh.enable = true;
 
   services.openssh.enable = true;
