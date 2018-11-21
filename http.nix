@@ -21,7 +21,7 @@
           domain = ".delroth.net";
           expire = 3600 * 24 * 30;
           secure = true;
-          authentication_key = builtins.readFile ./secrets/sso-key;
+          authentication_key = (import ./secrets.nix).sso.key;
         };
 
         login = {
@@ -34,8 +34,8 @@
 
         providers = {
           simple = {
-            users = import ./secrets/sso-users.nix;
-            groups = import ./secrets/sso-groups.nix;
+            users = (import ./secrets.nix).sso.users;
+            groups = (import ./secrets.nix).sso.groups;
           };
         };
 

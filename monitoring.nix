@@ -114,7 +114,7 @@
 
   services.grafana = {
     enable = true;
-    security.secretKey = builtins.readFile ./secrets/grafana-secret-key;
+    security.secretKey = (import ./secrets.nix).grafanaSecretKey;
     extraOptions = {
       AUTH_PROXY_ENABLED = "true";
       AUTH_PROXY_HEADER_NAME = "X-User";
