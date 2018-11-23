@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   my = import ../..;
@@ -20,6 +20,11 @@ in {
     ./networking.nix
     ./syncthing.nix
   ];
+
+  _module.args = {
+    staging = lib.mkDefault false;
+    machineName = lib.mkDefault "chaos";
+  };
 
   environment.systemPackages = with pkgs; [
     wget weechat screen rsync git mailutils openssl binutils ncdu youtube-dl
