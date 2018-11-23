@@ -11,10 +11,13 @@
     ./networking.nix
     ./security.nix
     ./syncthing.nix
-    ./tor.nix
+
+    ./roles/tor-relay.nix
 
     ./services/nginx-sso.nix
   ];
+
+  _module.args = { machineName = "chaos"; };
 
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;

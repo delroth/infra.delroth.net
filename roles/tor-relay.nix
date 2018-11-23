@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, machineName, ... }:
 
 {
   services.tor = {
@@ -8,7 +8,7 @@
       enable = true;
       role = "relay";
       port = 143;
-      nickname = "Chaos";
+      nickname = "${machineName}Delroth";
     };
   };
 

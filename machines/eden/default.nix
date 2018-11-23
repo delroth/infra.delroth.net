@@ -7,6 +7,8 @@ in {
     ./hardware.nix
 
     my.common.serverBase
+
+    my.roles.torRelay
   ];
   networking.hostName = "${machineName}.delroth.net";
 
