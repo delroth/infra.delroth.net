@@ -1,4 +1,4 @@
-{ ... }:
+{ machineName, ... }:
 
 {
   nix.autoOptimiseStore = true;
@@ -8,4 +8,9 @@
     man.enable = true;
     nixos.enable = false;
   };
+
+  # Support local nixos-rebuild for development/testing.
+  nix.nixPath = [
+    "nixos-config=/etc/nixos/machines/${machineName}"
+  ];
 }
