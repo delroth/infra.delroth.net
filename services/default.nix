@@ -1,0 +1,3 @@
+{
+  nginxSso = ./nginx-sso.nix;
+}

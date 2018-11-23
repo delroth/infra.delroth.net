@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 
-{
+let
+  my = import ../..;
+in {
   services.prometheus = rec {
     enable = true;
 
@@ -114,7 +116,7 @@
 
   services.grafana = {
     enable = true;
-    security.secretKey = (import ./secrets.nix).grafanaSecretKey;
+    security.secretKey = my.secrets.grafanaSecretKey;
     extraOptions = {
       AUTH_PROXY_ENABLED = "true";
       AUTH_PROXY_HEADER_NAME = "X-User";

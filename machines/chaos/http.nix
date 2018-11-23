@@ -1,13 +1,17 @@
-{ config, pkgs, ... }:
+{ config, pkgs, staging, ... }:
 
-{
+let
+  my = import ../..;
+in {
+  imports = [ my.services.nginxSso ];
+
   services.nginx = rec {
     enable = true;
     package = pkgs.nginxMainline;
 
     recommendedGzipSettings = true;
     recommendedOptimisation = true;
-    recommendedTlsSettings = true;
+    recommendedTlsSettings = !staging;
 
     sso = {
       enable = true;
@@ -21,7 +25,7 @@
           domain = ".delroth.net";
           expire = 3600 * 24 * 30;
           secure = true;
-          authentication_key = (import ./secrets.nix).sso.key;
+          authentication_key = my.secrets.sso.key;
         };
 
         login = {
@@ -34,8 +38,8 @@
 
         providers = {
           simple = {
-            users = (import ./secrets.nix).sso.users;
-            groups = (import ./secrets.nix).sso.groups;
+            users = my.secrets.sso.users;
+            groups = my.secrets.sso.groups;
           };
         };
 
@@ -55,7 +59,7 @@
     };
 
     virtualHosts = let
-      withSsl = vhost: vhost // {
+      withSsl = vhost: if staging then vhost else vhost // {
         forceSSL = true;
         enableACME = true;
       };

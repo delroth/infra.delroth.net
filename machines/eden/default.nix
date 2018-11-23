@@ -10,7 +10,6 @@ in {
 
     my.roles.torRelay
   ];
-  networking.hostName = "${machineName}.delroth.net";
 
   services.httpd.enable = true;
   services.httpd.adminAddr = "test@delroth.net";

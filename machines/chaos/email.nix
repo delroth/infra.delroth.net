@@ -1,12 +1,12 @@
-{ config, pkgs, ... }:
+{ config, lib, staging, ... }:
 
 {
   services.postfix = {
     enable = true;
     enableSubmission = true;
 
-    sslCert = "/var/lib/acme/${config.networking.hostName}/fullchain.pem";
-    sslKey = "/var/lib/acme/${config.networking.hostName}/key.pem";
+    sslCert = lib.mkIf (!staging) "/var/lib/acme/${config.networking.hostName}/fullchain.pem";
+    sslKey = lib.mkIf (!staging) "/var/lib/acme/${config.networking.hostName}/key.pem";
 
     recipientDelimiter = "+";
     rootAlias = "delroth";
@@ -36,7 +36,9 @@
 
   networking.firewall.allowedTCPPorts = [config.services.postfix.relayPort];
 
-  security.acme.certs."${config.networking.hostName}".postRun = ''
-    systemctl reload postfix
-  '';
+  security.acme.certs = lib.mkIf (!staging) {
+    "${config.networking.hostName}".postRun = ''
+      systemctl reload postfix
+    '';
+  };
 }

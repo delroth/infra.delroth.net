@@ -1,3 +1,4 @@
 {
+  chaos = ./chaos;
   eden = ./eden;
 }
