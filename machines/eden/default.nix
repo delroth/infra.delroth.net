@@ -8,6 +8,7 @@ in {
 
     my.common.serverBase
 
+    my.roles.syncthingRelay
     my.roles.torRelay
   ];
 

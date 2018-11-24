@@ -9,6 +9,7 @@ in {
 
     my.common.serverBase
 
+    my.roles.syncthingRelay
     my.roles.torRelay
 
     # TODO: Move most of these to generic roles.
