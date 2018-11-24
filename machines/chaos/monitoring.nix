@@ -45,8 +45,16 @@ in {
       {
         job_name = "node";
         scrape_interval = "10s";
+        scheme = "https";
+        metrics_path = "/metrics/node";
+        basic_auth = {
+          username = "prometheus";
+          password = my.secrets.nodeMetricsKey;
+        };
         static_configs = [
-          { targets = ["127.0.0.1:${toString config.services.prometheus.exporters.node.port}"]; }
+          {
+            targets = map (mach: "${mach}.delroth.net:443") (builtins.attrNames my.machines);
+          }
         ];
       }
       {
