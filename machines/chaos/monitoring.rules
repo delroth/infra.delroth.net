@@ -7,6 +7,15 @@ ALERT JobDown
     description = "Job {{ $labels.job }} on {{ $labels.instance }} has been down for more than 5 minutes.",
   }
 
+ALERT FileSystemUsageHigh
+  IF node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes < 0.2
+  FOR 5m
+  LABELS { severity = "page" }
+  ANNOTATIONS {
+    summary = "Root filesystem too full",
+    description = "Root filesystem on {{ $labels.instance }} is more than 80% full.",
+  }
+
 ALERT UnitFailed
   IF node_systemd_unit_state{state="failed"} == 1
   FOR 5m
