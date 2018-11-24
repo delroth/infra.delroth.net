@@ -1,6 +1,6 @@
 { ... }:
 
-{
+rec {
   users.users.delroth = {
     isNormalUser = true;
     uid = 1000;
@@ -11,4 +11,7 @@
       "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMj+Uu24FJNa6WSW7OdlIvsRxLxaQ+TZYeKTpD+rh0VF0VwP0CRWlMW/v3PvpblcGoVGpBwjHUyWEqSWNwSr1/s="
     ];
   };
+
+  users.users.root.openssh.authorizedKeys.keys =
+    users.users.delroth.openssh.authorizedKeys.keys;
 }
