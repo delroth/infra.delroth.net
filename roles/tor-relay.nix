@@ -1,14 +1,14 @@
-{ config, machineName, ... }:
+{ config, machineName, staging, ... }:
 
 {
   services.tor = {
     enable = true;
     controlPort = 9051;
     relay = {
-      enable = true;
+      enable = !staging;
       role = "relay";
       port = 143;
-      nickname = "${machineName}Delroth";
+      nickname = "${builtins.replaceStrings [ "-" ] [ "" ] machineName}Delroth";
     };
   };
 
