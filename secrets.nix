@@ -9,6 +9,7 @@ in
   if canaryHash != expectedHash then abort "Secrets are not readable. Have you run `git-crypt unlock`?"
   else {
     grafanaSecretKey = builtins.readFile ./secrets/grafana-secret-key;
+    nodeMetricsKey = builtins.readFile ./secrets/node-metrics-key;
     sso = {
       users = import ./secrets/sso-users.nix;
       groups = import ./secrets/sso-groups.nix;

@@ -14,11 +14,6 @@ in {
       port = 9115;
       configFile = ./blackbox.yml;
     };
-    exporters.node = {
-      enable = true;
-      enabledCollectors = [ "interrupts" "systemd" "tcpstat" ];
-      port = 9100;
-    };
     exporters.tor = {
       enable = true;
       torControlPort = config.services.tor.controlPort;
@@ -51,7 +46,7 @@ in {
         job_name = "node";
         scrape_interval = "10s";
         static_configs = [
-          { targets = ["127.0.0.1:${toString exporters.node.port}"]; }
+          { targets = ["127.0.0.1:${toString config.services.prometheus.exporters.node.port}"]; }
         ];
       }
       {
