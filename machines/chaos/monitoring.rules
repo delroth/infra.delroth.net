@@ -33,3 +33,12 @@ ALERT TorUnreachable
     summary = "tor network unreachable",
     description = "The Tor node on {{ $labels.instance }} has been unreachable for more than 1h.",
   }
+
+ALERT ProbeFailed
+  IF probe_success == 0
+  FOR 5m
+  LABELS { severity = "page" }
+  ANNOTATIONS {
+    summary = "Probe {{ $labels.job }} on {{ $labels.instance }} failed",
+    description = "Probe {{ $labels.job }} on {{ $labels.instance }} failed 3 times in a row.",
+  }

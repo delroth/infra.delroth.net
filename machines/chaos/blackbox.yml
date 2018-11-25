@@ -1,7 +1,9 @@
 modules:
-  http_2xx:
+  https_2xx:
     prober: http
     timeout: 5s
     http:
-      valid_status_codes: []
       method: GET
+      valid_status_codes: []
+      preferred_ip_protocol: "ip4"
+      fail_if_not_ssl: true

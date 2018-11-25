@@ -65,15 +65,14 @@ in {
       (blackboxTargets {
         job_name = "http_probe";
         scrape_interval = "1m";
-        modules = ["http_2xx"];
+        modules = ["https_2xx"];
         targets = [
           "https://delroth.net"
-          "https://home.delroth.net"
 
           "https://dolphin-emu.org"
           "https://forums.dolphin-emu.org"
           "https://wiki.dolphin-emu.org"
-          "https://dl.dolphin-emu.org"
+          "https://dl.dolphin-emu.org/robots.txt"
         ];
       })
     ];
