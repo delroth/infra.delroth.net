@@ -13,4 +13,12 @@
   };
 
   networking.firewall.allowedTCPPorts = [config.services.tor.relay.port];
+
+  # Monitoring.
+  services.prometheus.exporters.tor = {
+    enable = true;
+    torControlPort = config.services.tor.controlPort;
+    listenAddress = "127.0.0.1";
+    port = 9130;
+  };
 }

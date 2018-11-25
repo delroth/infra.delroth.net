@@ -1,4 +1,4 @@
-{ config, machineName, staging, ... }:
+{ config, lib, machineName, staging, ... }:
 
 let
   my = import ../.;
@@ -10,8 +10,8 @@ in {
     port = 9101;
   };
 
-  # The Prometheus node exporter doesn't support any kind of security or
-  # authentication, "by design". Place it behind a reverse proxy.
+  # Define a reverse proxy configuration for Prometheus exporters to be placed
+  # behind.
   services.nginx = {
     enable = true;
 
@@ -25,10 +25,22 @@ in {
         enableACME = !staging;
         basicAuth = { prometheus = my.secrets.nodeMetricsKey; };
 
-        locations."/metrics/node" = {
-          proxyPass =
-            "http://localhost:${toString config.services.prometheus.exporters.node.port}/metrics";
-        };
+        locations = builtins.listToAttrs (
+          let
+            enabledExporters =
+              lib.filterAttrs
+                (exporterName: exporter: (exporter ? enable) && exporter.enable)
+                config.services.prometheus.exporters;
+          in
+            lib.mapAttrsToList (
+              exporterName: exporter: {
+                name = "/metrics/${exporterName}";
+                value = {
+                  proxyPass = "http://localhost:${toString exporter.port}/metrics";
+                };
+              })
+              enabledExporters
+        );
       };
     };
   };

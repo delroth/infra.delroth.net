@@ -14,12 +14,6 @@ in {
       port = 9115;
       configFile = ./blackbox.yml;
     };
-    exporters.tor = {
-      enable = true;
-      torControlPort = config.services.tor.controlPort;
-      listenAddress = "127.0.0.1";
-      port = 9130;
-    };
 
     scrapeConfigs = let
 
@@ -41,29 +35,32 @@ in {
         ];
       };
 
-    in [
-      {
-        job_name = "node";
+      whiteboxJob = exporterName: {
+        job_name = exporterName;
         scrape_interval = "10s";
         scheme = "https";
-        metrics_path = "/metrics/node";
+        metrics_path = "/metrics/${exporterName}";
         basic_auth = {
           username = "prometheus";
           password = my.secrets.nodeMetricsKey;
         };
-        static_configs = [
-          {
-            targets = map (mach: "${mach}.delroth.net:443") (builtins.attrNames nodes);
-          }
-        ];
-      }
-      {
-        job_name = "tor";
-        scrape_interval = "10s";
-        static_configs = [
-          { targets = ["127.0.0.1:${toString exporters.tor.port}"]; }
-        ];
-      }
+        static_configs = [{
+          targets =
+            let
+              nodesWithExporter =
+                builtins.filter
+                  (node: node.config.services.prometheus.exporters."${exporterName}".enable)
+                  (builtins.attrValues nodes);
+            in
+              map
+                (node: "${node.config.networking.hostName}:443")
+                nodesWithExporter;
+        }];
+      };
+
+    in [
+      (whiteboxJob "node")
+      (whiteboxJob "tor")
 
       (blackboxTargets {
         job_name = "http_probe";
