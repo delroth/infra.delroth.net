@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, nodes, pkgs, ... }:
 
 let
   my = import ../..;
@@ -53,7 +53,7 @@ in {
         };
         static_configs = [
           {
-            targets = map (mach: "${mach}.delroth.net:443") (builtins.attrNames my.machines);
+            targets = map (mach: "${mach}.delroth.net:443") (builtins.attrNames nodes);
           }
         ];
       }
