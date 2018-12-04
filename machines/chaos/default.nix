@@ -31,4 +31,7 @@ in {
     wget weechat screen rsync git mailutils openssl binutils ncdu youtube-dl
     whois gnupg git-crypt my.pkgs.vim
   ];
+
+  # Extra paths to backup.
+  my.backup.extraPaths = [ "/srv" ];
 }

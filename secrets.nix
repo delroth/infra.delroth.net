@@ -8,6 +8,12 @@ let
 in
   if canaryHash != expectedHash then abort "Secrets are not readable. Have you run `git-crypt unlock`?"
   else {
+    backup = {
+      location = builtins.readFile ./secrets/backup-location;
+      pass = import ./secrets/backup-pass.nix;
+      sshHostPub = ./secrets/backup-ssh-host-pub;
+      sshKey = ./secrets/backup-ssh-key;
+    };
     grafanaSecretKey = builtins.readFile ./secrets/grafana-secret-key;
     nodeMetricsKey = builtins.readFile ./secrets/node-metrics-key;
     sso = {
