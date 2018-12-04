@@ -2,7 +2,6 @@
 
 {
   services.ipfs.enable = true;
-  services.ipfs.dataDir = "/srv/ipfs";
   services.ipfs.autoMount = true;
   services.ipfs.localDiscovery = false;
 
