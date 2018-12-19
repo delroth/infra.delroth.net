@@ -1,4 +1,4 @@
-{ lib, machineName, ... }:
+{ pkgs, ... }:
 
 let
   my = import ../..;
@@ -18,4 +18,7 @@ in {
   services.syncthing.relay.perSessionRateBps = 100 * 1024;  # 200KB/s
   services.tor.relay.accountingStart = "day 0:00";
   services.tor.relay.accountingMax = "10 GBytes";
+
+  # Attempt to improve SLAB memory leak situation with a more recent kernel.
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 }
