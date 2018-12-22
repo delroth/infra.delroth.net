@@ -11,6 +11,7 @@ in {
 
     my.roles.syncthingRelay
     my.roles.torRelay
+    my.roles.wireguardServer
   ];
 
   # Only 1TB/month to use :(

@@ -11,6 +11,7 @@ in {
 
     my.roles.syncthingRelay
     my.roles.torRelay
+    my.roles.wireguardServer
   ];
 
   # Attempt to improve SLAB memory leak situation with a more recent kernel.

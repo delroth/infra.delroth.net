@@ -11,6 +11,7 @@ in {
 
     my.roles.syncthingRelay
     my.roles.torRelay
+    my.roles.wireguardServer
 
     # TODO: Move most of these to generic roles.
     ./dns.nix

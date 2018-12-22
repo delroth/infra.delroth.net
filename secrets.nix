@@ -21,4 +21,7 @@ in
       groups = import ./secrets/sso-groups.nix;
       key = builtins.readFile ./secrets/sso-key;
     };
+    wireguard = {
+      privateKeys = import ./secrets/wireguard-keys.nix;
+    };
   }
