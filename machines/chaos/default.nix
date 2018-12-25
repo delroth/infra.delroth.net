@@ -28,6 +28,8 @@ in {
     machineName = lib.mkDefault "chaos";
   };
 
+  my.stateless = false;
+
   environment.systemPackages = with pkgs; [
     wget weechat screen rsync git mailutils openssl binutils ncdu youtube-dl
     whois gnupg git-crypt my.pkgs.vim

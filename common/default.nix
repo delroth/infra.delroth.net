@@ -7,6 +7,7 @@ rec {
   nix = import ./nix.nix;
   remoteAccess = import ./remote-access.nix;
   security = import ./security.nix;
+  stateless = import ./stateless.nix;
   users = import ./users.nix;
 
   # "Base layer" definitions for convenience.
@@ -19,6 +20,7 @@ rec {
       nix
       remoteAccess
       security
+      stateless
       users
     ];
   };
