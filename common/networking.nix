@@ -18,4 +18,9 @@
 
   # Send to local Stubby resolver.
   networking.nameservers = [ "127.0.0.1" ];
+
+  boot.kernel.sysctl = {
+    "net.ipv4.tcp_fastopen" = 3;  # Enable for incoming and outgoing.
+    "net.ipv4.tcp_tw_reuse" = 1;
+  };
 }
