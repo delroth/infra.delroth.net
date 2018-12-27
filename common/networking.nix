@@ -1,4 +1,4 @@
-{ machineName, ... }:
+{ machineName, pkgs, ... }:
 
 {
   networking.hostName = "${machineName}.delroth.net";
@@ -23,4 +23,8 @@
     "net.ipv4.tcp_fastopen" = 3;  # Enable for incoming and outgoing.
     "net.ipv4.tcp_tw_reuse" = 1;
   };
+
+  # Useful networking tools which really ought to be everywhere.
+  boot.kernelModules = [ "af_packet" ];
+  environment.systemPackages = with pkgs; [ mtr tcpdump traceroute ];
 }
