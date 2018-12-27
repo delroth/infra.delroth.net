@@ -38,7 +38,19 @@ in {
 
         providers = {
           simple = {
-            users = my.secrets.sso.users;
+            users =
+              builtins.mapAttrs
+                (_: value: value.passwordHash)
+                my.secrets.sso.users;
+
+            mfa =
+              builtins.mapAttrs
+                (_: value: [{
+                  provider = "google";
+                  attributes = { secret = value.totpSecret; };
+                }])
+                my.secrets.sso.users;
+
             groups = my.secrets.sso.groups;
           };
         };
