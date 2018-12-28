@@ -3,8 +3,6 @@
 let
   my = import ../..;
 in {
-  imports = [ my.services.nginxSso ];
-
   services.nginx = rec {
     enable = true;
     package = pkgs.nginxMainline;
