@@ -16,6 +16,7 @@ in
     };
     grafanaSecretKey = builtins.readFile ./secrets/grafana-secret-key;
     nodeMetricsKey = builtins.readFile ./secrets/node-metrics-key;
+    randstructSeed = builtins.readFile ./secrets/randstruct-seed;
     sso = {
       users = import ./secrets/sso-users.nix;
       groups = import ./secrets/sso-groups.nix;

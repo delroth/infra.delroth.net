@@ -1,6 +1,8 @@
 { pkgs, ... }:
 
-{
+let
+  my = import ../.;
+in {
   imports = [
     <nixpkgs/nixos/modules/profiles/hardened.nix>
   ];
@@ -22,4 +24,8 @@
       IA32_EMULATION y
     '';
   }];
+
+  # TODO: Once more build capacity has been converted to NixOS, add hostname to
+  # the seed as well for more diversity.
+  boot.kernel.randstructSeed = "${my.secrets.randstructSeed}";
 }
