@@ -18,5 +18,6 @@
       address = "fe80::1";
       interface = "enp0s3";
     };
+    my.networking.externalInterface = "enp0s3";
   };
 }

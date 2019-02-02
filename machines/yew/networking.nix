@@ -19,5 +19,6 @@
     };
     networking.defaultGateway = "149.56.128.1";
     networking.defaultGateway6 = "2607:5300:201:3000::1";
+    my.networking.externalInterface = "ens3";
   };
 }

@@ -23,7 +23,7 @@ in
       key = builtins.readFile ./secrets/sso-key;
     };
     wireguard = {
-      publicKeys = import ./secrets/wireguard-clients.nix;
+      clients = import ./secrets/wireguard-clients.nix;
       privateKeys = import ./secrets/wireguard-keys.nix;
     };
   }
