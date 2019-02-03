@@ -14,7 +14,11 @@ in {
       enableACME = true;
 
       locations."/" = {
-        proxyPass = "http://localhost:${toString port}";
+        root = "${pkgs.glowing-bear}";
+      };
+
+      locations."/weechat" = {
+        proxyPass = "http://localhost:${toString port}/weechat";
         extraConfig = ''
           proxy_http_version 1.1;
           proxy_set_header Upgrade $http_upgrade;
