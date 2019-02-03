@@ -9,6 +9,7 @@ in {
 
     my.common.serverBase
 
+    my.roles.ircClient
     my.roles.syncthingRelay
     my.roles.torRelay
     my.roles.wireguardServer
@@ -31,7 +32,7 @@ in {
   my.stateless = false;
 
   environment.systemPackages = with pkgs; [
-    wget weechat screen rsync git mailutils openssl binutils ncdu youtube-dl
+    wget rsync git mailutils openssl binutils ncdu youtube-dl
     whois gnupg git-crypt my.pkgs.vim
   ];
 
