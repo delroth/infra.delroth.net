@@ -17,7 +17,12 @@ in {
       doInit = true;
       archiveBaseName = machineName;
 
-      paths = [ "/home" "/root" "/var/log" ] ++ config.my.backup.extraPaths;
+      paths = [
+        "/home"
+        "/root"
+        "/var/lib"
+        "/var/log"
+      ] ++ config.my.backup.extraPaths;
       extraCreateArgs = "--one-file-system";
 
       startAt = "daily";
