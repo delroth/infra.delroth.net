@@ -10,6 +10,7 @@ in {
     my.common.serverBase
 
     my.roles.ircClient
+    my.roles.matrixSynapse
     my.roles.syncthingRelay
     my.roles.torRelay
     my.roles.wireguardServer

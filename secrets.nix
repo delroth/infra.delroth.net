@@ -15,6 +15,7 @@ in
       sshKey = ./secrets/backup-ssh-key;
     };
     grafanaSecretKey = builtins.readFile ./secrets/grafana-secret-key;
+    matrix = import ./secrets/matrix.nix;
     nodeMetricsKey = builtins.readFile ./secrets/node-metrics-key;
     randstructSeed = builtins.readFile ./secrets/randstruct-seed;
     sso = {
