@@ -162,8 +162,11 @@ in {
       # Used to bypass CORS for https://delroth.net/publibike/
       "publibike-api.delroth.net" = withSsl {
         locations."/" = {
-          proxyPass = "https://api.publibike.ch:443";
+          # Don't use the proxyPass option to avoid adding the recommended
+          # proxy headers. We explicitly don't want them as they will re-add
+          # Host and Origin with wrong values.
           extraConfig = ''
+            proxy_pass https://api.publibike.ch:443;
             proxy_set_header Host api.publibike.ch;
             proxy_set_header Origin "";
             proxy_set_header Referer "";
