@@ -10,6 +10,9 @@ in {
   # User namespaces are required for sandboxing. Better than nothing imo.
   security.allowUserNamespaces = true;
 
+  # Hyperthreading is not a concern for single-user environments.
+  security.allowSimultaneousMultithreading = true;
+
   security.sudo.enable = true;
   security.sudo.wheelNeedsPassword = false;
 
