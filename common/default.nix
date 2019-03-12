@@ -2,6 +2,8 @@
 rec {
   backup = import ./backup.nix;
   filesystem = import ./filesystem.nix;
+  graphical = import ./graphical.nix;
+  laptop = import ./laptop.nix;
   locale = import ./locale.nix;
   monitoring = import ./monitoring.nix;
   networking = import ./networking.nix;
@@ -18,6 +20,22 @@ rec {
       filesystem
       locale
       monitoring
+      networking
+      nix
+      remoteAccess
+      security
+      stateless
+      users
+    ];
+  };
+
+  laptopBase = { ... }: {
+    imports = [
+      backup
+      filesystem
+      graphical
+      laptop
+      locale
       networking
       nix
       remoteAccess
