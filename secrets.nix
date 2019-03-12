@@ -27,4 +27,5 @@ in
       clients = import ./secrets/wireguard-clients.nix;
       privateKeys = import ./secrets/wireguard-keys.nix;
     };
+    wirelessNetworks = import ./secrets/wireless-networks.nix;
   }
