@@ -1,6 +1,7 @@
 # Module definitions for common infrastructure layer.
 rec {
   backup = import ./backup.nix;
+  filesystem = import ./filesystem.nix;
   locale = import ./locale.nix;
   monitoring = import ./monitoring.nix;
   networking = import ./networking.nix;
@@ -14,6 +15,7 @@ rec {
   serverBase = { ... }: {
     imports = [
       backup
+      filesystem
       locale
       monitoring
       networking
