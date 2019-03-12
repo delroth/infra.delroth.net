@@ -6,7 +6,7 @@ rec {
     isNormalUser = true;
     uid = 1000;
     group = "delroth";
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "users" "wheel" ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII3tjB4KYDok3KlWxdBp/yEmqhhmybd+w0VO4xUwLKKV"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDy5fxZeXuACbWDhmcCy3eiwNzejF2E71Q2qtV04nQMg"
