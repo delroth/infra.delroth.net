@@ -1,9 +1,11 @@
 { ... }:
 
 rec {
+  users.groups.delroth = { gid = 1000; };
   users.users.delroth = {
     isNormalUser = true;
     uid = 1000;
+    group = "delroth";
     extraGroups = [ "wheel" ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII3tjB4KYDok3KlWxdBp/yEmqhhmybd+w0VO4xUwLKKV"
