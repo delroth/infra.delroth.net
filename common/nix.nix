@@ -8,7 +8,10 @@
     man.enable = true;
     nixos.enable = false;
   };
-  nix.gc.automatic = true;
+  nix.gc = {
+    automatic = true;
+    options = "--delete-older-than 14d";
+  };
   nix.trustedUsers = [ "root" "@wheel" ];
 
   nix.daemonNiceLevel = 10;
