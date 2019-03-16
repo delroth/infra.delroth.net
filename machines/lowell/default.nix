@@ -35,4 +35,6 @@ in {
   programs.ssh.startAgent = true;
 
   hardware.u2f.enable = true;
+
+  boot.kernelModules = [ "cifs" "cmac" "md4" "sha512" ];
 }
