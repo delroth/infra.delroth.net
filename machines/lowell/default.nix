@@ -7,6 +7,8 @@ in {
     ./hardware.nix
 
     my.common.laptopBase
+
+    my.roles.infraDevMachine
   ];
 
   _module.args = {
@@ -37,4 +39,6 @@ in {
   hardware.u2f.enable = true;
 
   boot.kernelModules = [ "cifs" "cmac" "md4" "sha512" ];
+
+  my.roles.infra-dev-machine.enable = true;
 }

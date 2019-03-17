@@ -11,6 +11,7 @@ in {
 
     my.roles.ircClient
     my.roles.matrixSynapse
+    my.roles.nixBuilder
     my.roles.syncthingRelay
     my.roles.torRelay
     my.roles.wireguardServer
@@ -39,4 +40,6 @@ in {
 
   # Extra paths to backup.
   my.backup.extraPaths = [ "/srv" ];
+
+  my.roles.nix-builder.enable = true;
 }

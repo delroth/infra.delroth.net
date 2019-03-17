@@ -14,6 +14,10 @@ in
       sshHostPub = ./secrets/backup-ssh-host-pub;
       sshKey = ./secrets/backup-ssh-key;
     };
+    distbuild = {
+      ssh-public = builtins.readFile ./secrets/distbuild-ssh-pub;
+      ssh-private = builtins.readFile ./secrets/distbuild-ssh-priv;
+    };
     grafanaSecretKey = builtins.readFile ./secrets/grafana-secret-key;
     matrix = import ./secrets/matrix.nix;
     nodeMetricsKey = builtins.readFile ./secrets/node-metrics-key;
