@@ -9,6 +9,7 @@ in {
     my.common.laptopBase
 
     my.roles.infraDevMachine
+    my.roles.syncthingMirror
   ];
 
   _module.args = {
@@ -41,4 +42,5 @@ in {
   boot.kernelModules = [ "cifs" "cmac" "md4" "sha512" ];
 
   my.roles.infra-dev-machine.enable = true;
+  my.roles.syncthing-mirror.enable = true;
 }

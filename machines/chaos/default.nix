@@ -12,6 +12,7 @@ in {
     my.roles.ircClient
     my.roles.matrixSynapse
     my.roles.nixBuilder
+    my.roles.syncthingMirror
     my.roles.syncthingRelay
     my.roles.torRelay
     my.roles.wireguardServer
@@ -23,7 +24,6 @@ in {
     ./ipfs.nix
     ./monitoring.nix
     ./networking.nix
-    ./syncthing.nix
   ];
 
   _module.args = {
@@ -42,4 +42,5 @@ in {
   my.backup.extraPaths = [ "/srv" ];
 
   my.roles.nix-builder.enable = true;
+  my.roles.syncthing-mirror.enable = true;
 }
