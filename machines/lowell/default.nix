@@ -23,9 +23,9 @@ in {
 
   environment.systemPackages = with pkgs; [
     wget chromiumBeta xterm most mpv feh pavucontrol acpi git dex gnupg
-    cifs-utils tpm2-tools git-crypt python3 pwgen keepassx2 vulnix electrum
+    cifs-utils tpm2-tools git-crypt python3 pwgen keepassxc vulnix electrum
     lm_sensors xorg.xbacklight picocom whois transmission-remote-cli scrot
-    imgurbash2 my.pkgs.vim nixops
+    imgurbash2 my.pkgs.vim nixops gnome3.eog evince
   ];
 
   # TODO: Switch to NetworkManager.
