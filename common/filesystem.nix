@@ -1,5 +1,5 @@
 { ... }:
 
 {
-  boot.tmpOnTmpfs = true;
+  boot.cleanTmpDir = true;
 }
