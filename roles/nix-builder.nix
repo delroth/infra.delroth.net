@@ -17,7 +17,7 @@ in {
 
     maxJobs = lib.mkOption {
       type = lib.types.int;
-      default = 5;
+      default = 2;
       description = ''
         Maximum number of builds to run at once on this machine.
       '';
