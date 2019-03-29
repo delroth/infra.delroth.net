@@ -2,6 +2,11 @@
 
 let
   my = import ../.;
+
+  kernelPackages = with pkgs;
+    recurseIntoAttrs (linuxPackagesFor (linux_latest_hardened.override {
+      features.ia32Emulation = true;
+    }));
 in {
   imports = [
     <nixpkgs/nixos/modules/profiles/hardened.nix>
@@ -19,7 +24,7 @@ in {
   services.haveged.enable = true;
 
   # Use the hardened kernel but keep IA32 emulation.
-  boot.kernelPackages = pkgs.linuxPackages_latest_hardened;
+  boot.kernelPackages = kernelPackages;
   boot.kernelPatches = [{
     name = "keep-ia32";
     patch = null;

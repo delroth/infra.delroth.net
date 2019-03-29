@@ -1,4 +1,5 @@
 {
+  gamingClient = import ./gaming-client.nix;
   infraDevMachine = import ./infra-dev-machine.nix;
   ircClient = import ./irc-client.nix;
   matrixSynapse = import ./matrix-synapse.nix;

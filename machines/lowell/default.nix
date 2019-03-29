@@ -8,6 +8,7 @@ in {
 
     my.common.laptopBase
 
+    my.roles.gamingClient
     my.roles.infraDevMachine
     my.roles.syncthingMirror
   ];
@@ -41,6 +42,7 @@ in {
 
   boot.kernelModules = [ "cifs" "cmac" "md4" "sha512" ];
 
+  my.roles.gaming-client.enable = true;
   my.roles.infra-dev-machine.enable = true;
   my.roles.syncthing-mirror.enable = true;
 }
