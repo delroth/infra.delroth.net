@@ -1,4 +1,4 @@
-{ machineName, ... }:
+{ lib, machineName, pkgs, ... }:
 
 {
   nix.autoOptimiseStore = true;
@@ -17,8 +17,6 @@
   nix.daemonNiceLevel = 10;
   nix.daemonIONiceLevel = 5;
 
-  # Support local nixos-rebuild for development/testing.
-  nix.nixPath = [
-    "nixos-config=/etc/nixos/machines/${machineName}"
-  ];
+  # Support using nix-shell for temporary package installs on infra machines.
+  nix.nixPath = [ "nixpkgs=${lib.cleanSource pkgs.path}" ];
 }
