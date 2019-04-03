@@ -22,6 +22,7 @@ in
     matrix = import ./secrets/matrix.nix;
     nodeMetricsKey = builtins.readFile ./secrets/node-metrics-key;
     randstructSeed = builtins.readFile ./secrets/randstruct-seed;
+    shadowHash = builtins.readFile ./secrets/shadow-hash;
     sso = {
       users = import ./secrets/sso-users.nix;
       groups = import ./secrets/sso-groups.nix;

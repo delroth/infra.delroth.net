@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
   my = import ../.;
@@ -19,7 +19,8 @@ in {
   security.allowSimultaneousMultithreading = true;
 
   security.sudo.enable = true;
-  security.sudo.wheelNeedsPassword = false;
+  security.sudo.wheelNeedsPassword =  # Require password if set.
+    config.users.users.delroth.hashedPassword != null;
 
   services.haveged.enable = true;
 

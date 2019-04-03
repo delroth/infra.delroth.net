@@ -1,6 +1,8 @@
 { ... }:
 
 rec {
+  users.mutableUsers = false;
+
   users.groups.delroth = { gid = 1000; };
   users.users.delroth = {
     isNormalUser = true;
