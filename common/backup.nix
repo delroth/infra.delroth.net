@@ -23,6 +23,12 @@ in {
         "/var/lib"
         "/var/log"
       ] ++ config.my.backup.extraPaths;
+
+      exclude = [
+        "/home/*/.cache"
+        "/home/*/.local/share/Steam"
+      ];
+
       extraCreateArgs = "--one-file-system";
 
       startAt = "daily";
