@@ -6,8 +6,17 @@ let
 
   distbuildPrivKeyEtcPath = "nix/distbuild-ssh.priv";
 in {
-  options.my.roles.infra-dev-machine = {
-    enable = lib.mkEnableOption "Infra dev machine";
+  options.my.roles.infra-dev-machine = with lib; {
+    enable = mkEnableOption "Infra dev machine";
+
+    extraBuilders = mkOption {
+      type = types.listOf types.attrs;
+      default = [];
+      description = ''
+        Extra builders to configure outside of the infra.delroth.net
+        deployment. The distbuild ssh key is automatically set.
+      '';
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -24,6 +33,10 @@ in {
               (lib.hasAttrByPath [ "my" "roles" "nix-builder" ] node.config) &&
               node.config.my.roles.nix-builder.enable
             );
+
+          extraNodes = lib.flip builtins.map cfg.extraBuilders (node: {
+            sshKey = "/etc/${distbuildPrivKeyEtcPath}";
+          } // node);
         in
           lib.flip builtins.map builderNodes (node: {
             hostName = node.config.networking.hostName;
@@ -34,7 +47,7 @@ in {
             speedFactor = node.config.my.roles.nix-builder.speedFactor;
             supportedFeatures =
               node.config.my.roles.nix-builder.supportedFeatures;
-          });
+          }) ++ extraNodes;
     };
 
     # To work around ssh private key permissions issues, copy the private key

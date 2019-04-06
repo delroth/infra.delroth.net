@@ -45,4 +45,15 @@ in {
   my.roles.gaming-client.enable = true;
   my.roles.infra-dev-machine.enable = true;
   my.roles.syncthing-mirror.enable = true;
+
+  my.roles.infra-dev-machine.extraBuilders = [
+    {
+      hostName = "192.168.0.220";
+      sshUser = "root";
+      system = "x86_64-linux";
+      maxJobs = 2;
+      speedfactor = 1;
+      supportedFeatures = [ "big-parallel" ];
+    }
+  ];
 }
