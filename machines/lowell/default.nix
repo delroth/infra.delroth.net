@@ -40,7 +40,13 @@ in {
 
   hardware.u2f.enable = true;
 
-  boot.kernelModules = [ "cifs" "cmac" "md4" "sha512" ];
+  boot.kernelModules = [
+    # For CIFS mounting.
+    "cifs" "cmac" "md4" "sha512"
+
+    # FTDI
+    "ftdi_sio"
+  ];
 
   my.roles.gaming-client.enable = true;
   my.roles.infra-dev-machine.enable = true;
