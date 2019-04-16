@@ -2,7 +2,10 @@ with import <nixpkgs> {};
 
 let
   base = {
-    network.description = "*.delroth.net prod infra";
+    network = {
+      description = "*.delroth.net prod infra";
+      enableRollback = true;
+    };
   };
 
   machines = import ../machines;
