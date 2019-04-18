@@ -59,5 +59,8 @@ in {
         BORG_RSH = "ssh -i /tmp/backup-ssh-key -o UserKnownHostsFile=${my.secrets.backup.sshHostPub}";
       };
     };
+
+    # To allow mounting remote backups.
+    boot.kernelModules = [ "fuse" ];
   };
 }
