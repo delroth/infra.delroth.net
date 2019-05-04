@@ -25,7 +25,19 @@ in {
         prometheus = {};
 
         sensor = [
-          { platform = "fitbit"; }
+          {
+            platform = "fitbit";
+            monitored_resources = [
+              "activities/calories"
+              "activities/distance"
+              "activities/floors"
+              "activities/heart"
+              "activities/steps"
+              "body/weight"
+              "devices/battery"
+              "sleep/efficiency"
+            ];
+          }
           { platform = "netatmo"; }
         ];
       };
