@@ -19,6 +19,7 @@ in
       ssh-private = builtins.readFile ./secrets/distbuild-ssh-priv;
     };
     grafanaSecretKey = builtins.readFile ./secrets/grafana-secret-key;
+    iot = import ./secrets/iot.nix;
     matrix = import ./secrets/matrix.nix;
     nodeMetricsKey = builtins.readFile ./secrets/node-metrics-key;
     randstructSeed = builtins.readFile ./secrets/randstruct-seed;
