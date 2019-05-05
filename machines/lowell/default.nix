@@ -10,7 +10,6 @@ in {
 
     my.roles.gamingClient
     my.roles.infraDevMachine
-    my.roles.iotGateway
     my.roles.syncthingMirror
   ];
 
@@ -51,7 +50,6 @@ in {
 
   my.roles.gaming-client.enable = true;
   my.roles.infra-dev-machine.enable = true;
-  my.roles.iot-gateway.enable = true;
   my.roles.syncthing-mirror.enable = true;
 
   my.roles.infra-dev-machine.extraBuilders = [

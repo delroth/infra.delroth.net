@@ -9,6 +9,7 @@ in {
 
     my.common.serverBase
 
+    my.roles.iotGateway
     my.roles.ircClient
     my.roles.matrixSynapse
     my.roles.nixBuilder
@@ -41,6 +42,7 @@ in {
   # Extra paths to backup.
   my.backup.extraPaths = [ "/srv" ];
 
+  my.roles.iot-gateway.enable = true;
   my.roles.nix-builder.enable = true;
   my.roles.syncthing-mirror.enable = true;
 }
