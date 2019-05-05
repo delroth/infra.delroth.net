@@ -75,6 +75,15 @@ in {
           "https://dl.dolphin-emu.org/robots.txt"
         ];
       })
+
+      {
+        job_name = "hass";
+        scrape_interval = "1m";
+        scheme = "https";
+        metrics_path = "/api/prometheus";
+        bearer_token = my.secrets.iot.token;
+        static_configs = [{ targets = [ "hass.delroth.net:443" ]; }];
+      }
     ];
 
     alertmanager = {
