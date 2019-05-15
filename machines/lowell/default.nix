@@ -26,7 +26,7 @@ in {
     wget chromiumBeta xterm most mpv feh pavucontrol acpi gitFull dex gnupg
     cifs-utils tpm2-tools git-crypt python3 pwgen keepassxc vulnix electrum
     lm_sensors xorg.xbacklight picocom whois transmission scrot imgurbash2
-    my.pkgs.vim nixops gnome3.eog evince libnotify hexedit
+    my.pkgs.vim nixops gnome3.eog evince libnotify hexedit my.pkgs.blitzloop
   ];
 
   # TODO: Switch to NetworkManager.
