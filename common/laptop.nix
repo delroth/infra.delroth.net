@@ -3,6 +3,7 @@
 let
   my = import ../.;
 in {
+  hardware.bluetooth.enable = true;
   networking.wireless.enable = true;
 
   services.tlp.enable = true;
