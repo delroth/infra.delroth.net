@@ -34,6 +34,9 @@ in {
     '';
   }];
 
+  # Default hardened allocator interacts badly with Nix.
+  environment.memoryAllocator.provider = "libc";
+
   # TODO: Once more build capacity has been converted to NixOS, add hostname to
   # the seed as well for more diversity.
   boot.kernel.randstructSeed = "${my.secrets.randstructSeed}";
