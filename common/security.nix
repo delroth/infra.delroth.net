@@ -34,8 +34,7 @@ in {
     '';
   }];
 
-  # Default hardened allocator interacts badly with Nix.
-  environment.memoryAllocator.provider = "libc";
+  environment.memoryAllocator.provider = "scudo";
 
   # TODO: Once more build capacity has been converted to NixOS, add hostname to
   # the seed as well for more diversity.
