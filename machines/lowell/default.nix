@@ -27,6 +27,7 @@ in {
     cifs-utils tpm2-tools git-crypt python3 pwgen keepassxc vulnix electrum
     lm_sensors xorg.xbacklight picocom whois transmission scrot imgurbash2
     my.pkgs.vim nixops gnome3.eog evince libnotify hexedit my.pkgs.blitzloop
+    wireguard-tools
   ];
 
   # TODO: Switch to NetworkManager.
@@ -46,7 +47,13 @@ in {
 
     # FTDI
     "ftdi_sio"
+
+    # TODO: Temporary.
+    "wireguard"
   ];
+
+  # TODO: Temporary.
+  boot.extraModulePackages = [ config.boot.kernelPackages.wireguard ];
 
   my.roles.gaming-client.enable = true;
   my.roles.infra-dev-machine.enable = true;
