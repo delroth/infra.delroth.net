@@ -30,7 +30,7 @@ in
       key = builtins.readFile ./secrets/sso-key;
     };
     wireguard = {
-      clients = import ./secrets/wireguard-clients.nix;
+      peers = import ./secrets/wireguard-peers.nix;
       privateKeys = import ./secrets/wireguard-keys.nix;
     };
     wirelessNetworks = import ./secrets/wireless-networks.nix;
