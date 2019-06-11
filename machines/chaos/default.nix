@@ -10,6 +10,7 @@ in {
     my.common.serverBase
 
     my.roles.iotGateway
+    my.roles.ircClient
     my.roles.matrixSynapse
     my.roles.nixBuilder
     my.roles.syncthingMirror

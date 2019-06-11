@@ -6,5 +6,5 @@
     defaultLocale = "en_US.UTF-8";
     supportedLocales = [ "en_US.UTF-8/UTF-8" ];
   };
-  time.timeZone = "Asia/Tokyo";
+  time.timeZone = "Europe/Zurich";
 }
