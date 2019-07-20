@@ -18,6 +18,9 @@ in
       ssh-public = builtins.readFile ./secrets/distbuild-ssh-pub;
       ssh-private = builtins.readFile ./secrets/distbuild-ssh-priv;
     };
+    dnssec = pkgs.lib.genAttrs
+      (builtins.attrNames (builtins.readDir ./secrets/dnssec))
+      (f: builtins.readFile (./secrets/dnssec + "/${f}"));
     grafanaSecretKey = builtins.readFile ./secrets/grafana-secret-key;
     iot = import ./secrets/iot.nix;
     matrix = import ./secrets/matrix.nix;
