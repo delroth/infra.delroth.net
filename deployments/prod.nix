@@ -1,10 +1,9 @@
-with import <nixpkgs> {};
-
 let
+  pkgs = import <nixpkgs> {};
   base = {
     network = {
+      inherit pkgs;
       description = "*.delroth.net prod infra";
-      enableRollback = true;
     };
   };
 
@@ -12,16 +11,18 @@ let
 
   # Modifies a machine definition to add deployment related information for
   # normal deployments (→ NixOS target server).
-  makeNormalDeployment = name: machineMod: { config, ... }: {
-    _module.args = {
-      staging = false;
-      machineName = name;
+  makeNormalDeployment = name: machineMod: {
+    name = "${name}.delroth.net";
+    value = { config, ... }: {
+      _module.args = {
+        staging = false;
+        machineName = name;
+      };
+
+      imports = [ machineMod ];
+
+      deployment.targetHost = config.networking.hostName;
     };
-
-    imports = [ machineMod ];
-
-    deployment.targetEnv = "none";  # NixOS
-    deployment.targetHost = config.networking.hostName;
   };
 in
-  base // (lib.mapAttrs makeNormalDeployment machines)
+  base // (pkgs.lib.mapAttrs' makeNormalDeployment machines)

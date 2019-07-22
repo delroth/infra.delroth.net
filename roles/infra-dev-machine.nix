@@ -76,7 +76,7 @@ in {
     })];
 
     environment.systemPackages = with pkgs; [
-      diffoscope qemu nix-review nixops
+      diffoscope qemu morph nix-review
     ];
   };
 }
