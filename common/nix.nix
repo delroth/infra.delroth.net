@@ -18,5 +18,6 @@
   nix.daemonIONiceLevel = 5;
 
   # Support using nix-shell for temporary package installs on infra machines.
-  nix.nixPath = [ "nixpkgs=${lib.cleanSource pkgs.path}" ];
+  environment.etc.nixpkgs.source = lib.cleanSource pkgs.path;
+  nix.nixPath = [ "nixpkgs=/etc/nixpkgs" ];
 }
