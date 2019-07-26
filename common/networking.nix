@@ -15,6 +15,9 @@
         tls_auth_name: "cloudflare-dns.com"
     '';
   };
+  # Require Stubby to be up for network to be considered available. Avoids
+  # sequencing problems at boot time.
+  systemd.services.stubby.wantedBy = [ "network.target" ];
 
   # Send to local Stubby resolver.
   networking.nameservers = [ "127.0.0.1" ];
