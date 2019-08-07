@@ -15,8 +15,10 @@ in {
   # User namespaces are required for sandboxing. Better than nothing imo.
   security.allowUserNamespaces = true;
 
-  # Hyperthreading is not a concern for single-user environments.
+  # Hyperthreading is not a concern for single-user environments. PTI mostly
+  # isn't either.
   security.allowSimultaneousMultithreading = true;
+  security.forcePageTableIsolation = false;
 
   security.sudo.enable = true;
   security.sudo.wheelNeedsPassword =  # Require password if set.
