@@ -59,6 +59,6 @@ in {
       gid = 0;
     };
 
-    environment.systemPackages = with pkgs; [ diffoscope nixops ];
+    environment.systemPackages = with pkgs; [ diffoscope qemu nixops ];
   };
 }
