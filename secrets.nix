@@ -32,6 +32,7 @@ in
       groups = import ./secrets/sso-groups.nix;
       key = builtins.readFile ./secrets/sso-key;
     };
+    syncthing = import ./secrets/syncthing.nix;
     wireguard = {
       peers = import ./secrets/wireguard-peers.nix;
       privateKeys = import ./secrets/wireguard-keys.nix;
