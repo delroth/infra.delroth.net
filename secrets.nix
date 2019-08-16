@@ -21,6 +21,7 @@ in
     dnssec = pkgs.lib.genAttrs
       (builtins.attrNames (builtins.readDir ./secrets/dnssec))
       (f: builtins.readFile (./secrets/dnssec + "/${f}"));
+    email = import ./secrets/email.nix;
     grafanaSecretKey = builtins.readFile ./secrets/grafana-secret-key;
     iot = import ./secrets/iot.nix;
     matrix = import ./secrets/matrix.nix;

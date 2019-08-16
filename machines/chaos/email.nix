@@ -1,6 +1,26 @@
-{ config, lib, staging, ... }:
+{ config, lib, pkgs, staging, ... }:
 
-{
+let
+  my = import ../..;
+  sasl-db = pkgs.runCommand "sasl.db" {} ''
+    echo "${my.secrets.email.smtp-password}" | \
+      ${pkgs.cyrus_sasl}/bin/saslpasswd2 \
+        -f $out \
+        -u ${config.networking.hostName} \
+        -c -p \
+        ${my.secrets.email.smtp-user}
+  '';
+  sasl-conf = pkgs.writeText "sasl-smtpd.conf" ''
+    pwcheck_method: auxprop
+    auxprop_plugin: sasldb
+    mech_list: PLAIN LOGIN CRAM-MD5 DIGEST-MD5 NTLM
+    sasldb_path: ${sasl-db}
+  '';
+  sasl-conf-dir = pkgs.runCommand "sasl-conf.d" {} ''
+    mkdir $out
+    ln -s ${sasl-conf} $out/smtpd.conf
+  '';
+in {
   services.postfix = {
     enable = true;
     enableSubmission = true;
@@ -11,6 +31,11 @@
     recipientDelimiter = "+";
     rootAlias = "delroth";
 
+    config = {
+      cyrus_sasl_config_path = "${sasl-conf-dir}";
+      smtpd_sasl_auth_enable = true;
+      smtpd_tls_auth_only = true;
+    };
     destination = [
       config.networking.hostName
       "localhost"
