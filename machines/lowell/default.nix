@@ -48,6 +48,9 @@ in {
     # FTDI
     "ftdi_sio"
 
+    # USB mass storage
+    "usb_storage" "sd_mod" "vfat"
+
     # TODO: Temporary.
     "wireguard"
   ];
