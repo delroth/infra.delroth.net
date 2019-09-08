@@ -1,6 +1,8 @@
 { lib, machineName, pkgs, ... }:
 
-{
+let
+  my = import ../.;
+in {
   nix.autoOptimiseStore = true;
   documentation = {
     doc.enable = false;
@@ -20,4 +22,7 @@
   # Support using nix-shell for temporary package installs on infra machines.
   environment.etc.nixpkgs.source = lib.cleanSource pkgs.path;
   nix.nixPath = [ "nixpkgs=/etc/nixpkgs" ];
+
+  # Add custom package set to overlays.
+  nixpkgs.overlays = [ my.pkgs ];
 }

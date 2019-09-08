@@ -36,7 +36,7 @@ in {
 
   environment.systemPackages = with pkgs; [
     wget rsync git mailutils openssl binutils ncdu youtube-dl
-    whois gnupg git-crypt my.pkgs.vim
+    whois gnupg git-crypt vim_delroth
   ];
 
   # Extra paths to backup.
