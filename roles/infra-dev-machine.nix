@@ -59,6 +59,22 @@ in {
       gid = 0;
     };
 
+    # Morph 1.3.1 has a few blocking issues that require patching.
+    nixpkgs.overlays = [(self: super: {
+      morph = super.morph.overrideAttrs (old: {
+        patches = (if old?patches then old.patches else []) ++ [
+          (pkgs.fetchurl {
+            url = "https://github.com/delroth/morph/commit/949c3eaa50805921c77381a4e248c1f2db1be449.patch";
+            sha256 = "0md4mx8fdp8qcv34py3gq1yckp7pf6418vm4ixzi5fajx2xa3vhk";
+          })
+        ];
+
+        # Assets get bundled before patching in nixpkgs derivation. Fix that.
+        prePatch = "";
+        postPatch = old.prePatch;
+      });
+    })];
+
     environment.systemPackages = with pkgs; [
       diffoscope qemu nix-review nixops
     ];
