@@ -9,6 +9,7 @@ rec {
   networking = import ./networking.nix;
   nix = import ./nix.nix;
   remoteAccess = import ./remote-access.nix;
+  scheduling = import ./scheduling.nix;
   security = import ./security.nix;
   stateless = import ./stateless.nix;
   users = import ./users.nix;
@@ -23,6 +24,7 @@ rec {
       networking
       nix
       remoteAccess
+      scheduling
       security
       stateless
       users
@@ -39,6 +41,7 @@ rec {
       networking
       nix
       remoteAccess
+      scheduling
       security
       stateless
       users
