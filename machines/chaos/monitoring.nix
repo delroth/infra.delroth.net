@@ -117,7 +117,12 @@ in {
         ];
       };
     };
-    alertmanagerURL = [ "http://${alertmanager.listenAddress}:${toString alertmanager.port}" ];
+
+    alertmanagers = [{
+      static_configs = [{
+        targets = [ "${alertmanager.listenAddress}:${toString alertmanager.port}" ];
+      }];
+    }];
 
     ruleFiles = [ ./monitoring.rules ];
   };

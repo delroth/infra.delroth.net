@@ -1,44 +1,48 @@
-ALERT JobDown
-  IF up == 0
-  FOR 5m
-  LABELS { severity = "page" }
-  ANNOTATIONS {
-    summary = "Job {{ $labels.down }} unreachable",
-    description = "Job {{ $labels.job }} on {{ $labels.instance }} has been down for more than 5 minutes.",
-  }
+groups:
+- name: alerts
+  rules:
 
-ALERT FileSystemUsageHigh
-  IF node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes < 0.2
-  FOR 5m
-  LABELS { severity = "page" }
-  ANNOTATIONS {
-    summary = "Root filesystem too full",
-    description = "Root filesystem on {{ $labels.instance }} is more than 80% full.",
-  }
+  - alert: JobDown
+    expr: up == 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      summary: "Job {{ $labels.down }} unreachable"
+      description: "Job {{ $labels.job }} on {{ $labels.instance }} has been down for more than 5 minutes."
 
-ALERT UnitFailed
-  IF node_systemd_unit_state{state="failed"} == 1
-  FOR 5m
-  LABELS { severity = "page" }
-  ANNOTATIONS {
-    summary = "systemd unit {{ $labels.name }} failed",
-    description = "The systemd unit {{ $labels.name }} on {{ $labels.instance }} has been down for more than 5 minutes.",
-  }
+  - alert: FileSystemUsageHigh
+    expr: node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes < 0.2
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      summary: "Root filesystem too full"
+      description: "Root filesystem on {{ $labels.instance }} is more than 80% full."
 
-ALERT TorUnreachable
-  IF tor_network_liveness == 0
-  FOR 1h
-  LABELS { severity = "ticket" }
-  ANNOTATIONS {
-    summary = "tor network unreachable",
-    description = "The Tor node on {{ $labels.instance }} has been unreachable for more than 1h.",
-  }
+  - alert: UnitFailed
+    expr: node_systemd_unit_state{state="failed"} == 1
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      summary: "systemd unit {{ $labels.name }} failed"
+      description: "The systemd unit {{ $labels.name }} on {{ $labels.instance }} has been down for more than 5 minutes."
 
-ALERT ProbeFailed
-  IF probe_success == 0
-  FOR 5m
-  LABELS { severity = "page" }
-  ANNOTATIONS {
-    summary = "Probe {{ $labels.job }} on {{ $labels.instance }} failed",
-    description = "Probe {{ $labels.job }} on {{ $labels.instance }} failed 3 times in a row.",
-  }
+  - alert: TorUnreachable
+    expr: tor_network_liveness == 0
+    for: 1h
+    labels:
+      severity: ticket
+    annotations:
+      summary: "tor network unreachable"
+      description: "The Tor node on {{ $labels.instance }} has been unreachable for more than 1h."
+
+  - alert: ProbeFailed
+    expr: probe_success == 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      summary: "Probe {{ $labels.job }} on {{ $labels.instance }} failed"
+      description: "Probe {{ $labels.job }} on {{ $labels.instance }} failed 3 times in a row."
