@@ -4,6 +4,7 @@
   iotGateway = import ./iot-gateway.nix;
   ircClient = import ./irc-client.nix;
   matrixSynapse = import ./matrix-synapse.nix;
+  musicServer = import ./music-server.nix;
   nixBuilder = import ./nix-builder.nix;
   syncthingMirror = import ./syncthing-mirror.nix;
   syncthingRelay = import ./syncthing-relay.nix;
