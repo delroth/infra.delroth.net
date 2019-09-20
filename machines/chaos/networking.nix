@@ -17,6 +17,7 @@
     networking.defaultGateway6 = {
       address = "fe80::1";
       interface = "ens3";
+      sourceAddress = "2a01:4f8:13b:f15::1";
     };
     my.networking.externalInterface = "ens3";
   };
