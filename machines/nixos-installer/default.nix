@@ -18,8 +18,8 @@ in {
 
   deployment.buildOnly = true;
   my.stateless = false;
-  networking.wireless.networks = my.secrets.wirelessNetworks;
   services.mingetty.autologinUser = "delroth";
+  security.lockKernelModules = false;
 
   isoImage = {
     isoBaseName = "delroth-nixos-installer";
