@@ -27,6 +27,9 @@ in {
       exclude = [
         "/home/*/.cache"
         "/home/*/.local/share/Steam"
+
+        # Causes backups to fail due to temp files appearing / disappearing.
+        "/var/lib/tor/diff-cache"
       ];
 
       extraCreateArgs = "--one-file-system";
