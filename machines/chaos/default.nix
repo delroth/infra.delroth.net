@@ -47,4 +47,6 @@ in {
   my.roles.music-server.enable = true;
   my.roles.nix-builder.enable = true;
   my.roles.syncthing-mirror.enable = true;
+
+  my.roles.nix-builder.speedFactor = 2;
 }
