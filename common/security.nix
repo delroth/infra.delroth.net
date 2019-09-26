@@ -1,8 +1,6 @@
-{ config, pkgs, ... }:
+{ config, pkgs, secrets, ... }:
 
 let
-  my = import ../.;
-
   kernelPackages = with pkgs;
     recurseIntoAttrs (linuxPackagesFor (linux_latest_hardened.override {
       features.ia32Emulation = true;
@@ -40,5 +38,5 @@ in {
 
   # TODO: Once more build capacity has been converted to NixOS, add hostname to
   # the seed as well for more diversity.
-  boot.kernel.randstructSeed = "${my.secrets.randstructSeed}";
+  boot.kernel.randstructSeed = "${secrets.randstructSeed}";
 }

@@ -1,14 +1,13 @@
-{ config, lib, pkgs, staging, ... }:
+{ config, lib, pkgs, secrets, staging, ... }:
 
 let
-  my = import ../..;
   sasl-db = pkgs.runCommand "sasl.db" {} ''
-    echo "${my.secrets.email.smtp-password}" | \
+    echo "${secrets.email.smtp-password}" | \
       ${pkgs.cyrus_sasl}/bin/saslpasswd2 \
         -f $out \
         -u ${config.networking.hostName} \
         -c -p \
-        ${my.secrets.email.smtp-user}
+        ${secrets.email.smtp-user}
   '';
   sasl-conf = pkgs.writeText "sasl-smtpd.conf" ''
     pwcheck_method: auxprop

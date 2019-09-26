@@ -1,8 +1,6 @@
-{ config, nodes, pkgs, ... }:
+{ config, nodes, pkgs, secrets, ... }:
 
-let
-  my = import ../..;
-in {
+{
   services.prometheus = rec {
     enable = true;
 
@@ -42,7 +40,7 @@ in {
         metrics_path = "/metrics/${exporterName}";
         basic_auth = {
           username = "prometheus";
-          password = my.secrets.nodeMetricsKey;
+          password = secrets.nodeMetricsKey;
         };
         static_configs = [{
           targets =
@@ -81,7 +79,7 @@ in {
         scrape_interval = "1m";
         scheme = "https";
         metrics_path = "/api/prometheus";
-        bearer_token = my.secrets.iot.token;
+        bearer_token = secrets.iot.token;
         static_configs = [{ targets = [ "hass.delroth.net:443" ]; }];
       }
     ];
@@ -129,7 +127,7 @@ in {
 
   services.grafana = {
     enable = true;
-    security.secretKey = my.secrets.grafanaSecretKey;
+    security.secretKey = secrets.grafanaSecretKey;
     extraOptions = {
       AUTH_PROXY_ENABLED = "true";
       AUTH_PROXY_HEADER_NAME = "X-User";

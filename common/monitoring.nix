@@ -1,8 +1,6 @@
-{ config, lib, machineName, staging, ... }:
+{ config, lib, machineName, secrets, staging, ... }:
 
-let
-  my = import ../.;
-in {
+{
   services.prometheus.exporters.node = {
     enable = true;
     enabledCollectors = [ "interrupts" "systemd" "tcpstat" ];
@@ -23,7 +21,7 @@ in {
       "${machineName}.delroth.net" = {
         forceSSL = !staging;
         enableACME = !staging;
-        basicAuth = { prometheus = my.secrets.nodeMetricsKey; };
+        basicAuth = { prometheus = secrets.nodeMetricsKey; };
 
         locations = builtins.listToAttrs (
           let

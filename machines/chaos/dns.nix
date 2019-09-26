@@ -1,8 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, secrets, ... }:
 
 let
-  my = import ../..;
-
   secondaryDnsServers = [
     "69.65.50.192"  # ns2.afraid.org
     "204.42.254.5"  # puck.nether.net
@@ -53,7 +51,7 @@ in {
       mode = "0400";
       text = contents;
     };
-  }) my.secrets.dnssec;
+  }) secrets.dnssec;
 
   networking.firewall.allowedTCPPorts = [ 53 ];
   networking.firewall.allowedUDPPorts = [ 53 ];

@@ -1,8 +1,6 @@
-{ config, ... }:
+{ config, secrets, ... }:
 
-let
-  my = import ../.;
-in {
+{
   hardware.bluetooth.enable = true;
   networking.wireless.enable = true;
 
@@ -22,5 +20,5 @@ in {
   '';
 
   # Set a password for the main login user.
-  users.users.delroth.hashedPassword = my.secrets.shadowHash;
+  users.users.delroth.hashedPassword = secrets.shadowHash;
 }

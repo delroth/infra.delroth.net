@@ -1,8 +1,6 @@
-{ config, pkgs, staging, ... }:
+{ config, pkgs, secrets, staging, ... }:
 
-let
-  my = import ../..;
-in {
+{
   services.nginx = rec {
     enable = true;
     package = pkgs.nginxMainline;
@@ -23,7 +21,7 @@ in {
           domain = ".delroth.net";
           expire = 3600 * 24 * 30;
           secure = true;
-          authentication_key = my.secrets.sso.key;
+          authentication_key = secrets.sso.key;
         };
 
         login = {
@@ -39,7 +37,7 @@ in {
             users =
               builtins.mapAttrs
                 (_: value: value.passwordHash)
-                my.secrets.sso.users;
+                secrets.sso.users;
 
             mfa =
               builtins.mapAttrs
@@ -47,9 +45,9 @@ in {
                   provider = "google";
                   attributes = { secret = value.totpSecret; };
                 }])
-                my.secrets.sso.users;
+                secrets.sso.users;
 
-            groups = my.secrets.sso.groups;
+            groups = secrets.sso.groups;
           };
         };
 

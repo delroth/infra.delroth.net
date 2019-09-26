@@ -39,4 +39,7 @@ in {
     pkgs.runCommand "programs.sqlite" {} ''
       tar xf ${channelTarball} --wildcards "nixos*/programs.sqlite" -O > $out
     '';
+
+  # Inject secrets through module arguments while evaluating configs.
+  _module.args.secrets = my.secrets;
 }

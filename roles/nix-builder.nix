@@ -1,8 +1,7 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, secrets, ... }:
 
 let
   cfg = config.my.roles.nix-builder;
-  my = import ../.;
 in {
   options.my.roles.nix-builder = {
     enable = lib.mkEnableOption "Remote Nix builder";
@@ -45,7 +44,7 @@ in {
     users.users."${cfg.user}" = {
       isSystemUser = true;
       shell = pkgs.bash;
-      openssh.authorizedKeys.keys = [ my.secrets.distbuild.ssh-public ];
+      openssh.authorizedKeys.keys = [ secrets.distbuild.ssh-public ];
     };
 
     nix.trustedUsers = [ cfg.user ];

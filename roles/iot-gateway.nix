@@ -1,8 +1,7 @@
-{ config, lib, ... }:
+{ config, lib, secrets, ... }:
 
 let
   cfg = config.my.roles.iot-gateway;
-  my = import ../.;
 
   hostname = "hass.delroth.net";
   port = 8123;
@@ -27,10 +26,10 @@ in {
         history = {};
 
         netatmo = {
-          api_key = my.secrets.iot.netatmo.api_key;
-          secret_key = my.secrets.iot.netatmo.secret_key;
-          username = my.secrets.iot.netatmo.username;
-          password = my.secrets.iot.netatmo.password;
+          api_key = secrets.iot.netatmo.api_key;
+          secret_key = secrets.iot.netatmo.secret_key;
+          username = secrets.iot.netatmo.username;
+          password = secrets.iot.netatmo.password;
         };
         prometheus = {};
 

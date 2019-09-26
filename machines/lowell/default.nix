@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, secrets, ... }:
 
 let
   my = import ../..;
@@ -30,7 +30,7 @@ in {
   ];
 
   # TODO: Switch to NetworkManager.
-  networking.wireless.networks = my.secrets.wirelessNetworks;
+  networking.wireless.networks = secrets.wirelessNetworks;
 
   programs.zsh.enable = true;
   users.users.delroth.shell = pkgs.zsh;

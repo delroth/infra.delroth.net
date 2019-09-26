@@ -1,8 +1,6 @@
-{ config, lib, machineName, ... }:
+{ config, lib, machineName, secrets, ... }:
 
-let
-  my = import ../.;
-in {
+{
   options.my.backup.extraPaths = lib.mkOption {
     type = lib.types.listOf lib.types.str;
     default = [ ];
@@ -11,9 +9,9 @@ in {
     '';
   };
 
-  config = lib.mkIf (my.secrets.backup.pass ? "${machineName}") {
+  config = lib.mkIf (secrets.backup.pass ? "${machineName}") {
     services.borgbackup.jobs.default = {
-      repo = "${my.secrets.backup.location}/${machineName}";
+      repo = "${secrets.backup.location}/${machineName}";
       doInit = true;
       archiveBaseName = machineName;
 
@@ -48,18 +46,18 @@ in {
       compression = "auto,zstd";
       encryption = {
         mode = "repokey-blake2";
-        passphrase = my.secrets.backup.pass."${machineName}";
+        passphrase = secrets.backup.pass."${machineName}";
       };
 
       # SSH insists on having secure unix permissions on SSH private keys. We
       # don't really care since these are single user systems.
       preHook = ''
-        cp ${my.secrets.backup.sshKey} /tmp/backup-ssh-key
+        cp ${secrets.backup.sshKey} /tmp/backup-ssh-key
         chmod 600 /tmp/backup-ssh-key
       '';
 
       environment = {
-        BORG_RSH = "ssh -i /tmp/backup-ssh-key -o UserKnownHostsFile=${my.secrets.backup.sshHostPub}";
+        BORG_RSH = "ssh -i /tmp/backup-ssh-key -o UserKnownHostsFile=${secrets.backup.sshHostPub}";
       };
     };
 

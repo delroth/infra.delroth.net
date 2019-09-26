@@ -1,8 +1,6 @@
-{ config, pkgs, ... }:
+{ config, pkgs, secrets, ... }:
 
 let
-  my = import ../.;
-
   federationPort = { public = 8448; private = 11338; };
   clientPort = { public = 443; private = 11339; };
   domain = "delroth.net";
@@ -14,7 +12,7 @@ in {
     server_name = domain;
     public_baseurl = "https://matrix.${domain}";
 
-    registration_shared_secret = my.secrets.matrix.registrationSharedSecret;
+    registration_shared_secret = secrets.matrix.registrationSharedSecret;
 
     listeners = [
       # Federation

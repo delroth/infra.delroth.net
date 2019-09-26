@@ -1,11 +1,10 @@
-{ config, lib, machineName, ... }:
+{ config, lib, machineName, secrets, ... }:
 
 let
-  my = import ../.;
   port = 51820;
   iface = "wg0";
 
-  allPeers = my.secrets.wireguard.peers;
+  allPeers = secrets.wireguard.peers;
   thisPeer = allPeers."${machineName}";
 in {
   options.my.networking.externalInterface = lib.mkOption {
@@ -21,7 +20,7 @@ in {
     networking = {
       wireguard.interfaces."${iface}" = {
         listenPort = port;
-        privateKey = my.secrets.wireguard.privateKeys."${machineName}";
+        privateKey = secrets.wireguard.privateKeys."${machineName}";
         ips = [ "${thisPeer.vpnIp}/24" ];
 
         peers = map
@@ -31,7 +30,7 @@ in {
           } // lib.optionalAttrs (peer ? externalIp) {
             endpoint = "${peer.externalIp}:${toString port}";
           })
-          (lib.attrValues my.secrets.wireguard.peers);
+          (lib.attrValues secrets.wireguard.peers);
       };
 
       nat = {

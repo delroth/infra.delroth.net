@@ -1,8 +1,7 @@
-{ config, lib, nodes, pkgs, ... }:
+{ config, lib, nodes, pkgs, secrets, ... }:
 
 let
   cfg = config.my.roles.infra-dev-machine;
-  my = import ../.;
 
   distbuildPrivKeyEtcPath = "nix/distbuild-ssh.priv";
 in {
@@ -53,7 +52,7 @@ in {
     # To work around ssh private key permissions issues, copy the private key
     # out of the nix store to a system path.
     environment.etc."${distbuildPrivKeyEtcPath}" = {
-      text = my.secrets.distbuild.ssh-private;
+      text = secrets.distbuild.ssh-private;
       mode = "0400";
       uid = 0;
       gid = 0;
