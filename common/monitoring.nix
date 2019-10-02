@@ -34,7 +34,7 @@
               exporterName: exporter: {
                 name = "/metrics/${exporterName}";
                 value = {
-                  proxyPass = "http://localhost:${toString exporter.port}/metrics";
+                  proxyPass = "http://127.0.0.1:${toString exporter.port}/metrics";
                 };
               })
               enabledExporters
