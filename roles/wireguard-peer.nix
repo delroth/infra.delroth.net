@@ -34,6 +34,8 @@ in {
             publicKey = peer.key;
           } // lib.optionalAttrs (peer ? externalIp) {
             endpoint = "${peer.externalIp}:${toString port}";
+          } // lib.optionalAttrs (!(thisPeer ? externalIp)) {
+            persistentKeepalive = 10;
           })
           (lib.attrValues secrets.wireguard.peers);
       };
