@@ -11,6 +11,6 @@ in {
 
     my.roles.syncthingRelay
     my.roles.torRelay
-    my.roles.wireguardServer
+    my.roles.wireguardPeer
   ];
 }

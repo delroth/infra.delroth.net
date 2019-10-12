@@ -9,7 +9,7 @@ in {
     my.common.serverBase
 
     my.roles.nixBuilder
-    my.roles.wireguardServer
+    my.roles.wireguardPeer
   ];
 
   _module.args = {
