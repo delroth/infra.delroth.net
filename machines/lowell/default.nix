@@ -11,6 +11,7 @@ in {
     my.roles.gamingClient
     my.roles.infraDevMachine
     my.roles.syncthingMirror
+    my.roles.wireguardPeer
   ];
 
   _module.args = {
@@ -57,7 +58,10 @@ in {
   # TODO: Temporary.
   boot.extraModulePackages = [ config.boot.kernelPackages.wireguard ];
 
-  my.roles.gaming-client.enable = true;
-  my.roles.infra-dev-machine.enable = true;
-  my.roles.syncthing-mirror.enable = true;
+  my.roles = {
+    gaming-client.enable = true;
+    infra-dev-machine.enable = true;
+    syncthing-mirror.enable = true;
+    wireguard-peer.enable = true;
+  };
 }
