@@ -1,22 +1,27 @@
 { config, lib, machineName, secrets, ... }:
 
 let
+  cfg = config.my.roles.wireguard-peer;
   port = 51820;
   iface = "wg";
 
   allPeers = secrets.wireguard.peers;
   thisPeer = allPeers."${machineName}";
 in {
-  options.my.networking.externalInterface = lib.mkOption {
-    type = lib.types.nullOr lib.types.str;
-    default = null;
-    description = ''
-      Name of the network interface that egresses to the internet. Used for
-      e.g. NATing internal networks.
-    '';
+  options = {
+    my.networking.externalInterface = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+      description = ''
+        Name of the network interface that egresses to the internet. Used for
+        e.g. NATing internal networks.
+      '';
+    };
+
+    my.roles.wireguard-peer.enable = lib.mkEnableOption "Wireguard peer";
   };
 
-  config = {
+  config = lib.mkIf cfg.enable {
     networking = {
       wireguard.interfaces."${iface}" = {
         listenPort = port;
@@ -33,13 +38,13 @@ in {
           (lib.attrValues secrets.wireguard.peers);
       };
 
-      nat = {
+      nat = lib.optionalAttrs (thisPeer ? externalIp) {
         enable = true;
         externalInterface = config.my.networking.externalInterface;
         internalInterfaces = [ iface ];
       };
 
-      firewall.allowedUDPPorts = [ port ];
+      firewall.allowedUDPPorts = lib.optional (thisPeer ? externalIp) port;
     };
   };
 }

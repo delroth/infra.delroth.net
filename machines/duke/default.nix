@@ -20,5 +20,8 @@ in {
   my.stateless = true;
   my.networking.externalInterface = "enp0s25";
 
-  my.roles.nix-builder.enable = true;
+  my.roles = {
+    nix-builder.enable = true;
+    wireguard-peer.enable = true;
+  };
 }

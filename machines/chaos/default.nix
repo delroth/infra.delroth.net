@@ -43,10 +43,13 @@ in {
   # Extra paths to backup.
   my.backup.extraPaths = [ "/srv" ];
 
-  my.roles.iot-gateway.enable = true;
-  my.roles.music-server.enable = true;
-  my.roles.nix-builder.enable = true;
-  my.roles.syncthing-mirror.enable = true;
+  my.roles = {
+    iot-gateway.enable = true;
+    music-server.enable = true;
+    nix-builder.enable = true;
+    syncthing-mirror.enable = true;
+    wireguard-peer.enable = true;
+  };
 
   my.roles.nix-builder.speedFactor = 2;
 }

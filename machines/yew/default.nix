@@ -13,4 +13,8 @@ in {
     my.roles.torRelay
     my.roles.wireguardPeer
   ];
+
+  my.roles = {
+    wireguard-peer.enable = true;
+  };
 }
