@@ -5,6 +5,7 @@ let
   port = 51820;
   iface = "wg";
 
+  wgcfg = secrets.wireguard.cfg;
   allPeers = secrets.wireguard.peers;
   thisPeer = allPeers."${machineName}";
 in {
@@ -26,11 +27,18 @@ in {
       wireguard.interfaces."${iface}" = {
         listenPort = port;
         privateKey = secrets.wireguard.privateKeys."${machineName}";
-        ips = [ "${thisPeer.vpnIp}/24" ];
+        ips = [
+          "${wgcfg.subnet4}.${toString thisPeer.clientNum}/${toString wgcfg.mask4}"
+          # Technically, should hex-convert clientNum... but holes are fine.
+          "${wgcfg.subnet6}::${toString thisPeer.clientNum}/${toString wgcfg.mask6}"
+        ];
 
         peers = map
           (peer: {
-            allowedIPs = [ "${peer.vpnIp}/32" ];
+            allowedIPs = [
+              "${wgcfg.subnet4}.${toString peer.clientNum}/32"
+              "${wgcfg.subnet6}::${toString peer.clientNum}/128"
+            ];
             publicKey = peer.key;
           } // lib.optionalAttrs (peer ? externalIp) {
             endpoint = "${peer.externalIp}:${toString port}";

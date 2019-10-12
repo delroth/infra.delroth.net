@@ -32,6 +32,7 @@ in
     };
     syncthing = import ./secrets/syncthing.nix;
     wireguard = {
+      cfg = import ./secrets/wireguard.nix;
       peers = import ./secrets/wireguard-peers.nix;
       privateKeys = import ./secrets/wireguard-keys.nix;
     };
