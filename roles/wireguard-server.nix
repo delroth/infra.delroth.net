@@ -2,7 +2,7 @@
 
 let
   port = 51820;
-  iface = "wg0";
+  iface = "wg";
 
   allPeers = secrets.wireguard.peers;
   thisPeer = allPeers."${machineName}";
