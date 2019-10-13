@@ -20,11 +20,6 @@ in {
     ./networking.nix
   ];
 
-  _module.args = {
-    staging = lib.mkDefault false;
-    machineName = lib.mkDefault "chaos";
-  };
-
   my.stateless = false;
 
   environment.systemPackages = with pkgs; [

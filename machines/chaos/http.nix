@@ -1,4 +1,4 @@
-{ config, pkgs, secrets, staging, ... }:
+{ config, pkgs, secrets, ... }:
 
 {
   services.nginx = rec {
@@ -7,7 +7,7 @@
 
     recommendedGzipSettings = true;
     recommendedOptimisation = true;
-    recommendedTlsSettings = !staging;
+    recommendedTlsSettings = true;
 
     sso = {
       enable = true;
@@ -67,7 +67,7 @@
     };
 
     virtualHosts = let
-      withSsl = vhost: if staging then vhost else vhost // {
+      withSsl = vhost: vhost // {
         forceSSL = true;
         enableACME = true;
       };

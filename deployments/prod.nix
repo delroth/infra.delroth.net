@@ -15,7 +15,6 @@ let
     name = "${name}.delroth.net";
     value = { config, ... }: {
       _module.args = {
-        staging = false;
         machineName = name;
       };
 

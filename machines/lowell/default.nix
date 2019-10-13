@@ -11,11 +11,6 @@ in {
     my.roles
   ];
 
-  _module.args = {
-    staging = lib.mkDefault false;
-    machineName = lib.mkDefault "lowell";
-  };
-
   my.stateless = false;
 
   nixpkgs.config.allowUnfree = true;

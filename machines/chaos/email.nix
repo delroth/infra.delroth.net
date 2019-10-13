@@ -1,4 +1,4 @@
-{ config, lib, pkgs, secrets, staging, ... }:
+{ config, lib, pkgs, secrets, ... }:
 
 let
   sasl-db = pkgs.runCommand "sasl.db" {} ''
@@ -24,8 +24,8 @@ in {
     enable = true;
     enableSubmission = true;
 
-    sslCert = lib.mkIf (!staging) "/var/lib/acme/${config.networking.hostName}/fullchain.pem";
-    sslKey = lib.mkIf (!staging) "/var/lib/acme/${config.networking.hostName}/key.pem";
+    sslCert = "/var/lib/acme/${config.networking.hostName}/fullchain.pem";
+    sslKey = "/var/lib/acme/${config.networking.hostName}/key.pem";
 
     recipientDelimiter = "+";
     rootAlias = "delroth";
@@ -60,7 +60,7 @@ in {
 
   networking.firewall.allowedTCPPorts = [config.services.postfix.relayPort];
 
-  security.acme.certs = lib.mkIf (!staging) {
+  security.acme.certs = {
     "${config.networking.hostName}".postRun = ''
       systemctl reload postfix
     '';

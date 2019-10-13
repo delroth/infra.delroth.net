@@ -1,4 +1,4 @@
-{ config, lib, machineName, secrets, staging, ... }:
+{ config, lib, machineName, secrets, ... }:
 
 {
   services.prometheus.exporters.node = {
@@ -15,12 +15,12 @@
 
     recommendedGzipSettings = true;
     recommendedOptimisation = true;
-    recommendedTlsSettings = !staging;
+    recommendedTlsSettings = true;
 
     virtualHosts = {
       "${machineName}.delroth.net" = {
-        forceSSL = !staging;
-        enableACME = !staging;
+        forceSSL = true;
+        enableACME = true;
         basicAuth = { prometheus = secrets.nodeMetricsKey; };
 
         locations = builtins.listToAttrs (

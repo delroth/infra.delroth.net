@@ -1,4 +1,4 @@
-{ config, lib, machineName, staging, ...}:
+{ config, lib, machineName, ...}:
 
 let
   cfg = config.my.roles.syncthing-relay;
@@ -12,9 +12,6 @@ in {
       enable = true;
       port = 22067;
       statusPort = 22070;
-
-      # Do not relay in staging.
-      pools = lib.mkIf staging [];
 
       providedBy = "delroth (${machineName})";
 

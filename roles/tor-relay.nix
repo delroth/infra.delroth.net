@@ -1,4 +1,4 @@
-{ config, lib, machineName, staging, ... }:
+{ config, lib, machineName, ... }:
 
 let
   cfg = config.my.roles.tor-relay;
@@ -12,7 +12,7 @@ in {
       enable = true;
       controlPort = 9051;
       relay = {
-        enable = !staging;
+        enable = true;
         role = "relay";
         port = 143;
         nickname = "${builtins.replaceStrings [ "-" ] [ "" ] machineName}Delroth";

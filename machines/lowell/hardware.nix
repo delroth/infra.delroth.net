@@ -1,41 +1,39 @@
-{ lib, pkgs, staging, ... }:
+{ lib, pkgs, ... }:
 
 {
   imports = [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix> ];
 
-  config = lib.mkIf (!staging) {
-    boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
-    boot.kernelModules = [ "kvm-intel" ];
-    boot.extraModulePackages = [ ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
 
-    boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable = true;
 
-    fileSystems."/" =
-      { device = "/dev/disk/by-uuid/9e0a75fd-be40-4b3f-891c-092f4f201725";
-        fsType = "ext4";
-      };
-
-    boot.initrd.luks.devices."plain".device = "/dev/disk/by-uuid/592d5b09-2910-44be-abe6-dceac543e726";
-
-    fileSystems."/boot" =
-      { device = "/dev/disk/by-uuid/E5C0-C972";
-        fsType = "vfat";
-      };
-
-    nix.maxJobs = lib.mkDefault 4;
-    powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-
-    # Fix S3 sleep support -- don't wake up on XHCI events.
-    systemd.services.disable-xhci-wakeup = {
-      description = "Disables XHCI wakeup for S3 sleep support.";
-      wantedBy = [ "multi-user.target" ];
-      after = [ "multi-user.target" ];
-      serviceConfig.type = "oneshot";
-      script = ''
-        if ${pkgs.gnugrep}/bin/grep -q 'XHCI.*enabled' /proc/acpi/wakeup; then
-          echo XHCI > /proc/acpi/wakeup
-        fi
-      '';
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/9e0a75fd-be40-4b3f-891c-092f4f201725";
+      fsType = "ext4";
     };
+
+  boot.initrd.luks.devices."plain".device = "/dev/disk/by-uuid/592d5b09-2910-44be-abe6-dceac543e726";
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/E5C0-C972";
+      fsType = "vfat";
+    };
+
+  nix.maxJobs = lib.mkDefault 4;
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+
+  # Fix S3 sleep support -- don't wake up on XHCI events.
+  systemd.services.disable-xhci-wakeup = {
+    description = "Disables XHCI wakeup for S3 sleep support.";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "multi-user.target" ];
+    serviceConfig.type = "oneshot";
+    script = ''
+      if ${pkgs.gnugrep}/bin/grep -q 'XHCI.*enabled' /proc/acpi/wakeup; then
+        echo XHCI > /proc/acpi/wakeup
+      fi
+    '';
   };
 }

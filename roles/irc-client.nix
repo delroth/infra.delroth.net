@@ -1,4 +1,4 @@
-{ config, lib, pkgs, staging, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.my.roles.irc-client;
@@ -8,7 +8,7 @@ in {
     enable = lib.mkEnableOption "IRC Client";
   };
 
-  config = lib.mkIf (!staging && cfg.enable) {
+  config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ screen weechat ];
 
     # TODO(delroth): Define weechat as an actual service, and configure the
