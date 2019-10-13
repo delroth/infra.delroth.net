@@ -9,12 +9,12 @@ in {
 
     my.common.serverBase
 
-    my.roles.syncthingRelay
-    my.roles.torRelay
-    my.roles.wireguardPeer
+    my.roles
   ];
 
   my.roles = {
+    syncthing-relay.enable = true;
+    tor-relay.enable = true;
     wireguard-peer.enable = true;
   };
 

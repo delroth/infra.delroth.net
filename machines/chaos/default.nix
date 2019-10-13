@@ -9,15 +9,7 @@ in {
 
     my.common.serverBase
 
-    my.roles.iotGateway
-    my.roles.ircClient
-    my.roles.matrixSynapse
-    my.roles.musicServer
-    my.roles.nixBuilder
-    my.roles.syncthingMirror
-    my.roles.syncthingRelay
-    my.roles.torRelay
-    my.roles.wireguardPeer
+    my.roles
 
     # TODO: Move most of these to generic roles.
     ./dns.nix
@@ -45,9 +37,13 @@ in {
 
   my.roles = {
     iot-gateway.enable = true;
+    irc-client.enable = true;
+    matrix-synapse.enable = true;
     music-server.enable = true;
     nix-builder.enable = true;
     syncthing-mirror.enable = true;
+    syncthing-relay.enable = true;
+    tor-relay.enable = true;
     wireguard-peer.enable = true;
   };
 

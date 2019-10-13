@@ -8,10 +8,7 @@ in {
 
     my.common.laptopBase
 
-    my.roles.gamingClient
-    my.roles.infraDevMachine
-    my.roles.syncthingMirror
-    my.roles.wireguardPeer
+    my.roles
   ];
 
   _module.args = {

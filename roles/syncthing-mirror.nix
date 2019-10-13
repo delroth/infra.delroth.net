@@ -9,8 +9,9 @@ let
     introducer = true;
   }) secrets.syncthing;
 in {
-  options.my.roles.syncthing-mirror.enable =
-    lib.mkEnableOption "Syncthing mirror role";
+  options.my.roles.syncthing-mirror = {
+    enable = lib.mkEnableOption "Syncthing mirror role";
+  };
 
   config = lib.mkIf cfg.enable {
     services.syncthing = {

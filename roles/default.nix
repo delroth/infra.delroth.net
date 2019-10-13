@@ -1,13 +1,15 @@
 {
-  gamingClient = import ./gaming-client.nix;
-  infraDevMachine = import ./infra-dev-machine.nix;
-  iotGateway = import ./iot-gateway.nix;
-  ircClient = import ./irc-client.nix;
-  matrixSynapse = import ./matrix-synapse.nix;
-  musicServer = import ./music-server.nix;
-  nixBuilder = import ./nix-builder.nix;
-  syncthingMirror = import ./syncthing-mirror.nix;
-  syncthingRelay = import ./syncthing-relay.nix;
-  torRelay = import ./tor-relay.nix;
-  wireguardPeer = import ./wireguard-peer.nix;
+  imports = [
+    ./gaming-client.nix
+    ./infra-dev-machine.nix
+    ./iot-gateway.nix
+    ./irc-client.nix
+    ./matrix-synapse.nix
+    ./music-server.nix
+    ./nix-builder.nix
+    ./syncthing-mirror.nix
+    ./syncthing-relay.nix
+    ./tor-relay.nix
+    ./wireguard-peer.nix
+  ];
 }

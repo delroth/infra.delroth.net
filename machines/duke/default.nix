@@ -8,8 +8,7 @@ in {
 
     my.common.serverBase
 
-    my.roles.nixBuilder
-    my.roles.wireguardPeer
+    my.roles
   ];
 
   _module.args = {
