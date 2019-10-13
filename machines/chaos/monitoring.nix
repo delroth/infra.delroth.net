@@ -42,18 +42,23 @@
           username = "prometheus";
           password = secrets.nodeMetricsKey;
         };
-        static_configs = [{
-          targets =
-            let
-              nodesWithExporter =
-                builtins.filter
-                  (node: node.config.services.prometheus.exporters."${exporterName}".enable)
-                  (builtins.attrValues nodes);
-            in
-              map
-                (node: "${node.config.networking.hostName}:443")
-                nodesWithExporter;
-        }];
+        static_configs = let
+          hasExporter = node:
+              node.config.services.prometheus.exporters."${exporterName}".enable;
+
+          nodesWithExporter =
+              builtins.filter hasExporter (builtins.attrValues nodes);
+
+          nodeIsRoaming = node: node.config.my.laptop.enable;
+          partByRoaming = builtins.partition nodeIsRoaming nodesWithExporter;
+
+          nodeTarget = node: "${node.config.networking.hostName}:443";
+          roamingTargets = map nodeTarget partByRoaming.right;
+          nonRoamingTargets = map nodeTarget partByRoaming.wrong;
+        in [
+          { targets = roamingTargets; labels = { roaming = "true"; }; }
+          { targets = nonRoamingTargets; labels = { roaming = "false"; }; }
+        ];
       };
 
     in [
