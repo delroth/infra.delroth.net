@@ -10,38 +10,28 @@
 
   # Define a reverse proxy configuration for Prometheus exporters to be placed
   # behind.
-  services.nginx = {
-    enable = true;
+  services.nginx.virtualHosts = {
+    "${machineName}.delroth.net" = {
+      forceSSL = true;
+      enableACME = true;
+      basicAuth = { prometheus = secrets.nodeMetricsKey; };
 
-    recommendedGzipSettings = true;
-    recommendedOptimisation = true;
-    recommendedTlsSettings = true;
-
-    virtualHosts = {
-      "${machineName}.delroth.net" = {
-        forceSSL = true;
-        enableACME = true;
-        basicAuth = { prometheus = secrets.nodeMetricsKey; };
-
-        locations = builtins.listToAttrs (
-          let
-            enabledExporters =
-              lib.filterAttrs
-                (exporterName: exporter: (exporter ? enable) && exporter.enable)
-                config.services.prometheus.exporters;
-          in
-            lib.mapAttrsToList (
-              exporterName: exporter: {
-                name = "/metrics/${exporterName}";
-                value = {
-                  proxyPass = "http://127.0.0.1:${toString exporter.port}/metrics";
-                };
-              })
-              enabledExporters
-        );
-      };
+      locations = builtins.listToAttrs (
+        let
+          enabledExporters =
+            lib.filterAttrs
+              (exporterName: exporter: (exporter ? enable) && exporter.enable)
+              config.services.prometheus.exporters;
+        in
+          lib.mapAttrsToList (
+            exporterName: exporter: {
+              name = "/metrics/${exporterName}";
+              value = {
+                proxyPass = "http://127.0.0.1:${toString exporter.port}/metrics";
+              };
+            })
+            enabledExporters
+      );
     };
   };
-
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
 }

@@ -62,6 +62,7 @@
       };
 
     in [
+      (whiteboxJob "nginx")
       (whiteboxJob "node")
       (whiteboxJob "tor")
 

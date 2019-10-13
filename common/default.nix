@@ -8,6 +8,7 @@
      ./locale.nix
      ./monitoring.nix
      ./networking.nix
+     ./nginx.nix
      ./nix.nix
      ./remote-access.nix
      ./scheduling.nix
