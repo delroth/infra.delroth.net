@@ -38,6 +38,7 @@ rec {
       graphical
       laptop
       locale
+      monitoring
       networking
       nix
       remoteAccess
