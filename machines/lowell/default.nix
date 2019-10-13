@@ -6,12 +6,10 @@ in {
   imports = [
     ./hardware.nix
 
-    my.common.laptopBase
-
-    my.roles
+    my.modules
   ];
 
-  my.stateless = false;
+  my.laptop.enable = true;
 
   nixpkgs.config.allowUnfree = true;
 

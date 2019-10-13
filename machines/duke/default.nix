@@ -6,12 +6,9 @@ in {
   imports = [
     ./hardware.nix
 
-    my.common.serverBase
-
-    my.roles
+    my.modules
   ];
 
-  my.stateless = true;
   my.networking.externalInterface = "enp0s25";
 
   my.roles = {

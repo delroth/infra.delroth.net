@@ -7,9 +7,7 @@ in {
     ./hardware.nix
     ./networking.nix
 
-    my.common.serverBase
-
-    my.roles
+    my.modules
 
     # TODO: Move most of these to generic roles.
     ./dns.nix
@@ -20,7 +18,7 @@ in {
     ./networking.nix
   ];
 
-  my.stateless = false;
+  my.stateless.enable = false;
 
   environment.systemPackages = with pkgs; [
     wget rsync git mailutils openssl binutils ncdu youtube-dl

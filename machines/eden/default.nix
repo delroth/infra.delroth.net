@@ -7,9 +7,7 @@ in {
     ./hardware.nix
     ./networking.nix
 
-    my.common.serverBase
-
-    my.roles
+    my.modules
   ];
 
   my.roles = {

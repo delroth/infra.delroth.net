@@ -3,7 +3,7 @@
 let
   my = import ../.;
 in {
-  options.my.stateless = lib.mkOption {
+  options.my.stateless.enable = lib.mkOption {
     type = lib.types.bool;
     default = true;
     description = ''
@@ -14,7 +14,7 @@ in {
     '';
   };
 
-  config = lib.mkIf (config.my.stateless) {
+  config = lib.mkIf (config.my.stateless.enable) {
     # Reboot on OOM instead of trying to recover.
     boot.kernel.sysctl = {
       "vm.panic_on_oom" = true;
