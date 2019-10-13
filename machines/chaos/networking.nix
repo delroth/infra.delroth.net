@@ -3,7 +3,6 @@
 let
   vpnIn4 = "195.201.9.57";
   vpnIn6 = "2a01:4f8:13b:f15::2";
-  extInterface = "ens3";
 
   wgcfg = secrets.wireguard.cfg;
 
@@ -33,17 +32,28 @@ in {
       interface = "ens3";
       sourceAddress = "2a01:4f8:13b:f15::1";
     };
-    my.networking.externalInterface = extInterface;
+    my.networking.externalInterface = "ens3";
 
     # Routing configuration for vpn-in to lowell.
     boot.kernel.sysctl."net.ipv6.conf.all.forwarding" = true;
     boot.kernel.sysctl."net.ipv6.conf.default.forwarding" = true;
     networking.firewall.extraCommands = ''
-      iptables -t nat -A PREROUTING -i ${extInterface} -d ${vpnIn4} -j DNAT --to-dest ${lowellVpn4}
-      ip6tables -t nat -A PREROUTING -i ${extInterface} -d ${vpnIn6} -j DNAT --to-dest ${lowellVpn6}
+      iptables -t nat -A PREROUTING  -d ${vpnIn4} -j DNAT --to-dest ${lowellVpn4}
+      iptables -t nat -A OUTPUT  -d ${vpnIn4} -j DNAT --to-dest ${lowellVpn4}
+      ip6tables -t nat -A PREROUTING -d ${vpnIn6} -j DNAT --to-dest ${lowellVpn6}
+      ip6tables -t nat -A OUTPUT -d ${vpnIn6} -j DNAT --to-dest ${lowellVpn6}
 
       iptables -t nat -A POSTROUTING -d ${lowellVpn4} -j SNAT --to-source ${chaosVpn4}
       ip6tables -t nat -A POSTROUTING -d ${lowellVpn6} -j SNAT --to-source ${chaosVpn6}
+    '';
+    networking.firewall.extraStopCommands = ''
+      iptables -t nat -F PREROUTING
+      iptables -t nat -F OUTPUT
+      iptables -t nat -F POSTROUTING
+
+      ip6tables -t nat -F PREROUTING
+      ip6tables -t nat -F OUTPUT
+      ip6tables -t nat -F POSTROUTING
     '';
   };
 }
