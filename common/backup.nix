@@ -61,6 +61,8 @@
       };
     };
 
+    systemd.services.borgbackup-job-default.wants = [ "network-online.target" ];
+
     # To allow mounting remote backups.
     boot.kernelModules = [ "fuse" ];
   };
