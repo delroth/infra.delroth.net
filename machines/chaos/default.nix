@@ -11,7 +11,6 @@ in {
 
     # TODO: Move most of these to generic roles.
     ./dns.nix
-    ./email.nix
     ./http.nix
     ./ipfs.nix
     ./monitoring.nix
@@ -34,6 +33,7 @@ in {
     matrix-synapse.enable = true;
     music-server.enable = true;
     nix-builder.enable = true;
+    smtp-server.enable = true;
     syncthing-mirror.enable = true;
     syncthing-relay.enable = true;
     tor-relay.enable = true;
