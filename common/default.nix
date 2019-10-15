@@ -6,6 +6,7 @@
      ./graphical.nix
      ./laptop.nix
      ./locale.nix
+     ./mail.nix
      ./monitoring.nix
      ./networking.nix
      ./nginx.nix
