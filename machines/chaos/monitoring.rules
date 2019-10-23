@@ -46,3 +46,12 @@ groups:
     annotations:
       summary: "Probe {{ $labels.job }} on {{ $labels.target }} failed"
       description: "Probe {{ $labels.job }} on {{ $labels.target }} failed for 5 minutes."
+
+  - alert: ProbeTlsCertExpiringSoon
+    expr: min(probe_ssl_earliest_cert_expiry) by (job, target) - time() < 3600 * 24 * 7
+    for: 5m
+    labels:
+      severity: ticket
+    annotations:
+      summary: "TLS certificate for {{ $labels.job }} on {{ $labels.target }} expiring soon"
+      description: "The TLS certificate for {{ $labels.job }} on {{ $labels.target }} expires in less than 7 days."
