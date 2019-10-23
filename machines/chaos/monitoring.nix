@@ -136,6 +136,8 @@
 
   services.grafana = {
     enable = true;
+    domain = "mon.delroth.net";
+    rootUrl = "https://mon.delroth.net/";
     security.secretKey = secrets.grafanaSecretKey;
     extraOptions = {
       AUTH_PROXY_ENABLED = "true";
