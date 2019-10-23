@@ -22,7 +22,7 @@
             lib.filterAttrs
               (exporterName: exporter: (exporter ? enable) && exporter.enable)
               config.services.prometheus.exporters;
-        in
+        in (
           lib.mapAttrsToList (
             exporterName: exporter: {
               name = "/metrics/${exporterName}";
@@ -31,6 +31,16 @@
               };
             })
             enabledExporters
+        ) ++ (
+          lib.mapAttrsToList (
+            exporterName: exporter: {
+              name = "/probe/${exporterName}";
+              value = {
+                proxyPass = "http://127.0.0.1:${toString exporter.port}/probe";
+              };
+            })
+            enabledExporters
+        )
       );
     };
   };
