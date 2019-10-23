@@ -8,6 +8,7 @@ let
   wgcfg = secrets.wireguard.cfg;
   allPeers = secrets.wireguard.peers;
   thisPeer = allPeers."${machineName}";
+  otherPeers = lib.filterAttrs (n: v: n != machineName) allPeers;
 in {
   options = {
     my.networking.externalInterface = lib.mkOption {
@@ -46,7 +47,7 @@ in {
           } // lib.optionalAttrs (!(thisPeer ? externalIp)) {
             persistentKeepalive = 10;
           })
-          secrets.wireguard.peers;
+          otherPeers;
       };
 
       nat = lib.optionalAttrs (thisPeer ? externalIp) {
