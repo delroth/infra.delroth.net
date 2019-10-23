@@ -79,6 +79,7 @@
           "https://forums.dolphin-emu.org"
           "https://wiki.dolphin-emu.org"
           "https://dl.dolphin-emu.org/robots.txt"
+          "https://dolp.in"
         ];
       })
 
