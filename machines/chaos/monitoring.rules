@@ -39,10 +39,10 @@ groups:
       description: "The Tor node on {{ $labels.instance }} has been unreachable for more than 1h."
 
   - alert: ProbeFailed
-    expr: probe_success == 0
+    expr: avg(probe_success) by (job, target) < 0.5
     for: 5m
     labels:
       severity: page
     annotations:
-      summary: "Probe {{ $labels.job }} on {{ $labels.instance }} failed"
-      description: "Probe {{ $labels.job }} on {{ $labels.instance }} failed 3 times in a row."
+      summary: "Probe {{ $labels.job }} on {{ $labels.target }} failed"
+      description: "Probe {{ $labels.job }} on {{ $labels.target }} failed for 5 minutes."
