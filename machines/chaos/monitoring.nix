@@ -7,12 +7,6 @@
     listenAddress = "127.0.0.1:9090";
     webExternalUrl = "https://prom.delroth.net/";
 
-    exporters.blackbox = {
-      enable = true;
-      port = 9115;
-      configFile = ./blackbox.yml;
-    };
-
     scrapeConfigs = let
 
       blackboxTargets = {job_name, scrape_interval, modules, targets}: {
@@ -29,7 +23,7 @@
           { source_labels = [ "__address__" ]; target_label = "__param_target"; }
           { source_labels = [ "__param_target" ]; target_label = "instance"; }
           { source_labels = []; target_label = "__address__";
-            replacement = "127.0.0.1:${toString exporters.blackbox.port}"; }
+            replacement = "127.0.0.1:9115"; }
         ];
       };
 

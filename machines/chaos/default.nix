@@ -28,6 +28,7 @@ in {
   my.backup.extraPaths = [ "/srv" ];
 
   my.roles = {
+    blackbox-prober.enable = true;
     iot-gateway.enable = true;
     irc-client.enable = true;
     matrix-synapse.enable = true;
