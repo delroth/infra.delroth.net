@@ -157,6 +157,15 @@
         vhost = localReverseProxy 8384;
       };
 
+      # Allow Grafana snapshot access without auth.
+      "mon-public.delroth.net" = let
+        vhost = (localReverseProxy config.services.grafana.port).locations."/";
+      in withSsl {
+        locations."/api/snapshots" = vhost;
+        locations."/dashboard/snapshot" = vhost;
+        locations."/public" = vhost;
+      };
+
       # Used to bypass CORS for https://delroth.net/publibike/
       "publibike-api.delroth.net" = withSsl {
         locations."/" = {
