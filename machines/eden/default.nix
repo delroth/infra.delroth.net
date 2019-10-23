@@ -11,6 +11,7 @@ in {
   ];
 
   my.roles = {
+    blackbox-prober.enable = true;
     syncthing-relay.enable = true;
     tor-relay.enable = true;
     wireguard-peer.enable = true;
