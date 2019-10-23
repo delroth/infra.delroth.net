@@ -9,33 +9,41 @@
 
     scrapeConfigs = let
 
-      blackboxTargets = {job_name, scrape_interval, modules, targets}: {
-        job_name = job_name;
-        scrape_interval = scrape_interval;
-        metrics_path = "/probe";
-        params = {
-          module = modules;
-        };
-        static_configs = [
-          { targets = targets; }
-        ];
-        relabel_configs = [
-          { source_labels = [ "__address__" ]; target_label = "__param_target"; }
-          { source_labels = [ "__param_target" ]; target_label = "instance"; }
-          { source_labels = []; target_label = "__address__";
-            replacement = "127.0.0.1:9115"; }
-        ];
-      };
-
-      whiteboxJob = exporterName: {
-        job_name = exporterName;
-        scrape_interval = "10s";
+      baseScrapeConfig = {
         scheme = "https";
-        metrics_path = "/metrics/${exporterName}";
         basic_auth = {
           username = "prometheus";
           password = secrets.nodeMetricsKey;
         };
+      };
+
+      blackboxTargets = {job_name, scrape_interval, modules, targets}: let
+        hasBlackbox = node:
+            node.config.services.prometheus.exporters.blackbox.enable;
+        exporterNodes =
+            builtins.filter hasBlackbox (builtins.attrValues nodes);
+        exporters =
+            map (n: "${n.config.networking.hostName}:443") exporterNodes;
+      in baseScrapeConfig // {
+        job_name = job_name;
+        scrape_interval = scrape_interval;
+        metrics_path = "/probe/blackbox";
+        params = {
+          module = modules;
+        };
+        static_configs = map (t: {
+          targets = exporters;
+          labels.target = t;
+        }) targets;
+        relabel_configs = [
+          { source_labels = [ "target" ]; target_label = "__param_target"; }
+        ];
+      };
+
+      whiteboxJob = exporterName: baseScrapeConfig // {
+        job_name = exporterName;
+        scrape_interval = "10s";
+        metrics_path = "/metrics/${exporterName}";
         static_configs = let
           hasExporter = node:
               node.config.services.prometheus.exporters."${exporterName}".enable;
