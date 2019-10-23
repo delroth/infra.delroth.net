@@ -33,8 +33,9 @@ in {
           "${wgcfg.subnet6}::${toString thisPeer.clientNum}/${toString wgcfg.mask6}"
         ];
 
-        peers = map
-          (peer: {
+        peers = lib.mapAttrsToList
+          (name: peer: {
+            inherit name;
             allowedIPs = [
               "${wgcfg.subnet4}.${toString peer.clientNum}/32"
               "${wgcfg.subnet6}::${toString peer.clientNum}/128"
@@ -45,7 +46,7 @@ in {
           } // lib.optionalAttrs (!(thisPeer ? externalIp)) {
             persistentKeepalive = 10;
           })
-          (lib.attrValues secrets.wireguard.peers);
+          secrets.wireguard.peers;
       };
 
       nat = lib.optionalAttrs (thisPeer ? externalIp) {
