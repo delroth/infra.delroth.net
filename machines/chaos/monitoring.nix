@@ -83,6 +83,15 @@
         ];
       })
 
+      (blackboxTargets {
+        job_name = "smtp_probe";
+        scrape_interval = "1m";
+        modules = ["smtp_starttls"];
+        targets = [
+          "chaos.delroth.net:25"
+        ];
+      })
+
       {
         job_name = "hass";
         scrape_interval = "1m";

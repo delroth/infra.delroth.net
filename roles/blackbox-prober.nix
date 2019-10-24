@@ -13,6 +13,22 @@ let
           fail_if_not_ssl = true;
         };
       };
+
+      smtp_starttls = {
+        prober = "tcp";
+        timeout = "5s";
+        tcp.query_response = [
+          { expect = "^220 ([^ ]+) ESMTP (.+)$"; }
+          { send = "EHLO prober"; }
+          { expect = "^250-STARTTLS"; }
+          { send = "STARTTLS"; }
+          { expect = "^220"; }
+          { starttls = true; }
+          { send = "EHLO prober"; }
+          { expect = "^250-AUTH"; }
+          { send = "QUIT"; }
+        ];
+      };
     };
   };
 in {
