@@ -9,6 +9,7 @@
     ./matrix-synapse.nix
     ./music-server.nix
     ./nix-builder.nix
+    ./publibike-locator.nix
     ./smtp-server.nix
     ./syncthing-mirror.nix
     ./syncthing-relay.nix
