@@ -12,6 +12,7 @@ in {
   my.networking.externalInterface = "enp5s0";
 
   my.roles = {
+    fifoci-worker.enable = true;
     nix-builder.enable = true;
     wireguard-peer.enable = true;
   };
