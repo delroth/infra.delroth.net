@@ -2,13 +2,13 @@
 
 stdenv.mkDerivation rec {
   pname = "publibike-locator";
-  version = "9229a2e48b4e218a4723b6aaef8781d87eca2fa8";
+  version = "5f81573f7474c9ece039dd5882e2d6908154e762";
 
   src = fetchFromGitHub {
     owner = "delroth";
     repo = "publibike-locator";
     rev = version;
-    sha256 = "07lrjzhhjlz731xr41ccq443jq5rf2b27fzfnm34mq1wa4q4r3gz";
+    sha256 = "06gj1dbv321wc2b9fkz7s10vdyv85y7k4sdlrdp13csmaqd6i62f";
   };
 
   nativeBuildInputs = [ nodePackages.typescript ];
