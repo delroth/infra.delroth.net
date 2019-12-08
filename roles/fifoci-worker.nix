@@ -1,8 +1,18 @@
-{ config, lib, pkgs, secrets, ... }:
+{ config, lib, machineName, pkgs, secrets, ... }:
 
 let
   cfg = config.my.roles.fifoci-worker;
 
+  masterAddr = "buildbot.dolphin-emu.org:9989";
+  workerPassword = secrets.buildbot-worker."${machineName}".password;
+
+  homeDir = "/srv/fifoci-worker";
+  workerDir = "${homeDir}/worker";
+
+  # fifociShell is a shell with the environment required to build Dolphin.
+  # Setting up a development environment with NixOS is tricky, since this
+  # requires running package hooks to get e.g. the proper PKG_CONFIG_PATH and
+  # more.
   fifociShell = let
     dol = pkgs.dolphinEmuMaster;
     inputAttrs = [
@@ -18,7 +28,11 @@ let
       in
         "${attr}=\"${spaceSeparated}\""
     ) inputAttrs;
-  in pkgs.runCommand "fifoci-shell" {} ''
+  in pkgs.runCommand "fifoci-shell" {
+    passthru = {
+      shellPath = "/bin/fifoci-shell";
+    };
+  } ''
     mkdir -p $out/bin $out/share
 
     cat > $out/bin/fifoci-shell <<EOF
@@ -27,6 +41,7 @@ let
     EOF
     chmod +x $out/bin/fifoci-shell
 
+    # Lifted from the nix-shell implementation.
     cat > $out/share/rcfile <<EOF
     export NIX_BUILD_TOP="/tmp"
     export NIX_STORE="/nix/store"
@@ -41,17 +56,64 @@ let
     EOF
   '';
 
-  fifociEnvPackages = (with pkgs; [ ccache git ninja ]) ++ [ fifociShell ];
+  workerPackage = pkgs.runCommand "fifoci-buildbot-worker" {} ''
+    mkdir $out
+    ${pkgs.python3Packages.buildbot-worker}/bin/buildbot-worker \
+        create-worker \
+        --relocatable \
+        --force \
+        $out ${masterAddr} ${machineName} ${workerPassword}
+    echo "Pierre Bourdon <delroth@dolphin-emu.org>" > $out/info/admin
+    cat >$out/info/host <<EOF
+    ${cfg.info}
+    EOF
+  '';
+
+  fifociEnvPackages = with pkgs; [ ccache git ninja ];
 in {
-  options.my.roles.fifoci-worker.enable = lib.mkEnableOption "FifoCI worker";
+  options.my.roles.fifoci-worker = {
+    enable = lib.mkEnableOption "FifoCI worker";
+
+    info = lib.mkOption {
+      type = lib.types.str;
+      default = "NixOS FifoCI worker";
+      description = ''
+        Information about the machine running the FifoCI worker.
+      '';
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     users.users.fifoci = {
       isSystemUser = true;
-      useDefaultShell = true;
-      home = "/srv/fifoci-worker";
+      home = homeDir;
       createHome = true;
+      shell = fifociShell;
       packages = fifociEnvPackages;
+    };
+
+    systemd.services.fifoci-buildbot-worker = {
+      description = "FifoCI Buildbot Worker";
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
+      path = fifociEnvPackages;
+      environment.PYTHONPATH = "${pkgs.python3.withPackages (p: [ p.buildbot-worker ])}/${pkgs.python3.sitePackages}";
+
+      preStart = ''
+        mkdir -p ${workerDir}
+        ${pkgs.rsync}/bin/rsync -a ${workerPackage}/ ${workerDir}/
+        chmod u+w ${workerDir}
+      '';
+
+      serviceConfig = {
+        Type = "simple";
+        User = "fifoci";
+        Group = "nogroup";
+        WorkingDirectory = "${homeDir}";
+        ExecStart = "${fifociShell}/bin/fifoci-shell -c 'exec ${pkgs.python3Packages.twisted}/bin/twistd --nodaemon --pidfile= --logfile=- --python ${workerDir}/buildbot.tac'";
+        Restart = "always";
+        RestartSec = "10";
+      };
     };
   };
 }

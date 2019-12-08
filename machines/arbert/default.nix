@@ -17,5 +17,6 @@ in {
     wireguard-peer.enable = true;
   };
 
+  my.roles.fifoci-worker.info = "Intel NUC8i7HVK, NixOS unstable";
   my.roles.nix-builder.speedFactor = 2;
 }

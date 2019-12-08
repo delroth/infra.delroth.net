@@ -11,6 +11,7 @@ in
       sshHostPub = ./secrets/backup-ssh-host-pub;
       sshKey = ./secrets/backup-ssh-key;
     };
+    buildbot-worker = import ./secrets/buildbot-worker.nix;
     distbuild = {
       ssh-public = builtins.readFile ./secrets/distbuild-ssh-pub;
       ssh-private = builtins.readFile ./secrets/distbuild-ssh-priv;
