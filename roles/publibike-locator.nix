@@ -32,6 +32,9 @@ in {
         enableACME = true;
         locations."/publibike/" = {
           alias = "${pkgs.publibike-locator}/";
+          extraConfig = ''
+            add_header Cache-Control "no-cache, max-age=0";
+          '';
         };
       };
     };
