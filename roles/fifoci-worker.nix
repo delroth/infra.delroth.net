@@ -84,6 +84,8 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    hardware.opengl.enable = true;
+
     users.users.fifoci = {
       isSystemUser = true;
       home = homeDir;
