@@ -16,8 +16,8 @@ in {
   environment.systemPackages = with pkgs; [
     wget chromium most mpv feh lxqt.pavucontrol-qt acpi gitFull dex gnupg
     cifs-utils tpm2-tools git-crypt python3 pwgen keepassxc vulnix electrum
-    lm_sensors xorg.xbacklight picocom whois transmission scrot imgurbash2
-    vim_delroth gnome3.eog evince libnotify hexedit blitzloop wireguard-tools
+    lm_sensors picocom whois transmission scrot imgurbash2 vim_delroth
+    gnome3.eog evince libnotify hexedit blitzloop wireguard-tools
   ];
 
   # TODO: Switch to NetworkManager.

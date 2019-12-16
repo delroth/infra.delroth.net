@@ -7,6 +7,7 @@
 
   config = lib.mkIf config.my.laptop.enable {
     hardware.bluetooth.enable = true;
+    hardware.brightnessctl.enable = true;
     networking.wireless.enable = true;
 
     services.tlp.enable = true;
@@ -24,8 +25,11 @@
       noarp
     '';
 
-    # Set a password for the main login user.
-    users.users.delroth.hashedPassword = secrets.shadowHash;
+    # Set groups and a password for the main login user.
+    users.users.delroth = {
+      hashedPassword = secrets.shadowHash;
+      extraGroups = [ "video" ];
+    };
 
     my.stateless.enable = lib.mkDefault false;
   };
