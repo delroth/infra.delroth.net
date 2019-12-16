@@ -37,5 +37,8 @@
       enable = true;
       extraPackages = with pkgs; [ vaapiIntel vaapiVdpau libvdpau-va-gl ];
     };
+
+    environment.systemPackages = with pkgs; [ alacritty ];
+    environment.sessionVariables.TERMINAL = "alacritty";
   };
 }

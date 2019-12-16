@@ -14,7 +14,7 @@ in {
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    wget chromium xterm most mpv feh lxqt.pavucontrol-qt acpi gitFull dex gnupg
+    wget chromium most mpv feh lxqt.pavucontrol-qt acpi gitFull dex gnupg
     cifs-utils tpm2-tools git-crypt python3 pwgen keepassxc vulnix electrum
     lm_sensors xorg.xbacklight picocom whois transmission scrot imgurbash2
     vim_delroth gnome3.eog evince libnotify hexedit blitzloop wireguard-tools
