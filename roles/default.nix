@@ -1,6 +1,7 @@
 {
   imports = [
     ./blackbox-prober.nix
+    ./fiber7-prober.nix
     ./fifoci-worker.nix
     ./gaming-client.nix
     ./infra-dev-machine.nix
