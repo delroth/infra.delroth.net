@@ -69,7 +69,11 @@ let
     EOF
   '';
 
-  fifociEnvPackages = with pkgs; [ ccache git ninja ];
+  fifociPython = pkgs.python3.withPackages (p: [
+    p.buildbot-worker p.pillow p.requests
+  ]);
+
+  fifociEnvPackages = with pkgs; [ ccache fifociPython git ninja ];
 in {
   options.my.roles.fifoci-worker = {
     enable = lib.mkEnableOption "FifoCI worker";
@@ -99,12 +103,20 @@ in {
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
       path = fifociEnvPackages;
-      environment.PYTHONPATH = "${pkgs.python3.withPackages (p: [ p.buildbot-worker ])}/${pkgs.python3.sitePackages}";
+      environment.PYTHONPATH = "${fifociPython}/${fifociPython.sitePackages}";
 
       preStart = ''
         mkdir -p ${workerDir}
         ${pkgs.rsync}/bin/rsync -a ${workerPackage}/ ${workerDir}/
         chmod u+w ${workerDir}
+
+        mkdir -p dff
+
+        if ! [ -d fifoci ]; then
+          git clone https://github.com/dolphin-emu/fifoci
+        fi
+
+        rm -f python && ln -sf ${fifociPython}/bin/python python
       '';
 
       serviceConfig = {
