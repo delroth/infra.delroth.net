@@ -74,7 +74,9 @@ let
     p.buildbot-worker p.pillow p.requests
   ]);
 
-  fifociEnvPackages = with pkgs; [ ccache fifociPython git ninja ];
+  fifociEnvPackages = with pkgs; [
+    ccache ffmpeg fifociPython git imagemagick xorg.xorgserver ninja
+  ];
 in {
   options.my.roles.fifoci-worker = {
     enable = lib.mkEnableOption "FifoCI worker";
