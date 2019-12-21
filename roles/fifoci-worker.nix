@@ -37,7 +37,8 @@ let
 
     cat > $out/bin/fifoci-shell <<EOF
     #! /bin/sh
-    exec ${pkgs.bashInteractive}/bin/bash --rcfile $out/share/rcfile "\$@"
+    rc=$out/share/rcfile
+    exec BASH_ENV=$rc ${pkgs.bashInteractive}/bin/bash --rcfile $rc "\$@"
     EOF
     chmod +x $out/bin/fifoci-shell
 
@@ -52,7 +53,7 @@ let
     old_path="\$PATH"
     source ${pkgs.stdenv}/setup
     set +e
-    PATH="\$PATH:\$old_path"; unset old_path
+    export PATH="\$PATH:\$old_path"; unset old_path
     EOF
   '';
 
