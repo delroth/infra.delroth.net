@@ -38,23 +38,25 @@ let
     cat > $out/bin/fifoci-shell <<EOF
     #! /bin/sh
     rc=$out/share/rcfile
-    exec BASH_ENV=$rc ${pkgs.bashInteractive}/bin/bash --rcfile $rc "\$@"
+    BASH_ENV=\$rc exec ${pkgs.bashInteractive}/bin/bash --rcfile \$rc "\$@"
     EOF
     chmod +x $out/bin/fifoci-shell
 
     # Lifted from the nix-shell implementation.
-    cat > $out/share/rcfile <<EOF
-    export NIX_BUILD_TOP="/tmp"
-    export NIX_STORE="/nix/store"
+    export NIX_BUILD_TOP=/tmp
+    export NIX_STORE=/nix/store
+    export IN_NIX_SHELL=impure
 
     ${deps}
-    out="/tmp"
 
-    old_path="\$PATH"
     source ${pkgs.stdenv}/setup
-    set +e
-    export PATH="\$PATH:\$old_path"; unset old_path
-    EOF
+
+    unset SSL_CERT_FILE NIX_SSL_CERT_FILE HOME PWD TMP TMPDIR TEMPDIR TEMP
+
+    ${pkgs.coreutils}/bin/env |
+      ${pkgs.gnused}/bin/sed -r 's/^([^=]+)=(.*)$/export \1="\2"/'> $out/share/rcfile
+
+    ${pkgs.gnused}/bin/sed -ri 's/^(export PATH=.*)"$/\1:$PATH"/' $out/share/rcfile
   '';
 
   workerPackage = pkgs.runCommand "fifoci-buildbot-worker" {} ''
@@ -75,7 +77,7 @@ let
   ]);
 
   fifociEnvPackages = with pkgs; [
-    ccache ffmpeg fifociPython git imagemagick xorg.xorgserver ninja
+    bash ccache ffmpeg fifociPython git imagemagick ninja
   ];
 in {
   options.my.roles.fifoci-worker = {
@@ -94,6 +96,7 @@ in {
     hardware.opengl.enable = true;
 
     users.users.fifoci = {
+      extraGroups = [ "video" ];
       isSystemUser = true;
       home = homeDir;
       createHome = true;
