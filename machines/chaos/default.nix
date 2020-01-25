@@ -12,7 +12,6 @@ in {
     # TODO: Move most of these to generic roles.
     ./dns.nix
     ./http.nix
-    ./ipfs.nix
     ./monitoring.nix
     ./networking.nix
   ];
