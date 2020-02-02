@@ -10,6 +10,7 @@ in {
   ];
 
   my.networking.externalInterface = "enp5s0";
+  my.networking.external6 = "2a02:168:6426::3ac";
 
   my.roles = {
     fiber7-prober.enable = true;

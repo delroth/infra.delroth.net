@@ -11,15 +11,6 @@ let
   otherPeers = lib.filterAttrs (n: v: n != machineName) allPeers;
 in {
   options = {
-    my.networking.externalInterface = lib.mkOption {
-      type = lib.types.nullOr lib.types.str;
-      default = null;
-      description = ''
-        Name of the network interface that egresses to the internet. Used for
-        e.g. NATing internal networks.
-      '';
-    };
-
     my.roles.wireguard-peer.enable = lib.mkEnableOption "Wireguard peer";
   };
 

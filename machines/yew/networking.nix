@@ -1,6 +1,9 @@
 { lib, ... }:
 
 {
+  my.networking.external4 = "149.56.130.157";
+  my.networking.external6 = "2607:5300:201:3000::1b25";
+
   networking.dhcpcd.enable = false;
   networking.interfaces.ens3 = {
     ipv4.addresses = [{
