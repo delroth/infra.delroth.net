@@ -36,7 +36,9 @@ in {
         # Allow the use of multiple cores (default: 1). We run at higher
         # niceness anyway.
         NumCPUs 0
-      '';
+      '' + (lib.optionalString (config.my.networking.external6 != null) ''
+        ORPort [${config.my.networking.external6}]:${builtins.toString config.services.tor.relay.port}
+      '');
     };
 
     systemd.services.tor.serviceConfig.Nice = 5;
