@@ -32,8 +32,14 @@ in {
 
       extraConfig = ''
         MyFamily ${builtins.concatStringsSep "," myFamily}
+
+        # Allow the use of multiple cores (default: 1). We run at higher
+        # niceness anyway.
+        NumCPUs 0
       '';
     };
+
+    systemd.services.tor.serviceConfig.Nice = 5;
 
     networking.firewall.allowedTCPPorts = [config.services.tor.relay.port];
 
