@@ -6,6 +6,8 @@ let
   # TODO(delroth): Figure out how to automate this. This will likely
   # require managing keys through infra.delroth.net.
   myFamily = [
+    # arbert
+    "0432BEE829FCB155CE92CF418B7280F9849E12D0"
     # chaos
     "DD0C8EEC5CA402A9FA4478F10C31A440F71F6885"
     # eden
