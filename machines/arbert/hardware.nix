@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports = [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix> ];
@@ -24,4 +24,5 @@
 
   # For some reason, does not boot with a hardened kernel.
   boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
+  boot.kernel.sysctl."net.core.bpf_jit_enable" = null;
 }
