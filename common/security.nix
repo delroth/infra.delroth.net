@@ -10,6 +10,10 @@ in {
     <nixpkgs/nixos/modules/profiles/hardened.nix>
   ];
 
+  # Let's Encrypt related configuration.
+  security.acme.acceptTerms = true;
+  security.acme.email = "acme@delroth.net";
+
   # User namespaces are required for sandboxing. Better than nothing imo.
   security.allowUserNamespaces = true;
 

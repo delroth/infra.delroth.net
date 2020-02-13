@@ -53,6 +53,7 @@ in {
         alerts: postmaster
 
         me: delroth
+        acme: delroth
         tor: delroth
         delroth: delroth@gmail.com
         devnull: /dev/null
