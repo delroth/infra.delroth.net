@@ -1,4 +1,4 @@
-{ config, lib, secrets, ... }:
+{ config, lib, pkgs, secrets, ... }:
 
 {
   options = {
@@ -7,13 +7,14 @@
 
   config = lib.mkIf config.my.laptop.enable {
     hardware.bluetooth.enable = true;
-    hardware.brightnessctl.enable = true;
     networking.wireless.enable = true;
 
     services.tlp.enable = true;
     services.upower.enable = true;
 
     programs.mosh.enable = true;
+
+    environment.systemPackages = with pkgs; [ brightnessctl ];
 
     # For better power management support.
     boot.extraModulePackages = [ config.boot.kernelPackages.acpi_call ];
