@@ -29,7 +29,7 @@
     description = "Disables XHCI wakeup for S3 sleep support.";
     wantedBy = [ "multi-user.target" ];
     after = [ "multi-user.target" ];
-    serviceConfig.type = "oneshot";
+    serviceConfig.Type = "oneshot";
     script = ''
       if ${pkgs.gnugrep}/bin/grep -q 'XHCI.*enabled' /proc/acpi/wakeup; then
         echo XHCI > /proc/acpi/wakeup
