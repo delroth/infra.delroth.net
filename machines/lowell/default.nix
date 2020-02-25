@@ -35,8 +35,8 @@ in {
     # For CIFS mounting.
     "cifs" "cmac" "md4" "sha512"
 
-    # FTDI
-    "ftdi_sio"
+    # FTDI / Serial
+    "ftdi_sio" "pl2303"
 
     # USB mass storage
     "usb_storage" "sd_mod" "vfat"
