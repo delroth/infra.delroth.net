@@ -24,4 +24,7 @@ in {
   my.roles.fiber7-prober.probeId = "0x30ad7256";
   my.roles.fifoci-worker.info = "Intel NUC8i7HVK, NixOS unstable";
   my.roles.nix-builder.speedFactor = 2;
+
+  # Temporary while using this as a serial host.
+  boot.kernelModules = [ "pl2303" ];
 }
