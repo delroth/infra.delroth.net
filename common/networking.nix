@@ -39,20 +39,7 @@
       '';
     };
     # Require Stubby to be up for network to be considered available. Avoids
-    # sequencing problems at boot time. This requires custom patching in order
-    # to use a Type=notify service.
-    nixpkgs.overlays = [(self: super: {
-      stubby = super.stubby.overrideAttrs (old: {
-        patches = [
-          (pkgs.fetchurl {
-            url = "https://github.com/delroth/stubby/commit/6f1b64e1da657e8c9befb99498e64e66a7821b9f.patch";
-            sha256 = "0icc1f3xlc7lx8vjy560cgm2b81y20d1lv5anrfriirvp6dd8dh1";
-          })
-        ];
-        buildInputs = old.buildInputs ++ [ pkgs.systemd ];
-      });
-    })];
-    systemd.services.stubby.serviceConfig.Type = "notify";
+    # sequencing problems at boot time.
     systemd.services.stubby.wantedBy = [ "network-online.target" ];
 
     # Send to local Stubby resolver.
