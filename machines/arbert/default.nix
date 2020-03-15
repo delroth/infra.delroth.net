@@ -27,4 +27,7 @@ in {
 
   # Temporary while using this as a serial host.
   boot.kernelModules = [ "pl2303" ];
+
+  services.atftpd.enable = true;
+  networking.firewall.allowedUDPPorts = [ 69 ];
 }
