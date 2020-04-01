@@ -14,6 +14,8 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    services.postgresql.enable = true;
+
     services.matrix-synapse = {
       enable = true;
       server_name = domain;
