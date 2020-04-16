@@ -45,9 +45,6 @@ in {
     "wireguard"
   ];
 
-  # TODO: Temporary.
-  boot.extraModulePackages = [ config.boot.kernelPackages.wireguard ];
-
   my.roles = {
     gaming-client.enable = true;
     infra-dev-machine.enable = true;
