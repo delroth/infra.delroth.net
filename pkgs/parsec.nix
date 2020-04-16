@@ -1,4 +1,5 @@
-{ lib, stdenv, fetchurl, autoPatchelfHook, libGL, xorg }:
+{ lib, stdenv, fetchurl, alsaLib, dbus, libGL, libpulseaudio, libva
+, udev, xorg }:
 
 stdenv.mkDerivation {
   pname = "parsec";
@@ -9,7 +10,11 @@ stdenv.mkDerivation {
     sha256 = "1hfdzjd8qiksv336m4s4ban004vhv00cv2j461gc6zrp37s0fwhc";
   };
 
-  buildInputs = [ autoPatchelfHook libGL stdenv.cc.cc xorg.libX11 ];
+  runtimeDependencies = [
+    alsaLib dbus.lib libGL libpulseaudio libva stdenv.cc.cc.lib udev.lib
+    xorg.libX11 xorg.libXcursor xorg.libXi xorg.libXinerama xorg.libXrandr
+    xorg.libXScrnSaver
+  ];
 
   unpackPhase = ''
     ar p "$src" data.tar.xz | tar xJ
@@ -32,6 +37,20 @@ stdenv.mkDerivation {
     exec $out/libexec/parsecd
     EOF
     chmod +x $out/bin/parsecd
+  '';
+
+  postFixup = ''
+    # We do not use autoPatchelfHook since we need runtimeDependencies rpath to
+    # also be set on the .so, not just on the main executable.
+    patchelf --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
+        $out/libexec/parsecd
+
+    rpath=""
+    for dep in $runtimeDependencies; do
+      rpath="$rpath''${rpath:+:}$dep/lib"
+    done
+    patchelf --set-rpath "$rpath" $out/libexec/parsecd
+    patchelf --set-rpath "$rpath" $out/libexec/skel/*.so
   '';
 
   meta = with lib; {
