@@ -11,7 +11,7 @@ stdenv.mkDerivation {
   };
 
   runtimeDependencies = [
-    alsaLib dbus.lib libGL libpulseaudio libva stdenv.cc.cc.lib udev.lib
+    alsaLib dbus.lib libGL libpulseaudio libva.out stdenv.cc.cc.lib udev.lib
     xorg.libX11 xorg.libXcursor xorg.libXi xorg.libXinerama xorg.libXrandr
     xorg.libXScrnSaver
   ];
