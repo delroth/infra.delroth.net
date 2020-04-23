@@ -24,6 +24,8 @@
   nix.maxJobs = lib.mkDefault 4;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
+  services.xserver.xkbOptions = "caps:escape,compose:prsc";
+
   # Fix S3 sleep support -- don't wake up on XHCI events.
   systemd.services.disable-xhci-wakeup = {
     description = "Disables XHCI wakeup for S3 sleep support.";
