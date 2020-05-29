@@ -33,11 +33,7 @@ in {
               node.config.my.roles.nix-builder.enable
             );
 
-          extraNodes = lib.flip builtins.map cfg.extraBuilders (node: {
-            sshKey = "/etc/${distbuildPrivKeyEtcPath}";
-          } // node);
-        in
-          lib.flip builtins.map builderNodes (node: {
+          managedNodes = lib.flip builtins.map builderNodes (node: {
             hostName = node.config.networking.hostName;
             sshUser = node.config.my.roles.nix-builder.user;
             sshKey = "/etc/${distbuildPrivKeyEtcPath}";
@@ -46,7 +42,16 @@ in {
             speedFactor = node.config.my.roles.nix-builder.speedFactor;
             supportedFeatures =
               node.config.my.roles.nix-builder.supportedFeatures;
-          }) ++ extraNodes;
+          });
+
+          managedNodesArm8 = lib.flip builtins.map managedNodes
+            (node: node // { system = "aarch64-linux"; });
+
+          extraNodes = lib.flip builtins.map cfg.extraBuilders (node: {
+            sshKey = "/etc/${distbuildPrivKeyEtcPath}";
+          } // node);
+        in
+          managedNodes ++ managedNodesArm8 ++ extraNodes;
     };
 
     # To work around ssh private key permissions issues, copy the private key
