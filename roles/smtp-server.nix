@@ -5,7 +5,7 @@ let
     echo "${secrets.email.smtp-password}" | \
       ${pkgs.cyrus_sasl}/bin/saslpasswd2 \
         -f $out \
-        -u ${config.networking.hostName} \
+        -u ${config.my.networking.fqdn} \
         -c -p \
         ${secrets.email.smtp-user}
   '';
@@ -29,8 +29,8 @@ in {
       enable = true;
       enableSubmission = true;
 
-      sslCert = "/var/lib/acme/${config.networking.hostName}/fullchain.pem";
-      sslKey = "/var/lib/acme/${config.networking.hostName}/key.pem";
+      sslCert = "/var/lib/acme/${config.my.networking.fqdn}/fullchain.pem";
+      sslKey = "/var/lib/acme/${config.my.networking.fqdn}/key.pem";
 
       recipientDelimiter = "+";
       rootAlias = "delroth";
@@ -41,7 +41,7 @@ in {
         smtpd_tls_auth_only = true;
       };
       destination = [
-        config.networking.hostName
+        config.my.networking.fqdn
         "localhost"
         "delroth.net"
         "epita.eu"
@@ -68,7 +68,7 @@ in {
     networking.firewall.allowedTCPPorts = [config.services.postfix.relayPort];
 
     security.acme.certs = {
-      "${config.networking.hostName}".postRun = ''
+      "${config.my.networking.fqdn}".postRun = ''
         systemctl reload postfix
       '';
     };

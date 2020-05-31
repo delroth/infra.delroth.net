@@ -22,13 +22,13 @@
         allmailfrom = "${machineName}@${machineName}.delroth.net";
         defaultdomain = "delroth.net";
         defaulthost = machineName;
-        me = config.networking.hostName;
+        me = config.my.networking.fqdn;
 
         remotes = let
           hasSmtp = node: node.config.my.roles.smtp-server.enable;
           nodesWithSmtp = builtins.filter hasSmtp (builtins.attrValues nodes);
           lines = map (node:
-              "${node.config.networking.hostName} smtp --port=25 --starttls " +
+              "${node.config.my.networking.fqdn} smtp --port=25 --starttls " +
               "--user=${secrets.email.smtp-user} " +
               "--pass=${secrets.email.smtp-password}") nodesWithSmtp;
         in

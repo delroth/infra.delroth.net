@@ -133,7 +133,7 @@
     in {
 
       # Used for ACME to generate a TLS cert for the MX.
-      "${config.networking.hostName}" = withSsl {};
+      "${config.my.networking.fqdn}" = withSsl {};
 
       "login.delroth.net" = localReverseProxy sso.configuration.listen.port;
 

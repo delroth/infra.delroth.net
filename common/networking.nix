@@ -21,12 +21,20 @@
       default = null;
       description = "Main external IPv6 address of the machine.";
     };
+
+    fqdn = mkOption {
+      type = types.str;
+      description = "FQDN of the machine.";
+    };
   };
 
   config = {
-    networking.hostName = "${machineName}.delroth.net";
-    networking.firewall.allowPing = true;
+    networking.hostName = machineName;
+    networking.domain = "delroth.net";
+    my.networking.fqdn = "${machineName}.delroth.net";
     networking.search = [ "delroth.net" ];
+
+    networking.firewall.allowPing = true;
 
     # DNS to DNS-over-TLS gateway.
     services.stubby = {

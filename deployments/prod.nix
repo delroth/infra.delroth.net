@@ -20,7 +20,7 @@ let
 
       imports = [ machineMod ];
 
-      deployment.targetHost = config.networking.hostName;
+      deployment.targetHost = config.my.networking.fqdn;
     };
   };
 in

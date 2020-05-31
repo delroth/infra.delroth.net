@@ -23,7 +23,7 @@
         exporterNodes =
             builtins.filter hasBlackbox (builtins.attrValues nodes);
         exporters =
-            map (n: "${n.config.networking.hostName}:443") exporterNodes;
+            map (n: "${n.config.my.networking.fqdn}:443") exporterNodes;
       in baseScrapeConfig // {
         job_name = job_name;
         scrape_interval = scrape_interval;
@@ -54,7 +54,7 @@
           nodeIsRoaming = node: node.config.my.laptop.enable;
           partByRoaming = builtins.partition nodeIsRoaming nodesWithExporter;
 
-          nodeTarget = node: "${node.config.networking.hostName}:443";
+          nodeTarget = node: "${node.config.my.networking.fqdn}:443";
           roamingTargets = map nodeTarget partByRoaming.right;
           nonRoamingTargets = map nodeTarget partByRoaming.wrong;
         in [
