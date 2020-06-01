@@ -2,7 +2,6 @@ let
   pkgs = import <nixpkgs> {};
   base = {
     network = {
-      inherit pkgs;
       description = "*.delroth.net prod infra";
     };
   };
