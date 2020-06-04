@@ -19,6 +19,7 @@ in {
     lm_sensors picocom whois transmission scrot imgurbash2 vim_delroth
     gnome3.eog evince libnotify hexedit blitzloop wireguard-tools
   ];
+  security.chromiumSuidSandbox.enable = true;
 
   # TODO: Switch to NetworkManager.
   networking.wireless.networks = secrets.wirelessNetworks;
