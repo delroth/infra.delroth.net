@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ ... }:
 
 let
   my = import ../..;
@@ -11,4 +11,9 @@ in {
 
   my.roles = {
   };
+
+  # Remove a few non-essentials to avoid having to build LLVM and Spidermonkey.
+  security.apparmor.enable = false;
+  security.polkit.enable = false;
+  services.udisks2.enable = false;
 }

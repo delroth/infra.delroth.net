@@ -24,8 +24,9 @@ in {
   boot.loader.grub.enable = false;
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/937be0f2-f8d7-424d-883a-10dad3d2ddc3";
+    device = "/dev/disk/by-label/root";
     fsType = "ext4";
+    options = [ "noatime" "discard" ];
   };
 
   nix.maxJobs = lib.mkDefault 4;
