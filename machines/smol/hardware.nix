@@ -2,11 +2,7 @@
 
 let
   # Use cross-compiled kernel packages to make builds faster.
-  kernelPackages = import ./kernel.nix {
-    pkgs = import <nixpkgs> {
-      crossSystem = config.nixpkgs.localSystem;
-    };
-  };
+  kernelPackages = import ./kernel.nix { inherit pkgs; };
 in {
   nixpkgs.localSystem = lib.systems.examples.aarch64-multiplatform;
 
@@ -20,6 +16,8 @@ in {
     "earlycon"
     "panic=3"
   ];
+
+  networking.hostId = "ca504f8f";
 
   boot.loader.grub.enable = false;
 
