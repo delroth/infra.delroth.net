@@ -29,6 +29,8 @@ in {
       enable = true;
       enableSubmission = true;
 
+      domain = config.networking.domain;
+
       sslCert = "/var/lib/acme/${config.my.networking.fqdn}/fullchain.pem";
       sslKey = "/var/lib/acme/${config.my.networking.fqdn}/key.pem";
 
@@ -39,6 +41,7 @@ in {
         cyrus_sasl_config_path = "${sasl-conf-dir}";
         smtpd_sasl_auth_enable = true;
         smtpd_tls_auth_only = true;
+        smtpd_sasl_local_domain = config.my.networking.fqdn;
       };
       destination = [
         config.my.networking.fqdn
