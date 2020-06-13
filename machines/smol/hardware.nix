@@ -16,6 +16,9 @@ in {
     "earlycon"
     "panic=3"
   ];
+  boot.kernelModules = [
+    "drivetemp"  # For drive temperature monitoring.
+  ];
 
   networking.hostId = "ca504f8f";
 
