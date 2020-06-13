@@ -1,14 +1,14 @@
 { buildLinux, fetchFromGitHub, ... } @ args:
 
 buildLinux (args // rec {
-  version = "5.5.5";
+  version = "5.7.2";
   modDirVersion = "${version}-qnap";
 
   src = fetchFromGitHub {
     owner = "delroth";
     repo = "linux-qnap-tsx32x";
     rev = "qnap-tsx32x";
-    sha256 = "1cmp2s9n35dmfb103rmnz1c563p3llxbjlv8fnqrggv9qrhaj93m";
+    sha256 = "1hx2fd86zdia6mzgxx8xilsiv90dam4sd7ibis3z7ils8sz1vvwz";
   };
 
   defconfig = "qnap-tsx32x_defconfig";
