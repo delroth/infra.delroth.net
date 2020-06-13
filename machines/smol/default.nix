@@ -1,7 +1,8 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
   my = import ../..;
+  kernelPackages = config.boot.kernelPackages;
 in {
   imports = [
     ./hardware.nix
@@ -24,7 +25,9 @@ in {
     fsType = "zfs";
   };
   services.zfs.autoScrub.enable = true;
-  environment.systemPackages = with pkgs; [ fio ];
+  environment.systemPackages = with pkgs; [
+    fio kernelPackages.tmon lm_sensors screen sysstat
+  ];
 
   # SMART monitoring.
   services.smartd = {
