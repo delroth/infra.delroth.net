@@ -55,3 +55,12 @@ groups:
     annotations:
       summary: "TLS certificate for {{ $labels.job }} on {{ $labels.target }} expiring soon"
       description: "The TLS certificate for {{ $labels.job }} on {{ $labels.target }} expires in less than 7 days."
+
+  - alert: DriveTemperatureHigh
+    expr: node_hwmon_temp_celsius{chip=~"target.*"} > 45
+    for: 5m
+    labels:
+      severity: ticket
+    annotations:
+      summary: "{{ $labels.instance }} {{ $labels.chip }} HDD temperature too high"
+      description: "The temperature of {{ $labels.chip }} on {{ $labels.instance }} is above 45°C."
