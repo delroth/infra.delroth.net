@@ -23,6 +23,7 @@ in
     grafanaSecretKey = builtins.readFile ./secrets/grafana-secret-key;
     iot = import ./secrets/iot.nix;
     matrix = import ./secrets/matrix.nix;
+    nasPassword = builtins.readFile ./secrets/nas-password;
     nodeMetricsKey = builtins.readFile ./secrets/node-metrics-key;
     randstructSeed = builtins.readFile ./secrets/randstruct-seed;
     shadowHash = builtins.readFile ./secrets/shadow-hash;

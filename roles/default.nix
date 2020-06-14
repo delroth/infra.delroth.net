@@ -3,6 +3,7 @@
     ./blackbox-prober.nix
     ./fiber7-prober.nix
     ./fifoci-worker.nix
+    ./file-server.nix
     ./gaming-client.nix
     ./infra-dev-machine.nix
     ./iot-gateway.nix
