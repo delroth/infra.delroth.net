@@ -11,6 +11,11 @@ in {
   ];
 
   my.roles = {
+    file-server = {
+      enable = true;
+      root = "/data";
+      shareName = "data";
+    };
   };
 
   # Remove a few non-essentials to avoid having to build LLVM and Spidermonkey.
