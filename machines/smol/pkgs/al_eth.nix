@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     owner = "delroth";
     repo = "al_eth-standalone";
     rev = "master";
-    sha256 = "0yyhwwlqhqzi9x7rxm56hx8vypzhdpf1z5snn6d3iakyqm1h9yg1";
+    sha256 = "04s61k2zgzql7mnw921rh55qw1kq2xqyhaz0824dhqzhv0dzj30s";
   };
 
   nativeBuildInputs = kernel.moduleBuildDependencies;
