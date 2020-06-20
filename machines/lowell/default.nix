@@ -30,8 +30,6 @@ in {
   programs.gnupg.agent.enable = true;
   programs.ssh.startAgent = true;
 
-  hardware.u2f.enable = true;
-
   boot.kernelModules = [
     # For CIFS mounting.
     "cifs" "cmac" "md4" "sha512"
