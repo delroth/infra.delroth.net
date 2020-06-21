@@ -28,7 +28,7 @@
 
     # Set groups and a password for the main login user.
     users.users.delroth = {
-      hashedPassword = secrets.shadowHash;
+      hashedPassword = lib.mkForce secrets.shadowHash;
       extraGroups = [ "video" ];
     };
 

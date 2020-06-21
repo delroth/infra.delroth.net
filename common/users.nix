@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 
 rec {
   users.mutableUsers = false;
@@ -9,6 +9,7 @@ rec {
     uid = 1000;
     group = "delroth";
     extraGroups = [ "users" "wheel" ];
+    hashedPassword = lib.mkDefault null;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII3tjB4KYDok3KlWxdBp/yEmqhhmybd+w0VO4xUwLKKV"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDy5fxZeXuACbWDhmcCy3eiwNzejF2E71Q2qtV04nQMg"
@@ -17,6 +18,8 @@ rec {
     ];
   };
 
-  users.users.root.openssh.authorizedKeys.keys =
-    users.users.delroth.openssh.authorizedKeys.keys;
+  users.users.root = {
+    hashedPassword = null;
+    openssh.authorizedKeys.keys = users.users.delroth.openssh.authorizedKeys.keys;
+  };
 }
