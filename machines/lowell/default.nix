@@ -50,4 +50,13 @@ in {
     syncthing-mirror.enable = true;
     wireguard-peer.enable = true;
   };
+
+  my.roles.infra-dev-machine.extraBuilders = [{
+    hostName = "graviton.delroth.net";
+    sshUser = "ubuntu";
+    system = "aarch64-linux";
+    maxJobs = 2;
+    speedFactor = 1;
+    supportedFeatures = [ "big-parallel" ];
+  }];
 }
