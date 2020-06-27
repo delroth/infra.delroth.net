@@ -1,0 +1,35 @@
+{ stdenv, fetchFromGitHub, fetchpatch, kernel }:
+
+stdenv.mkDerivation rec {
+  pname = "intel_nuc_led";
+  version = "${kernel.version}-master";
+
+  src = fetchFromGitHub {
+    owner = "nomego";
+    repo = "intel_nuc_led";
+    rev = "master";
+    sha256 = "1swpkxyn2i6xq8giqdv4pp0zv9d0hgpa77hsyadvpvvcb42f1z0x";
+  };
+
+  patches = [
+    # proc: convert to struct proc_ops
+    (fetchpatch {
+      url = "https://github.com/nomego/intel_nuc_led/commit/4e0aefc83d29b9df6e10224a3f21a9c8ba91b4a5.patch";
+      sha256 = "0cl9zyv998w8ac3s8rw4hzm5w7rhrk9s3pq9i8mgjwc4id5vh3h7";
+    })
+  ];
+
+  nativeBuildInputs = kernel.moduleBuildDependencies;
+
+  buildPhase = ''
+    make \
+        ARCH=${stdenv.hostPlatform.platform.kernelArch} \
+        CROSS_COMPILE=${stdenv.cc.targetPrefix} \
+        M=$PWD \
+        -C ${kernel.dev}/lib/modules/${kernel.modDirVersion}/build
+  '';
+
+  installPhase = ''
+    install -m644 -b -D nuc_led.ko $out/lib/modules/${kernel.modDirVersion}/extra/nuc_led.ko
+  '';
+}

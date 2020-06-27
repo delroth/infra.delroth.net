@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
-{
+let
+  kernelPackages = import ./kernel.nix { inherit pkgs; };
+in {
   imports = [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix> ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "usbhid" "sd_mod" "sdhci_pci" ];
@@ -22,7 +24,21 @@
   nix.maxJobs = lib.mkDefault 8;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
-  # For some reason, does not boot with a hardened kernel.
-  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
+  boot.kernelPackages = lib.mkForce kernelPackages;
+  boot.extraModulePackages = [
+    kernelPackages.intel_nuc_led
+  ];
   boot.kernel.sysctl."net.core.bpf_jit_enable" = null;
+
+  # Disable annoying gamer LEDs.
+  systemd.services.disable-leds = {
+    description = "Disable NUC LEDs";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "multi-user.target" ];
+    serviceConfig.Type = "oneshot";
+    script = ''
+      echo set_indicator,2,6 > /proc/acpi/nuc_led
+      echo set_indicator,3,6 > /proc/acpi/nuc_led
+    '';
+  };
 }
