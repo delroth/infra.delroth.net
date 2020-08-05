@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
     # proc: convert to struct proc_ops
     (fetchpatch {
       url = "https://github.com/nomego/intel_nuc_led/commit/4e0aefc83d29b9df6e10224a3f21a9c8ba91b4a5.patch";
-      sha256 = "0cl9zyv998w8ac3s8rw4hzm5w7rhrk9s3pq9i8mgjwc4id5vh3h7";
+      sha256 = "03fx1s6rhmvpnkwvyqscy2b3nxwdkdqglyvv8jyv0lfijrpbifwz";
     })
   ];
 
