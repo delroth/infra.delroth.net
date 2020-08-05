@@ -22,7 +22,7 @@ stdenv.mkDerivation {
   meta = with lib; {
     description = "A protocol providing secure authentication and authorization for low dependency environments";
     homepage = "https://github.com/google/glome";
-    license = with licenses; [ asl2 ];
+    license = with licenses; [ asl20 ];
     maintainers = with maintainers; [ delroth ];
   };
 }
