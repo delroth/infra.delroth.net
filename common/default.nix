@@ -3,6 +3,7 @@
   imports = [
      ./backup.nix
      ./filesystem.nix
+     ./glome.nix
      ./graphical.nix
      ./laptop.nix
      ./locale.nix
