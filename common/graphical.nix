@@ -9,7 +9,6 @@
 
     fonts = {
       enableDefaultFonts = true;
-      fontconfig.penultimate.enable = true;
       fonts = with pkgs; [
         google-fonts liberation_ttf opensans-ttf roboto roboto-mono
         kochi-substitute
