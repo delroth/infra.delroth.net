@@ -4,7 +4,8 @@
   services.prometheus = rec {
     enable = true;
 
-    listenAddress = "127.0.0.1:9090";
+    listenAddress = "127.0.0.1";
+    port = 9090;
     webExternalUrl = "https://prom.delroth.net/";
 
     scrapeConfigs = let
