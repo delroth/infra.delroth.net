@@ -9,7 +9,7 @@ in {
   boot.kernelModules = [ "kvm-intel" ];
 
   boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.canTouchEfiVariables = false;
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/937be0f2-f8d7-424d-883a-10dad3d2ddc3";
