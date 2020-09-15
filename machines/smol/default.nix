@@ -40,7 +40,6 @@ in {
     enable = true;
     notifications = {
       mail.enable = true;
-      test = true;
     };
   };
 }
