@@ -17,6 +17,7 @@ in {
       shareName = "data";
     };
     nix-builder.enable = true;
+    syncthing-mirror.enable = true;
   };
 
   # Remove a few non-essentials to avoid having to build LLVM and Spidermonkey.
