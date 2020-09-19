@@ -150,7 +150,7 @@
       };
       "prom.delroth.net" = withSso {
         appName = "prometheus";
-        vhost = localReverseProxyAddr config.services.prometheus.listenAddress;
+        vhost = localReverseProxy config.services.prometheus.port;
       };
       "syncthing.delroth.net" = withSso {
         appName = "syncthing";
