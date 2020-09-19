@@ -35,6 +35,15 @@ organized like this:
 
 Machine specific configuration is scoped to the `machines` directory.
 
+Secrets are stored in the `secrets` directory, encrypted with `git-crypt`.
+
+## Caveats
+
+I made the explicit design choice that my machines are single-user, and that
+lateral movement across machines isn't something I'm focusing on strongly. This
+leads to some design simplifications: for example, I'm completely happy with
+secrets in the Nix store.
+
 ## Misc notes
 
 I use a few patches to nixpkgs that aren't upstreamed because I never bothered
