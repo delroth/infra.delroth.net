@@ -1,4 +1,22 @@
 groups:
+- name: relabels
+  rules:
+
+  - record: home_temperature
+    expr: rtl_433_temperature_celsius{channel="1",id="160"}
+    labels:
+      location: outside
+
+  - record: home_temperature
+    expr: rtl_433_temperature_celsius{channel="2",id="63"}
+    labels:
+      location: living-room
+
+  - record: home_temperature
+    expr: rtl_433_temperature_celsius{channel="3",id="232"}
+    labels:
+      location: office
+
 - name: alerts
   rules:
 
@@ -64,3 +82,12 @@ groups:
     annotations:
       summary: "{{ $labels.instance }} {{ $labels.chip }} HDD temperature too high"
       description: "The temperature of {{ $labels.chip }} on {{ $labels.instance }} is above 45°C."
+
+  - alert: ThermometerBatteryLow
+    expr: rtl_433_battery == 0
+    for: 15m
+    labels:
+      severity: ticket
+    annotations:
+      summary: "{{ $labels.model }} chan {{ $labels.channel }} battery low"
+      description: "The battery on {{ $labels.model }} chan {{ $labels.channel }} is running out and needs replacement."

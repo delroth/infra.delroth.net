@@ -30,4 +30,7 @@ in {
 
   services.atftpd.enable = true;
   networking.firewall.allowedUDPPorts = [ 69 ];
+
+  # Home temperature monitoring.
+  services.prometheus.exporters.rtl_433.enable = true;
 }
