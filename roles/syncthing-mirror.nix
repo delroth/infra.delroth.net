@@ -27,9 +27,18 @@ in {
 
         inherit devices;
 
-        # TODO(delroth): Make folders configuration declarative when versioning
-        # schemes are supported.
-        overrideFolders = false;
+        folders."/home/delroth/Dropbox" = {
+          id = "75wdo-3odel";
+          label = "Dropbox";
+          devices = builtins.attrNames devices;
+          versioning = {
+            type = "staggered";
+            params = {
+              cleanInterval = "3600";
+              maxAge = "31536000";  # 365d
+            };
+          };
+        };
       };
     };
   };
