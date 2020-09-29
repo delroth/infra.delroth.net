@@ -24,7 +24,7 @@ in {
   nix.nixPath = [ "nixpkgs=/etc/nixpkgs" ];
 
   # Add custom package set to overlays.
-  nixpkgs.overlays = [ my.pkgs ];
+  nixpkgs.overlays = [ my.pkgs my.secrets.pkgs ];
 
   # Add support for command-not-found. For simplicity, hardcode a Nix channel
   # revision that has the programs.sqlite pregenerated instead of building it

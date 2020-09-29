@@ -10,6 +10,7 @@ rec {
     imports = [
       common
       roles
+      secrets.roles
       services
     ];
   };

@@ -26,7 +26,9 @@ in
     matrix = import ./secrets/matrix.nix;
     nasPassword = builtins.readFile ./secrets/nas-password;
     nodeMetricsKey = builtins.readFile ./secrets/node-metrics-key;
+    pkgs = import ./secrets/pkgs;
     randstructSeed = builtins.readFile ./secrets/randstruct-seed;
+    roles = import ./secrets/roles;
     shadowHash = builtins.readFile ./secrets/shadow-hash;
     sso = {
       users = import ./secrets/sso-users.nix;
