@@ -45,7 +45,7 @@ in {
       '';
     }];
 
-    environment.memoryAllocator.provider = "scudo";
+    environment.memoryAllocator.provider = "libc";
   })
 
   (lib.mkIf (!x86) {
