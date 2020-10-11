@@ -36,6 +36,7 @@ in
       key = builtins.readFile ./secrets/sso-key;
     };
     syncthing = import ./secrets/syncthing.nix;
+    transmissionPassword = builtins.readFile ./secrets/transmission-password;
     wireguard = {
       cfg = import ./secrets/wireguard.nix;
       peers = import ./secrets/wireguard-peers.nix;

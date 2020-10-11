@@ -17,6 +17,7 @@ in {
       shareName = "data";
     };
     nix-builder.enable = true;
+    seedbox.enable = true;
     syncthing-mirror.enable = true;
     wild-eagle.enable = true;
   };
@@ -34,7 +35,7 @@ in {
   };
   services.zfs.autoScrub.enable = true;
   environment.systemPackages = with pkgs; [
-    fio kernelPackages.tmon lm_sensors screen sysstat
+    fio gdb kernelPackages.perf kernelPackages.tmon lm_sensors screen sysstat
   ];
 
   # SMART monitoring.
