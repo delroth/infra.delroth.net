@@ -29,6 +29,7 @@ in
     pkgs = import ./secrets/pkgs;
     randstructSeed = builtins.readFile ./secrets/randstruct-seed;
     roles = import ./secrets/roles;
+    seedbox-vpn = import ./secrets/seedbox-vpn.nix;
     shadowHash = builtins.readFile ./secrets/shadow-hash;
     sso = {
       users = import ./secrets/sso-users.nix;

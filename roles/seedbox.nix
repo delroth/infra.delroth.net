@@ -5,13 +5,27 @@ let
 
   hostname = "seedbox.delroth.net";
 
-  transmissionPort = 9091;
+  transmissionRpcPort = 9091;
+  transmissionExternalPort = 30251;
 in {
   options.my.roles.seedbox = with lib; {
     enable = mkEnableOption "Seedbox";
   };
 
   config = lib.mkIf cfg.enable {
+    my.services.wg-netns = {
+      enable = true;
+
+      privateKey = secrets.seedbox-vpn.privateKey;
+      peerPublicKey = secrets.seedbox-vpn.publicKey;
+      endpointAddr = secrets.seedbox-vpn.endpointAddr;
+      ip4 = secrets.seedbox-vpn.ip4;
+      ip6 = secrets.seedbox-vpn.ip6;
+
+      isolateServices = [ "transmission" ];
+      forwardPorts = [ transmissionRpcPort ];
+    };
+
     services.transmission = {
       enable = true;
       group = "nas";
@@ -20,8 +34,10 @@ in {
         download-dir = "/data/seedbox/default";
         incomplete-dir = "/data/seedbox/incomplete";
 
+        peer-port = transmissionExternalPort;
+
         rpc-enabled = true;
-        rpc-port = transmissionPort;
+        rpc-port = transmissionRpcPort;
         rpc-authentication-required = true;
 
         rpc-username = "delroth";
@@ -38,8 +54,13 @@ in {
       enableACME = true;
 
       locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString transmissionPort}";
+        proxyPass = "http://127.0.0.1:${toString transmissionRpcPort}";
       };
+    };
+
+    networking.firewall = {
+      allowedTCPPorts = [ transmissionExternalPort ];
+      allowedUDPPorts = [ transmissionExternalPort ];
     };
   };
 }
