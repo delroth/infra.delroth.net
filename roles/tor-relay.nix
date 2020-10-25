@@ -54,5 +54,9 @@ in {
       listenAddress = "127.0.0.1";
       port = 9130;
     };
+
+    # Exclude Tor diff cache from backups since it causes them to fail due to
+    # temp files appearing / disappearing.
+    my.backup.extraExclude = [ "/var/lib/tor/diff-cache" ];
   };
 }

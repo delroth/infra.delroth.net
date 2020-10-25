@@ -1,12 +1,22 @@
 { config, lib, machineName, secrets, ... }:
 
 {
-  options.my.backup.extraPaths = lib.mkOption {
-    type = lib.types.listOf lib.types.str;
-    default = [ ];
-    description = ''
-      Extra system paths to include in daily backups.
-    '';
+  options.my.backup = with lib; {
+    extraPaths = mkOption {
+      type = types.listOf types.str;
+      default = [ ];
+      description = ''
+        Extra system paths to include in daily backups.
+      '';
+    };
+
+    extraExclude = mkOption {
+      type = types.listOf types.str;
+      default = [ ];
+      description = ''
+        Extra system paths to exclude from daily backups.
+      '';
+    };
   };
 
   config = lib.mkIf (secrets.backup.pass ? "${machineName}") {
@@ -26,9 +36,11 @@
         "/home/*/.cache"
         "/home/*/.local/share/Steam"
 
-        # Causes backups to fail due to temp files appearing / disappearing.
-        "/var/lib/tor/diff-cache"
-      ];
+        # List of "heavy" files which are fine to exclude from offsite backups.
+        "*.mkv" "*.avi" "*.mp4" "*.mp3" "*.ogg" "*.flac" "*.VOB"
+        "*.iso" "*.gcm" "*.gcz" "*.cso" "*.sdc"
+        "*.vdi" "*.qcow2" "*.vmdk" "*.ova"
+      ] ++ config.my.backup.extraExclude;
 
       extraCreateArgs = "--one-file-system";
 

@@ -7,6 +7,8 @@ let
 
   transmissionRpcPort = 9091;
   transmissionExternalPort = 30251;
+
+  downloadBase = "/data/seedbox";
 in {
   options.my.roles.seedbox = with lib; {
     enable = mkEnableOption "Seedbox";
@@ -31,8 +33,8 @@ in {
       group = "nas";
 
       settings = {
-        download-dir = "/data/seedbox/default";
-        incomplete-dir = "/data/seedbox/incomplete";
+        download-dir = "${downloadBase}/default";
+        incomplete-dir = "${downloadBase}/incomplete";
 
         peer-port = transmissionExternalPort;
 
@@ -48,6 +50,8 @@ in {
         rpc-whitelist = "127.0.0.1";
       };
     };
+
+    my.backup.extraExclude = [ downloadBase ];
 
     services.nginx.virtualHosts."${hostname}" = {
       forceSSL = true;
