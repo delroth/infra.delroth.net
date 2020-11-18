@@ -34,6 +34,7 @@ in {
     music-server.enable = true;
     nix-builder.enable = true;
     publibike-locator.enable = true;
+    repology-notifier.enable = true;
     smtp-server.enable = true;
     syncthing-mirror.enable = true;
     syncthing-relay.enable = true;

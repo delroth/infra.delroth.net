@@ -12,6 +12,7 @@
     ./music-server.nix
     ./nix-builder.nix
     ./publibike-locator.nix
+    ./repology-notifier.nix
     ./seedbox.nix
     ./smtp-server.nix
     ./syncthing-mirror.nix

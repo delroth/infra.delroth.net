@@ -28,6 +28,7 @@ in
     nodeMetricsKey = builtins.readFile ./secrets/node-metrics-key;
     pkgs = import ./secrets/pkgs;
     randstructSeed = builtins.readFile ./secrets/randstruct-seed;
+    repologyNotifierGhToken = builtins.readFile ./secrets/repology-notifier-gh-token;
     roles = import ./secrets/roles;
     seedbox-vpn = import ./secrets/seedbox-vpn.nix;
     shadowHash = builtins.readFile ./secrets/shadow-hash;
