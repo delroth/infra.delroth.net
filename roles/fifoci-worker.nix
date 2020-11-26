@@ -123,6 +123,12 @@ in {
         fi
 
         rm -f python && ln -sf ${fifociPython}/bin/python python
+
+        # Clean up build directories since cmake can't figure out paths might
+        # have changes when a new system is pushed.
+        for d in ${workerDir}/*; do
+          [ -d "$d/build" ] && rm -rf $d || true
+        done
       '';
 
       serviceConfig = {
