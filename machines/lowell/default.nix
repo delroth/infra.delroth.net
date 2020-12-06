@@ -32,7 +32,7 @@ in {
 
   boot.kernelModules = [
     # For CIFS mounting.
-    "cifs" "cmac" "md4" "sha512"
+    "cifs" "cmac" "hmac" "md4" "md5" "sha256" "sha512"
 
     # FTDI / Serial
     "ftdi_sio" "pl2303"
