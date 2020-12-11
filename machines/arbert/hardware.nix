@@ -7,6 +7,7 @@ in {
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "usbhid" "sd_mod" "sdhci_pci" ];
   boot.kernelModules = [ "kvm-intel" ];
+  boot.blacklistedKernelModules = [ "dvb_usb_rtl28xxu" ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = false;
