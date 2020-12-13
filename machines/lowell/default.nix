@@ -38,7 +38,7 @@ in {
     "ftdi_sio" "pl2303"
 
     # USB mass storage
-    "usb_storage" "sd_mod" "vfat"
+    "usb_storage" "sd_mod" "vfat" "mmc_block"
 
     # TODO: Temporary.
     "wireguard"
