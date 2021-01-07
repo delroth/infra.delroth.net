@@ -22,11 +22,6 @@ in {
     wild-eagle.enable = true;
   };
 
-  # Remove a few non-essentials to avoid having to build LLVM and Spidermonkey.
-  security.apparmor.enable = false;
-  security.polkit.enable = false;
-  services.udisks2.enable = false;
-
   # ZFS configuration.
   boot.supportedFilesystems = [ "zfs" ];
   fileSystems."/data" = {
