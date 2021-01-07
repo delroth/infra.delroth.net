@@ -2,13 +2,13 @@
 
 stdenv.mkDerivation {
   pname = "glome";
-  version = "2020-08-05";
+  version = "2021-01-07";
 
   src = fetchFromGitHub {
-    owner = "delroth";
+    owner = "google";
     repo = "glome";
-    rev = "a523a19e37769240f86b1a655986f6f302f85d40";
-    sha256 = "1wfhxq0xzsk4c9qlrl6y6hmyj15qrjl5w3v44xlsc9vv3rdgb17a";
+    rev = "40cc757b3235f0a01f6c785982647efadee07a34";
+    sha256 = "1pb89dakhzm82q12rkcqga51f0szczbxz58l7kf5vmh61dyyj5w2";
   };
 
   nativeBuildInputs = [ meson ninja pkg-config ];
