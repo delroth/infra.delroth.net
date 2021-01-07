@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   my = import ../..;
@@ -40,4 +40,10 @@ in {
       mail.enable = true;
     };
   };
+
+  # TODO: Fix kernel support for apparmor
+  security.apparmor.enable = false;
+
+  # Disable module locking while working on kernel development.
+  security.lockKernelModules = lib.mkForce false;
 }
