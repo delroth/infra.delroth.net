@@ -1,6 +1,7 @@
 self: super: {
   blitzloop = super.callPackage ./blitzloop.nix {};
   glome = super.callPackage ./glome.nix {};
+  glome-login-authorize = super.callPackage ./glome-login-authorize.nix {};
   parsec = super.callPackage ./parsec.nix {};
   publibike-locator = super.callPackage ./publibike-locator.nix {};
   repology-notifier = super.callPackage ./repology-notifier.nix {};
