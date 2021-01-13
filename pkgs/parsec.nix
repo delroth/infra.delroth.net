@@ -3,7 +3,7 @@
 
 stdenv.mkDerivation {
   pname = "parsec";
-  version = "2020-01-29";
+  version = "2021-01-12";
 
   src = fetchurl {
     url = "https://builds.parsecgaming.com/package/parsec-linux.deb";
@@ -16,16 +16,17 @@ stdenv.mkDerivation {
   # fetch the latest binaries.
   latest_appdata = fetchurl {
     url = "https://builds.parsecgaming.com/channel/release/appdata/linux/latest";
-    sha256 = "1hs934lqgh9brzx8b0hbir5jkvd9gl361w6098ycd64c1v18d77q";
+    sha256 = "08hays1zzvs1ncy2fd84vlb11n3dw5h63wxxcglpc8kca4hkckqy";
   };
   latest_parsecd_so = fetchurl {
-    url = "https://builds.parsecgaming.com/channel/release/binary/linux/gz/parsecd-150-50.so";
-    sha256 = "1l5l9flgmq53lv7am36bg40wkchcjhvd7wzs71an111xxrcrvdfx";
+    url =
+      "https://builds.parsecgaming.com/channel/release/binary/linux/gz/parsecd-150-64.so";
+    sha256 = "1hcha7w4ir4h1k445h1g4y5sgdjb3hivmb57mf82yx9nzp3da8h5";
   };
 
   postPatch = ''
     cp $latest_appdata usr/share/parsec/skel/appdata.json
-    cp $latest_parsecd_so usr/share/parsec/skel/parsecd-150-50.so
+    cp $latest_parsecd_so usr/share/parsec/skel/parsecd-150-64.so
   '';
 
   runtimeDependencies = [
