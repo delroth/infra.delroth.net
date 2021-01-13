@@ -20,6 +20,6 @@ in {
   # Only 1TB/month to use :(
   services.syncthing.relay.globalRateBps = 200 * 1024;  # 200KB/s
   services.syncthing.relay.perSessionRateBps = 100 * 1024;  # 200KB/s
-  services.tor.relay.accountingStart = "day 0:00";
-  services.tor.relay.accountingMax = "10 GBytes";
+  services.tor.settings.AccountingStart = "day 0:00";
+  services.tor.settings.AccountingMax = "10 GBytes";
 }

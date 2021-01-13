@@ -23,34 +23,32 @@ in {
   config = lib.mkIf cfg.enable {
     services.tor = {
       enable = true;
-      controlPort = 9051;
+      openFirewall = true;
+
       relay = {
         enable = true;
         role = "relay";
-        port = 143;
-        nickname = "${builtins.replaceStrings [ "-" ] [ "" ] machineName}Delroth";
-        contactInfo = "tor+${machineName}@delroth.net";
       };
 
-      extraConfig = ''
-        MyFamily ${builtins.concatStringsSep "," myFamily}
-
-        # Allow the use of multiple cores (default: 1). We run at higher
-        # niceness anyway.
-        NumCPUs 0
-      '' + (lib.optionalString (config.my.networking.external6 != null) ''
-        ORPort [${config.my.networking.external6}]:${builtins.toString config.services.tor.relay.port}
-      '');
+      settings = {
+        ContactInfo = "tor+${machineName}@delroth.net";
+        ControlPort = 9051;
+        MyFamily = builtins.concatStringsSep "," myFamily;
+        Nickname = "${builtins.replaceStrings [ "-" ] [ "" ] machineName}Delroth";
+        NumCPUs = 0;
+        ORPort = [
+          { port = 143; }
+          { addr = "[${config.my.networking.external6}]"; port = 143; }
+        ];
+      };
     };
 
     systemd.services.tor.serviceConfig.Nice = 5;
 
-    networking.firewall.allowedTCPPorts = [config.services.tor.relay.port];
-
     # Monitoring.
     services.prometheus.exporters.tor = {
       enable = true;
-      torControlPort = config.services.tor.controlPort;
+      torControlPort = config.services.tor.settings.ControlPort;
       listenAddress = "127.0.0.1";
       port = 9130;
     };
