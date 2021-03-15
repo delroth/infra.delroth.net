@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
 
   buildPhase = ''
     make \
-        ARCH=${stdenv.hostPlatform.platform.kernelArch} \
+        ARCH=${stdenv.hostPlatform.linuxArch} \
         CROSS_COMPILE=${stdenv.cc.targetPrefix} \
         M=$PWD \
         -C ${kernel.dev}/lib/modules/${kernel.modDirVersion}/build
