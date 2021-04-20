@@ -7,7 +7,7 @@ let
 
   wgcfg = secrets.wireguard.cfg;
   allPeers = secrets.wireguard.peers;
-  thisPeer = allPeers."${machineName}";
+  thisPeer = allPeers."${machineName}" or null;
   otherPeers = lib.filterAttrs (n: v: n != machineName) allPeers;
 in {
   options = {
@@ -15,7 +15,8 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    networking = {
+    networking = let
+    in {
       wireguard.interfaces."${iface}" = {
         listenPort = port;
         privateKey = secrets.wireguard.privateKeys."${machineName}";
