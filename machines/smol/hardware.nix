@@ -7,6 +7,7 @@ in {
   nixpkgs.localSystem = lib.systems.examples.aarch64-multiplatform;
 
   boot.kernelPackages = lib.mkForce kernelPackages;
+  boot.initrd.includeDefaultModules = false;
   boot.extraModulePackages = [
     kernelPackages.al_eth
     kernelPackages.al_thermal
@@ -39,7 +40,7 @@ in {
     serviceConfig.Type = "oneshot";
     script = ''
       ${pkgs.coreutils}/bin/stty -F /dev/ttyS1 115200
-      echo -ne '\x35' > /dev/ttyS1
+      echo -ne '\x34' > /dev/ttyS1
     '';
   };
 
