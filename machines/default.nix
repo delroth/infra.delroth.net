@@ -5,5 +5,4 @@
   eden = ./eden;
   lowell = ./lowell;
   smol = ./smol;
-  yew = ./yew;
 }
