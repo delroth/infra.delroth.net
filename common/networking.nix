@@ -36,22 +36,20 @@
 
     networking.firewall.allowPing = true;
 
-    # DNS to DNS-over-TLS gateway.
-    services.stubby = {
+    # Use systemd-resolved for DoT support.
+    services.resolved = {
       enable = true;
-      upstreamServers = ''
-        - address_data: 8.8.8.8
-          tls_auth_name: "dns.google"
-        - address_data: 1.0.0.1
-          tls_auth_name: "cloudflare-dns.com"
+      dnssec = "allow-downgrade";
+      extraConfig = ''
+        DNSOverTLS=yes
       '';
     };
-    # Require Stubby to be up for network to be considered available. Avoids
-    # sequencing problems at boot time.
-    systemd.services.stubby.wantedBy = [ "network-online.target" ];
 
-    # Send to local Stubby resolver.
-    networking.nameservers = [ "127.0.0.1" ];
+    # Used by systemd-resolved, not directly by resolv.conf.
+    networking.nameservers = [
+      "8.8.8.8#dns.google"
+      "1.0.0.1#cloudflare-dns.com"
+    ];
 
     # Too spammy on most servers that get scanned.
     networking.firewall.logRefusedConnections = false;
