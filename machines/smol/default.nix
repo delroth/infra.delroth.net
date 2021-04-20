@@ -16,7 +16,6 @@ in {
       root = "/data";
       shareName = "data";
     };
-    nix-builder.enable = true;
     seedbox.enable = true;
     syncthing-mirror.enable = true;
     wild-eagle.enable = true;
