@@ -15,6 +15,7 @@ let
 
   privKey = pkgs.writeText "wireguard-priv-key" cfg.privateKey;
   resolvconf = pkgs.writeText "wg-resolv.conf" "nameserver 8.8.8.8";
+  nsswitchconf = pkgs.writeText "wg-nsswitch.conf" "hosts: files dns";
 in {
   options.my.services.wg-netns = with lib; {
     enable = mkEnableOption "Wireguard netns container";
@@ -83,7 +84,10 @@ in {
         unitConfig.JoinsNamespaceOf = "wireguard-netns.service";
         serviceConfig = {
           PrivateNetwork = true;
-          BindReadOnlyPaths = [ "${resolvconf}:/etc/resolv.conf" ];
+          BindReadOnlyPaths = [
+            "${resolvconf}:/etc/resolv.conf"
+            "${nsswitchconf}:/etc/nsswitch.conf"
+          ];
         };
       });
 
