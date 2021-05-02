@@ -28,6 +28,19 @@ in {
       forwardPorts = [ transmissionRpcPort ];
     };
 
+    # Use forked transmission version.
+    nixpkgs.overlays = [(self: super: {
+      transmission = super.transmission.overrideAttrs (old: {
+        src = self.fetchFromGitHub {
+          owner = "delroth";
+          repo = "transmission";
+          rev = "e1d7c3b555469de27efd7a5b29afaca15801990c";
+          sha256 = "1i87qjvkc7gc6bk73b3xi8x55a00xsy2nxhzywqbi9zdbqb9cq52";
+          fetchSubmodules = true;
+        };
+      });
+    })];
+
     services.transmission = {
       enable = true;
       group = "nas";
@@ -48,6 +61,8 @@ in {
         # Proxied behind nginx.
         rpc-whitelist-enabled = true;
         rpc-whitelist = "127.0.0.1";
+
+        verifier-parallelism = 4;
       };
     };
 
