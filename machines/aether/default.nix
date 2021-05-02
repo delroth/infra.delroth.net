@@ -15,7 +15,7 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
-    fio gdb kernelPackages.perf kernelPackages.tmon lm_sensors screen sysstat
+    fio htop kernelPackages.perf kernelPackages.tmon lm_sensors
   ];
 
   # TODO: Fix kernel support for apparmor
