@@ -21,6 +21,7 @@ in {
       uid = 5000;
       extraGroups = [ "nas" ];
       password = secrets.nasPassword;
+      isSystemUser = true;
     };
 
     services.samba = {
