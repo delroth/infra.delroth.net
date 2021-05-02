@@ -18,6 +18,9 @@ in {
       name = "pmp-${toString port}";
       value = {
         description = "PMP port mapping for port ${toString port}";
+        wantedBy = [ "multi-user.target" ];
+        after = [ "network-online.target" ];
+        wants = [ "network-online.target" ];
         serviceConfig = {
           Type = "oneshot";
           ExecStart = "${pkgs.libnatpmp}/bin/natpmpc -a ${toString port} ${toString port} tcp 600";
@@ -30,7 +33,6 @@ in {
       value = {
         description = "PMP port mapping for port ${toString port} (timer)";
         wantedBy = [ "timers.target" ];
-        requires = [ "network-online.target" ];
         timerConfig = {
           OnBootSec = "0";
           OnUnitActiveSec = "5min";
