@@ -39,7 +39,7 @@
     # Use systemd-resolved for DoT support.
     services.resolved = {
       enable = true;
-      dnssec = "allow-downgrade";
+      dnssec = "false";
       extraConfig = ''
         DNSOverTLS=yes
       '';
