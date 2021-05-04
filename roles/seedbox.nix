@@ -66,6 +66,14 @@ in {
       };
     };
 
+    services.flexget = {
+      enable = true;
+      user = "transmission";
+      homeDir = "/var/lib/transmission";
+      systemScheduler = false;
+      config = secrets.flexget-config { inherit config; };
+    };
+
     my.backup.extraExclude = [ downloadBase ];
 
     services.nginx.virtualHosts."${hostname}" = {

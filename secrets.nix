@@ -20,6 +20,7 @@ in
       (builtins.attrNames (builtins.readDir ./secrets/dnssec))
       (f: builtins.readFile (./secrets/dnssec + "/${f}"));
     email = import ./secrets/email.nix;
+    flexget-config = import ./secrets/flexget-config.nix;
     glome = import ./secrets/glome.nix;
     grafanaSecretKey = builtins.readFile ./secrets/grafana-secret-key;
     iot = import ./secrets/iot.nix;
