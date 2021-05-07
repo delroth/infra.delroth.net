@@ -30,6 +30,7 @@ in {
     blackbox-prober.enable = true;
     iot-gateway.enable = true;
     irc-client.enable = true;
+    matrix-client.enable = true;
     matrix-synapse.enable = true;
     music-server.enable = true;
     nix-builder.enable = true;

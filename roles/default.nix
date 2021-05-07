@@ -8,6 +8,7 @@
     ./infra-dev-machine.nix
     ./iot-gateway.nix
     ./irc-client.nix
+    ./matrix-client.nix
     ./matrix-synapse.nix
     ./music-server.nix
     ./nix-builder.nix
