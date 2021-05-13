@@ -8,13 +8,14 @@
     src = pkgs.fetchFromGitHub {
       owner = "SolidRun";
       repo = "linux-stable";
-      rev = "bc1160fd43de6bc9a09e25c027a057e1376e5b9a";
-      sha256 = "1cq36vpsd68g144gn7f3jjkl2bwibqv7nrrrjgvkdj1lfijcwm14";
+      rev = "linux-5.10.y-cex7";
+      sha256 = "1mqv6xvijrafkjf03bwjvfrcvd4h4576zbv8jpipfjzcxg6894zf";
     };
-    version = "5.10.5";
+    version = "5.10.23";
     kernelPatches = [ ];
     structuredExtraConfig = with pkgs.lib.kernel; {
       CGROUP_FREEZER = yes;
+      FSL_MC_UAPI_SUPPORT = yes;
     };
   }));
 
