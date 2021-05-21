@@ -74,6 +74,16 @@ in {
       config = secrets.flexget-config { inherit config; };
     };
 
+    services.minidlna = {
+      enable = true;
+      mediaDirs = [
+        "${downloadBase}/watchqueue"
+      ];
+      announceInterval = 10;
+    };
+
+    users.users.minidlna.extraGroups = [ "nas" ];
+
     my.backup.extraExclude = [ downloadBase ];
 
     services.nginx.virtualHosts."${hostname}" = {
