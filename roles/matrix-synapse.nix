@@ -42,6 +42,10 @@ in {
           resources = [ { names = [ "client" ]; compress = false; } ];
         }
       ];
+
+      extraConfig = ''
+        experimental_features: { spaces_enabled: true }
+      '';
     };
 
     services.nginx = {
