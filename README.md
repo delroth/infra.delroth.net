@@ -55,6 +55,5 @@ help understanding something, or if you see a potential for improvement, feel
 free to contact me and give me feedback! Either as an issue on this repo, or:
 
 - @delroth:delroth.net on Matrix
-- delroth on Freenode (IRC)
 - @delroth_ on Twitter
 - delroth@gmail.com by email
