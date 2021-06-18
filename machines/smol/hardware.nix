@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }:
 
 let
-  # Use cross-compiled kernel packages to make builds faster.
   kernelPackages = import ./kernel.nix { inherit pkgs; };
 in {
   nixpkgs.localSystem = lib.systems.examples.aarch64-multiplatform;
