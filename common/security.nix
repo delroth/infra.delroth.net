@@ -3,10 +3,6 @@
 let
   x86 = pkgs.stdenv.isx86_64;
 in {
-  imports = [
-    <nixpkgs/nixos/modules/profiles/hardened.nix>
-  ];
-
   config = lib.mkMerge [{
     # Let's Encrypt related configuration.
     security.acme.acceptTerms = true;
@@ -29,6 +25,16 @@ in {
     # TODO: Once more build capacity has been converted to NixOS, add hostname
     # to the seed as well for more diversity.
     boot.kernel.randstructSeed = "${secrets.randstructSeed}";
+
+    # Imported from hardened.nix.
+    nix.allowedUsers = lib.mkDefault [ "@users" ];
+    security.lockKernelModules = lib.mkDefault true;
+    security.protectKernelImage = lib.mkDefault true;
+    security.apparmor.enable = lib.mkDefault true;
+    boot.kernel.sysctl."kernel.yama.ptrace_scope" = lib.mkOverride 500 1;
+    boot.kernel.sysctl."kernel.kptr_restrict" = lib.mkOverride 500 2;
+    boot.kernel.sysctl."net.core.bpf_jit_enable" = lib.mkDefault false;
+    boot.kernel.sysctl."kernel.ftrace_enabled" = lib.mkDefault false;
   }
 
   (lib.mkIf x86 {
