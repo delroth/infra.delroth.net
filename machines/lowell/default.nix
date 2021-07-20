@@ -25,6 +25,7 @@ in {
   security.chromiumSuidSandbox.enable = true;
 
   # TODO: Switch to NetworkManager.
+  networking.wireless.interfaces = [ "wlp4s0" ];
   networking.wireless.networks = secrets.wirelessNetworks;
 
   programs.zsh.enable = true;
