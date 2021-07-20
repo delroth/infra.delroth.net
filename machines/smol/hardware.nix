@@ -18,6 +18,7 @@ in {
   ];
   boot.kernelModules = [
     "drivetemp"  # For drive temperature monitoring.
+    "i2c-mux-pca954x"  # For SFP+ link management.
   ];
 
   networking.hostId = "ca504f8f";
