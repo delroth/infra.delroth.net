@@ -25,6 +25,7 @@
       "earlycon=pl011,mmio32,0x21c0000"
       "pci=pcie_bus_perf"
       "arm-smmu.disable_bypass=0"
+      "iommu.passthrough=1"
   ];
 
   boot.loader.systemd-boot.enable = true;
