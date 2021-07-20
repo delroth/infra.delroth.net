@@ -84,7 +84,7 @@ groups:
       description: "The temperature of {{ $labels.chip }} on {{ $labels.instance }} is above 45°C."
 
   - alert: ThermometerBatteryLow
-    expr: rtl_433_battery == 0
+    expr: rtl_433_battery{model="Ambientweather-F007TH",channel=~"[123]"} == 0
     for: 15m
     labels:
       severity: ticket
