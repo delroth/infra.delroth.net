@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     owner = "delroth";
     repo = "al_eth-standalone";
     rev = "master";
-    sha256 = "04s61k2zgzql7mnw921rh55qw1kq2xqyhaz0824dhqzhv0dzj30s";
+    sha256 = "0jazj2kqk6gg3117q7jyggk4fpj55fn1fl7vi0fkwc03z5la7jcx";
   };
 
   nativeBuildInputs = kernel.moduleBuildDependencies;
@@ -19,7 +19,8 @@ stdenv.mkDerivation rec {
         ARCH=${stdenv.hostPlatform.linuxArch} \
         CROSS_COMPILE=${stdenv.cc.targetPrefix} \
         M=$PWD \
-        -C ${kernel.dev}/lib/modules/${kernel.modDirVersion}/build
+        -C ${kernel.dev}/lib/modules/${kernel.modDirVersion}/build \
+        -j$NIX_BUILD_CORES
   '';
 
   installPhase = ''
