@@ -25,8 +25,8 @@ in {
   my.roles.fifoci-worker.info = "Intel NUC8i7HVK, NixOS unstable";
   my.roles.nix-builder.speedFactor = 2;
 
-  # Temporary while using this as a serial host.
-  boot.kernelModules = [ "pl2303" ];
+  # Used as a serial host.
+  boot.kernelModules = [ "ftdi_sio" "pl2303" ];
 
   services.atftpd.enable = true;
   networking.firewall.allowedUDPPorts = [ 69 ];
