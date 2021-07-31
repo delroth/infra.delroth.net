@@ -8,10 +8,10 @@
     src = pkgs.fetchFromGitHub {
       owner = "SolidRun";
       repo = "linux-stable";
-      rev = "linux-5.10.y-cex7";
-      sha256 = "1mqv6xvijrafkjf03bwjvfrcvd4h4576zbv8jpipfjzcxg6894zf";
+      rev = "linux-5.12.y-cex7";
+      sha256 = "16p67q623adyakjpyrx10pxglvdwdvxkwkkfgmlqlpbk0ps8j2jk";
     };
-    version = "5.10.23";
+    version = "5.12.17";
     kernelPatches = [ ];
     structuredExtraConfig = with pkgs.lib.kernel; {
       CGROUP_FREEZER = yes;
