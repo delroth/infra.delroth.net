@@ -6,6 +6,7 @@ let
 in {
   imports = [
     ./hardware.nix
+    ./networking.nix
 
     my.modules
   ];
