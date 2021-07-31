@@ -15,6 +15,7 @@
     kernelPatches = [ ];
     structuredExtraConfig = with pkgs.lib.kernel; {
       CGROUP_FREEZER = yes;
+      EFI_GENERIC_STUB_INITRD_CMDLINE_LOADER = yes;
       FSL_MC_UAPI_SUPPORT = yes;
     };
   }));
