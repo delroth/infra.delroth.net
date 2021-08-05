@@ -41,6 +41,10 @@ let
     };
   };
 in {
+  networking.interfaces."${iface.upstream}" = {
+    useDHCP = true;
+  };
+
   networking.bridges."${iface.bridge}".interfaces = iface.downstreams;
 
   networking.interfaces."${iface.bridge}" = {
