@@ -27,6 +27,7 @@ in {
 
   # Used as a serial host.
   boot.kernelModules = [ "ftdi_sio" "pl2303" ];
+  environment.systemPackages = with pkgs; [ picocom ];
 
   services.atftpd.enable = true;
   networking.firewall.allowedUDPPorts = [ 69 ];
