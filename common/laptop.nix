@@ -7,7 +7,9 @@
 
   config = lib.mkIf config.my.laptop.enable {
     hardware.bluetooth.enable = true;
-    networking.wireless.enable = true;
+
+    networking.networkmanager.enable = true;
+    programs.nm-applet.enable = true;
 
     services.tlp.enable = true;
     services.upower.enable = true;
