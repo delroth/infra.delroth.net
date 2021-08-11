@@ -18,7 +18,7 @@ in {
   nixpkgs.overlays = [ (import ./pkgs) ];
 
   environment.systemPackages = with pkgs; [
-    fio htop kernelPackages.perf kernelPackages.tmon lm_sensors restool
+    ethtool fio htop kernelPackages.perf kernelPackages.tmon lm_sensors
   ];
 
   # TODO: Fix kernel support for apparmor
