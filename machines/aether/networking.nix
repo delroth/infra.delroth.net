@@ -60,6 +60,15 @@ in {
     useDHCP = true;
   };
 
+  networking.dhcpcd.extraConfig = ''
+    interface upstream
+      persistent
+      noipv4ll
+      nodelay
+      ia_na 1
+      ia_pd 2 downstream/0
+  '';
+
   networking.bridges.downstream.interfaces = [
     "down-25g"
     "down-10g-tl"
