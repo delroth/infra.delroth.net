@@ -44,6 +44,9 @@ in {
     # USB mass storage
     "usb_storage" "sd_mod" "vfat" "mmc_block"
 
+    # USB RJ45 dongle
+    "r8152"
+
     # TODO: Temporary.
     "wireguard"
   ];
