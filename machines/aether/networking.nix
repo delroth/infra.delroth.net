@@ -101,27 +101,29 @@ in {
     internalInterfaces = [ "downstream" ];
   };
 
-  services.dhcpd4 = {
+  services.dnsmasq = {
     enable = true;
-    interfaces = [ "downstream" "mgmt" ];
-    configFile = pkgs.writeText "dhcpd4.conf" ''
-      authoritative;
-      default-lease-time 3600;
-      max-lease-time 86400;
-      log-facility local1;
+    resolveLocalQueries = false;
+    extraConfig = ''
+      port=0  # Disable DNS
 
-      option domain-name "delroth.net";
-      option domain-name-servers 8.8.8.8, 8.8.4.4;
+      interface=downstream
+      interface=mgmt
+      bind-interfaces
 
-      subnet ${range.downstream.net} netmask ${range.downstream.mask} {
-        option routers ${range.downstream.ip};
-        range ${range.downstream.dhcpStart} ${range.downstream.dhcpEnd};
-      }
+      dhcp-authoritative
+      dhcp-range=${range.mgmt.dhcpStart},${range.mgmt.dhcpEnd},15m
+      dhcp-range=set:downstream,${range.downstream.dhcpStart},${range.downstream.dhcpEnd},15m
+      dhcp-range=set:downstream,::ff00,::ffff,constructor:downstream,slaac,15m
 
-      subnet ${range.mgmt.net} netmask ${range.mgmt.mask} {
-        option routers ${range.mgmt.ip};
-        range ${range.mgmt.dhcpStart} ${range.mgmt.dhcpEnd};
-      }
+      dhcp-option=tag:downstream,option:router,${range.downstream.ip}
+
+      dhcp-option=option:dns-server,8.8.8.8,8.8.4.4
+      dhcp-option=option6:dns-server,2001:4860:4860::8888,2001:4860:4860::8844
+
+      enable-ra
     '';
   };
+
+  networking.firewall.allowedUDPPorts = [ 67 547 ];
 }
