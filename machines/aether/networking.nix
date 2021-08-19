@@ -1,11 +1,11 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 let
   # v4 internal IP ranges. v6 uses prefix delegation from upstream
   range = {
     mgmt = {
       ip = "192.168.200.254";
-      net = "192.168.200.0";
+      net = "192.168.200.";
       mask = "255.255.255.0";
       cidr = 24;
 
@@ -15,7 +15,7 @@ let
 
     downstream = {
       ip = "192.168.1.254";
-      net = "192.168.1.0";
+      net = "192.168.1.";
       mask = "255.255.255.0";
       cidr = 24;
 
@@ -23,6 +23,19 @@ let
       dhcpEnd = "192.168.1.200";
     };
   };
+
+  # Machines on the LAN.
+  hosts = {
+    velvet = { mac = "00:02:c9:23:bd:90"; ip = 1; };
+    sw-living-room = { mac = "24:5e:be:53:fc:78"; ip = 50; };
+  };
+
+  dhcpHosts =
+    let
+      lines = lib.mapAttrsToList (hostname: info:
+        "dhcp-host=${info.mac},${range.downstream.net}${toString info.ip},[::${toString info.ip}],${hostname}"
+      ) hosts;
+    in builtins.concatStringsSep "\n" lines;
 in {
   # Rename interfaces to logical semantic names.
   systemd.network.links = {
@@ -120,6 +133,8 @@ in {
 
       dhcp-option=option:dns-server,8.8.8.8,8.8.4.4
       dhcp-option=option6:dns-server,2001:4860:4860::8888,2001:4860:4860::8844
+
+      ${dhcpHosts}
 
       enable-ra
     '';
