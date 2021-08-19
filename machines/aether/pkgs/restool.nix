@@ -2,20 +2,16 @@
 
 stdenv.mkDerivation rec {
   pname = "restool";
-  version = "LSDK-20.04";
+  version = "LSDK-20.12";
 
   src = fetchgit {
     url = "https://source.codeaurora.org/external/qoriq/qoriq-components/restool";
     rev = version;
-    sha256 = "1agkcqjfgi51h7jwxa6lr4czdj09jbf14hjpji4r5i73x0dxvl85";
+    sha256 = "137xvvms3n4wwb5v2sv70vsib52s3s314306qa0mqpgxf9fb19zl";
   };
 
   nativeBuildInputs = [ file ];
   buildInputs = [ bash coreutils dtc gawk gnugrep gnused ];
-
-  postPatch = ''
-    sed -i /-Werror/d Makefile
-  '';
 
   makeFlags = [
     "prefix=$(out)"
