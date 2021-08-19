@@ -15,8 +15,6 @@ in {
     nix-builder.enable = true;
   };
 
-  nixpkgs.overlays = [ (import ./pkgs) ];
-
   environment.systemPackages = with pkgs; [
     ethtool fio htop kernelPackages.perf kernelPackages.tmon lm_sensors
   ];
