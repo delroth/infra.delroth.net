@@ -1,4 +1,4 @@
-{ config, pkgs, secrets, ... }:
+{ config, lib, pkgs, secrets, ... }:
 
 {
   services.nginx = rec {
@@ -137,7 +137,7 @@
 
       "login.delroth.net" = localReverseProxy sso.configuration.listen.port;
 
-      "delroth.net" = (localRoot "/srv/http/public") // {
+      "delroth.net" = lib.recursiveUpdate (localRoot "/srv/http/public") {
         locations."/.well-known/matrix/client" = {
           extraConfig = ''
             return 200 '{"m.homeserver": {"base_url": "https://matrix.delroth.net"}}';
@@ -145,7 +145,6 @@
             add_header Access-Control-Allow-Origin *;
           '';
         };
-
         locations."/.well-known/matrix/server" = {
           extraConfig = ''
             return 200 '{"m.server": "matrix.delroth.net:8448"}';
