@@ -137,7 +137,15 @@
 
       "login.delroth.net" = localReverseProxy sso.configuration.listen.port;
 
-      "delroth.net" = localRoot "/srv/http/public";
+      "delroth.net" = (localRoot "/srv/http/public") // {
+        locations."/.well-known/matrix/client" = {
+          extraConfig = ''
+            return 200 '{"m.homeserver": {"base_url": "https://matrix.delroth.net"}}';
+            add_header Content-Type application/json;
+            add_header Access-Control-Allow-Origin *;
+          '';
+        };
+      };
       "japan2018.delroth.net" = localRoot "/srv/http/japan2018";
 
       "mon.delroth.net" = withSso {
