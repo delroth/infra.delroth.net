@@ -145,6 +145,14 @@
             add_header Access-Control-Allow-Origin *;
           '';
         };
+
+        locations."/.well-known/matrix/server" = {
+          extraConfig = ''
+            return 200 '{"m.server": "matrix.delroth.net:8448"}';
+            add_header Content-Type application/json;
+            add_header Access-Control-Allow-Origin *;
+          '';
+        };
       };
       "japan2018.delroth.net" = localRoot "/srv/http/japan2018";
 
