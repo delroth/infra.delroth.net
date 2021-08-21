@@ -3,6 +3,11 @@
 let
   my = import ../.;
 in {
+  nix.package = pkgs.nixUnstable;
+  nix.extraOptions = ''
+    experimental-features = nix-command
+  '';
+
   nix.autoOptimiseStore = true;
   documentation = {
     doc.enable = false;
