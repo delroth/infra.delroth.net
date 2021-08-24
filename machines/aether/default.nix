@@ -12,6 +12,23 @@ in {
   ];
 
   my.roles = {
+    homenet-gateway = {
+      enable = true;
+
+      upstreamIface = "upstream";
+      downstreamBridge = "downstream";
+
+      homenetGatewayIp4 = "192.168.1.254";
+      homenetIp4 = "192.168.1.";
+      homenetIp4Cidr = 24;
+      homenetDhcp4Start = "192.168.1.100";
+      homenetDhcp4End = "192.168.1.200";
+
+      homenetExtraHosts = {
+        velvet = { mac = "00:02:c9:23:bd:90"; ip = 1; };
+        sw-living-room = { mac = "24:5e:be:53:fc:78"; ip = 50; };
+      };
+    };
     nix-builder.enable = true;
   };
 

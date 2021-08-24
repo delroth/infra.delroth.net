@@ -5,6 +5,7 @@
     ./fifoci-worker.nix
     ./file-server.nix
     ./gaming-client.nix
+    ./homenet-gateway.nix
     ./infra-dev-machine.nix
     ./iot-gateway.nix
     ./irc-client.nix
