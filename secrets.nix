@@ -23,6 +23,7 @@ in
     flexget-config = import ./secrets/flexget-config.nix;
     glome = import ./secrets/glome.nix;
     grafanaSecretKey = builtins.readFile ./secrets/grafana-secret-key;
+    homenet = import ./secrets/homenet.nix;
     iot = import ./secrets/iot.nix;
     matrix = import ./secrets/matrix.nix;
     nasPassword = builtins.readFile ./secrets/nas-password;

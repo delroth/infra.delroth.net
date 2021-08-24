@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, secrets, ... }:
 
 let
   my = import ../..;
@@ -24,10 +24,7 @@ in {
       homenetDhcp4Start = "192.168.1.100";
       homenetDhcp4End = "192.168.1.200";
 
-      homenetExtraHosts = {
-        velvet = { mac = "00:02:c9:23:bd:90"; ip = 1; };
-        sw-living-room = { mac = "24:5e:be:53:fc:78"; ip = 50; };
-      };
+      homenetExtraHosts = secrets.homenet.extraHosts;
     };
     nix-builder.enable = true;
   };
