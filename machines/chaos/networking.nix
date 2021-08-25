@@ -15,7 +15,6 @@ let
   chaosVpn6 = "${wgcfg.subnet6}::${toString chaosPeer}";
 in {
   my.networking.external4 = "195.201.9.37";
-  my.networking.external6 = "2a01:4f8:13b:f15::1";
 
   networking.dhcpcd.enable = false;
   networking.interfaces.ens3 = {

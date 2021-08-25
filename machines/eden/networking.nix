@@ -2,7 +2,6 @@
 
 {
   my.networking.external4 = "172.105.199.155";
-  my.networking.external6 = "2400:8902::f03c:91ff:feaf:723b";
 
   networking.dhcpcd.enable = false;
   networking.interfaces.enp0s3 = {

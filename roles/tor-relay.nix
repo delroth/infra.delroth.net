@@ -36,7 +36,6 @@ in {
         NumCPUs = 0;
         ORPort = [
           { port = 143; }
-          { addr = "[${config.my.networking.external6}]"; port = 143; }
         ];
       };
     };

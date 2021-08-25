@@ -16,11 +16,6 @@
       default = null;
       description = "Main external IPv4 address of the machine.";
     };
-    external6 = mkOption {
-      type = types.nullOr types.str;
-      default = null;
-      description = "Main external IPv6 address of the machine.";
-    };
 
     fqdn = mkOption {
       type = types.str;
