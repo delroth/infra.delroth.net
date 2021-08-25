@@ -11,12 +11,6 @@
       '';
     };
 
-    external4 = mkOption {
-      type = types.nullOr types.str;
-      default = null;
-      description = "Main external IPv4 address of the machine.";
-    };
-
     fqdn = mkOption {
       type = types.str;
       description = "FQDN of the machine.";
