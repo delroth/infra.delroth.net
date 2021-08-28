@@ -20,7 +20,7 @@ in {
       description = "Fiber7 prober (probe id: ${cfg.probeId})";
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = "${pkgs.curl}/bin/curl -s -o /dev/null http://prober7-sink.zekjur.net:42070/lightprobe/${cfg.probeId}";
+        ExecStart = "-${pkgs.curl}/bin/curl -s -o /dev/null http://prober7-sink.zekjur.net:42070/lightprobe/${cfg.probeId}";
         DynamicUser = true;
       };
     };
