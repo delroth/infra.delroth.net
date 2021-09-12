@@ -47,6 +47,9 @@ in {
     # USB RJ45 dongle
     "r8152"
 
+    # Wi-Fi dependency
+    "libarc4"
+
     # TODO: Temporary.
     "wireguard"
   ];
