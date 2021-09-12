@@ -21,22 +21,20 @@ in {
       group = "users";
       dataDir = "/home/delroth/.syncthing";
 
-      declarative = {
-        cert = "${pkgs.writeText "syncthing-cert.pem" secrets.syncthing."${machineName}".cert}";
-        key = "${pkgs.writeText "syncthing-key.pem" secrets.syncthing."${machineName}".key}";
+      cert = "${pkgs.writeText "syncthing-cert.pem" secrets.syncthing."${machineName}".cert}";
+      key = "${pkgs.writeText "syncthing-key.pem" secrets.syncthing."${machineName}".key}";
 
-        inherit devices;
+      inherit devices;
 
-        folders."/home/delroth/Dropbox" = {
-          id = "75wdo-3odel";
-          label = "Dropbox";
-          devices = builtins.attrNames devices;
-          versioning = {
-            type = "staggered";
-            params = {
-              cleanInterval = "3600";
-              maxAge = "31536000";  # 365d
-            };
+      folders."/home/delroth/Dropbox" = {
+        id = "75wdo-3odel";
+        label = "Dropbox";
+        devices = builtins.attrNames devices;
+        versioning = {
+          type = "staggered";
+          params = {
+            cleanInterval = "3600";
+            maxAge = "31536000";  # 365d
           };
         };
       };
