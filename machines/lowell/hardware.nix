@@ -38,4 +38,10 @@
       fi
     '';
   };
+
+  # Battery care: only charge up from 40% to 80%.
+  services.tlp.settings = {
+    START_CHARGE_THRESH_BAT0 = 40;
+    STOP_CHARGE_THRESH_BAT0 = 80;
+  };
 }
