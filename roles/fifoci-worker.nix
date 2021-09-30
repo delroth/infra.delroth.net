@@ -53,6 +53,8 @@ let
 
     unset SSL_CERT_FILE NIX_SSL_CERT_FILE HOME PWD TMP TMPDIR TEMPDIR TEMP
 
+    export LD_PRELOAD="${pkgs.glibc}/lib/libSegFault.so:$LD_PRELOAD"
+
     ${pkgs.coreutils}/bin/env |
       ${pkgs.gnused}/bin/sed -r 's/^([^=]+)=(.*)$/export \1="\2"/'> $out/share/rcfile
 
