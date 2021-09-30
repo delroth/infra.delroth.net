@@ -33,7 +33,7 @@ in {
 
     supportedFeatures = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = [ "big-parallel" ];
+      default = [ "big-parallel" "kvm" ];
       description = ''
         Supported features for package builds on this machine.
       '';
