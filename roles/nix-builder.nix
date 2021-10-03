@@ -45,7 +45,9 @@ in {
       isSystemUser = true;
       shell = pkgs.bash;
       openssh.authorizedKeys.keys = [ secrets.distbuild.ssh-public ];
+      group = cfg.user;
     };
+    users.groups."${cfg.user}" = {};
 
     nix.trustedUsers = [ cfg.user ];
   };
