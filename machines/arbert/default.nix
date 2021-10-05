@@ -24,6 +24,12 @@ in {
   my.roles.fifoci-worker.info = "Intel NUC8i7HVK, NixOS unstable";
   my.roles.nix-builder.speedFactor = 2;
 
+  my.homenet = {
+    enable = true;
+    macAddress = "54:b2:03:8d:5a:c9";
+    ipSuffix = 11;
+  };
+
   # Used as a serial host.
   boot.kernelModules = [ "ftdi_sio" "pl2303" ];
   environment.systemPackages = with pkgs; [ picocom ];

@@ -60,4 +60,10 @@ in {
     syncthing-mirror.enable = true;
     wireguard-peer.enable = true;
   };
+
+  my.homenet = {
+    enable = true;
+    macAddress = "a4:34:d9:af:15:db";
+    ipSuffix = 10;
+  };
 }

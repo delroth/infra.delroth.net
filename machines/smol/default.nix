@@ -21,6 +21,12 @@ in {
     wild-eagle.enable = true;
   };
 
+  my.homenet = {
+    enable = true;
+    macAddress = "f6:d4:20:6a:54:70";
+    ipSuffix = 12;
+  };
+
   # ZFS configuration.
   boot.supportedFilesystems = [ "zfs" ];
   fileSystems."/data" = {
