@@ -50,6 +50,8 @@ in {
       port = 9130;
     };
 
+    my.homenet.ip4TcpPortForward = [ 143 ];
+
     # Exclude Tor diff cache from backups since it causes them to fail due to
     # temp files appearing / disappearing.
     my.backup.extraExclude = [ "/var/lib/tor/diff-cache" ];
