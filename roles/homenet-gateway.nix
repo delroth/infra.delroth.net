@@ -1,13 +1,33 @@
-{ config, lib, ... }:
+{ config, lib, nodes, ... }:
 
 let
   cfg = config.my.roles.homenet-gateway;
 
+  homenetNodes =
+    lib.mapAttrs (name: node: node.config.my.homenet) (
+      lib.flip lib.filterAttrs nodes (name: node:
+        (lib.hasAttrByPath [ "my" "homenet" ] node.config) &&
+        node.config.my.homenet.enable
+      )
+    );
+
   dhcpHosts =
     let
-      lines = lib.mapAttrsToList (hostname: info:
-        "dhcp-host=${info.mac},${cfg.homenetIp4}${toString info.ip},[::${toString info.ip}],${hostname}"
-      ) cfg.homenetExtraHosts;
+      homenetHosts = lib.mapAttrsToList (name: node: {
+        inherit name;
+        mac = node.macAddress;
+        ip = node.ipSuffix;
+      }) homenetNodes;
+
+      extraHosts = lib.mapAttrsToList (name: info: {
+        inherit name;
+        mac = info.mac;
+        ip = info.ip;
+      }) cfg.homenetExtraHosts;
+
+      lines = builtins.map (info:
+        "dhcp-host=${info.mac},${cfg.homenetIp4}${toString info.ip},[::${toString info.ip}],${info.name}"
+      ) (homenetHosts ++ extraHosts);
     in builtins.concatStringsSep "\n" lines;
 in {
   options.my.roles.homenet-gateway = with lib; {
