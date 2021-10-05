@@ -19,7 +19,7 @@ in {
     users.groups.nas.gid = 5000;
     users.users.nas = {
       uid = 5000;
-      extraGroups = [ "nas" ];
+      group = "nas";
       password = secrets.nasPassword;
       isSystemUser = true;
     };
