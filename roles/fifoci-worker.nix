@@ -46,6 +46,7 @@ let
     export NIX_BUILD_TOP=/tmp
     export NIX_STORE=/nix/store
     export IN_NIX_SHELL=impure
+    export NIX_ENFORCE_PURITY=0
 
     ${deps}
 
@@ -98,6 +99,7 @@ in {
     hardware.opengl.enable = true;
 
     users.users.fifoci = {
+      group = "fifoci";
       extraGroups = [ "video" ];
       isSystemUser = true;
       home = homeDir;
@@ -105,6 +107,7 @@ in {
       shell = fifociShell;
       packages = fifociEnvPackages;
     };
+    users.groups.fifoci = {};
 
     systemd.services.fifoci-buildbot-worker = {
       description = "FifoCI Buildbot Worker";
