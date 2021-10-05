@@ -11,6 +11,19 @@ let
       )
     );
 
+  portMaps = let
+    makePortMap = proto: mapName: lib.flatten (
+      lib.mapAttrsToList (name: node:
+        map (port: {
+          inherit proto;
+          sourcePort = port;
+          destination = "${cfg.homenetIp4}${toString node.ipSuffix}";
+        }) node."${mapName}"
+      ) homenetNodes
+    );
+  in
+    (makePortMap "tcp" "ip4TcpPortForward") ++ (makePortMap "udp" "ip4UdpPortForward");
+
   dhcpHosts =
     let
       homenetHosts = lib.mapAttrsToList (name: node: {
@@ -111,6 +124,7 @@ in {
       enable = true;
       externalInterface = cfg.upstreamIface;
       internalInterfaces = [ cfg.downstreamBridge ];
+      forwardPorts = portMaps;
     };
 
     # DHCPv4 / DHCPv6

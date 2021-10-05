@@ -18,9 +18,16 @@
       description = "IP address suffix of this machine within the homenet.";
     };
 
-    ip4PortForward = mkOption {
+    ip4TcpPortForward = mkOption {
       type = types.listOf types.port;
-      description = "List of ports being forwarded from the router's external IPv4.";
+      description = "List of TCP ports being forwarded from the router's external IPv4.";
+      default = [];
+    };
+
+    ip4UdpPortForward = mkOption {
+      type = types.listOf types.port;
+      description = "List of UDP ports being forwarded from the router's external IPv4.";
+      default = [];
     };
   };
 }
