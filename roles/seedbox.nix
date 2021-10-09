@@ -34,8 +34,8 @@ in {
         src = self.fetchFromGitHub {
           owner = "delroth";
           repo = "transmission";
-          rev = "e1d7c3b555469de27efd7a5b29afaca15801990c";
-          sha256 = "1i87qjvkc7gc6bk73b3xi8x55a00xsy2nxhzywqbi9zdbqb9cq52";
+          rev = "5681bd98fefbc58c64d18a98b10bf65e0b90810c";
+          sha256 = "sha256-XQN+nZup2pGQgoKU1FT4Pdo6mHOHZMOYMFIXz73VOQY=";
           fetchSubmodules = true;
         };
       });
@@ -62,7 +62,7 @@ in {
         rpc-whitelist-enabled = true;
         rpc-whitelist = "127.0.0.1";
 
-        verifier-parallelism = 4;
+        verify-threads = 4;
       };
     };
 
