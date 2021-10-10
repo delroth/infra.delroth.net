@@ -10,7 +10,6 @@ in {
   ];
 
   my.networking.externalInterface = "enp5s0";
-  my.networking.pmp.publicPorts = [ 143 ];
 
   my.roles = {
     fiber7-prober.enable = true;

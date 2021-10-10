@@ -12,7 +12,6 @@
      ./networking.nix
      ./nginx.nix
      ./nix.nix
-     ./pmp.nix
      ./remote-access.nix
      ./scheduling.nix
      ./security.nix
