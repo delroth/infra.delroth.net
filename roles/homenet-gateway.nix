@@ -122,6 +122,7 @@ in {
 
     networking.nat = {
       enable = true;
+      enableIPv6 = true;
       externalInterface = cfg.upstreamIface;
       internalInterfaces = [ cfg.downstreamBridge ];
       forwardPorts = portMaps;
