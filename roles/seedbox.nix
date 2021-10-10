@@ -6,7 +6,7 @@ let
   hostname = "seedbox.delroth.net";
 
   transmissionRpcPort = 9091;
-  transmissionExternalPort = 30251;
+  transmissionExternalPort = secrets.seedbox-vpn.publicPort;
 
   downloadBase = "/data/seedbox";
 in {
