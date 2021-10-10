@@ -122,10 +122,15 @@ in {
 
     networking.nat = {
       enable = true;
-      enableIPv6 = true;
       externalInterface = cfg.upstreamIface;
       internalInterfaces = [ cfg.downstreamBridge ];
       forwardPorts = portMaps;
+    };
+
+    # Enable IPv6 forwarding.
+    boot.kernel.sysctl = {
+      "net.ipv6.conf.all.forwarding" = true;
+      "net.ipv6.conf.default.forwarding" = true;
     };
 
     # DHCPv4 / DHCPv6
