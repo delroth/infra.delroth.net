@@ -48,7 +48,7 @@ in {
     "r8152"
 
     # Wi-Fi dependency
-    "libarc4"
+    "libarc4" "ccm"
 
     # TODO: Temporary.
     "wireguard"
