@@ -18,17 +18,38 @@
         };
       };
 
-      blackboxTargets = {job_name, scrape_interval, modules, targets}: let
-        hasBlackbox = node:
-            node.config.services.prometheus.exporters.blackbox.enable;
+      findExportersFor = type: let
+        hasType = node:
+            node.config.services.prometheus.exporters."${type}".enable;
         exporterNodes =
-            builtins.filter hasBlackbox (builtins.attrValues nodes);
-        exporters =
-            map (n: "${n.config.my.networking.fqdn}:443") exporterNodes;
+            builtins.filter hasType (builtins.attrValues nodes);
+      in
+        map (n: "${n.config.my.networking.fqdn}:443") exporterNodes;
+
+      blackboxTargets = {job_name, scrape_interval, modules, targets}: let
+        exporters = findExportersFor "blackbox";
       in baseScrapeConfig // {
         job_name = job_name;
         scrape_interval = scrape_interval;
         metrics_path = "/probe/blackbox";
+        params = {
+          module = modules;
+        };
+        static_configs = map (t: {
+          targets = exporters;
+          labels.target = t;
+        }) targets;
+        relabel_configs = [
+          { source_labels = [ "target" ]; target_label = "__param_target"; }
+        ];
+      };
+
+      snmpTargets = {job_name, scrape_interval, modules, targets}: let
+        exporters = findExportersFor "snmp";
+      in baseScrapeConfig // {
+        job_name = job_name;
+        scrape_interval = scrape_interval;
+        metrics_path = "/snmp/snmp";
         params = {
           module = modules;
         };
@@ -91,6 +112,15 @@
         modules = ["smtp_starttls"];
         targets = [
           "chaos.delroth.net:25"
+        ];
+      })
+
+      (snmpTargets {
+        job_name = "snmp_homenet";
+        scrape_interval = "1m";
+        modules = [ "if_mib" ];
+        targets = [
+          "192.168.1.52"  # sw-living-room
         ];
       })
 

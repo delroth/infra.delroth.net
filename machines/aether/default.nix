@@ -27,6 +27,7 @@ in {
       homenetExtraHosts = secrets.homenet.extraHosts;
     };
     nix-builder.enable = true;
+    snmp-exporter.enable = true;
   };
 
   environment.systemPackages = with pkgs; [

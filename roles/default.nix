@@ -17,6 +17,7 @@
     ./repology-notifier.nix
     ./seedbox.nix
     ./smtp-server.nix
+    ./snmp-exporter.nix
     ./syncthing-mirror.nix
     ./syncthing-relay.nix
     ./tor-relay.nix
