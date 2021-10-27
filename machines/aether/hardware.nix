@@ -3,22 +3,16 @@
 {
   nixpkgs.localSystem = lib.systems.examples.aarch64-multiplatform;
 
-  # Use the vendor kernel.
-  boot.kernelPackages = lib.mkForce (pkgs.linuxPackagesFor (pkgs.buildLinux {
-    src = pkgs.fetchFromGitHub {
-      owner = "SolidRun";
-      repo = "linux-stable";
-      rev = "linux-5.12.y-cex7";
-      sha256 = "16p67q623adyakjpyrx10pxglvdwdvxkwkkfgmlqlpbk0ps8j2jk";
-    };
-    version = "5.12.17";
-    kernelPatches = [ ];
-    structuredExtraConfig = with pkgs.lib.kernel; {
-      CGROUP_FREEZER = yes;
-      EFI_GENERIC_STUB_INITRD_CMDLINE_LOADER = yes;
-      FSL_MC_UAPI_SUPPORT = yes;
-    };
-  }));
+  # Use the latest (5.14+) kernel with a few extra options.
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPatches = [{
+    name = "honeycomb-support";
+    patch = null;
+    extraConfig = ''
+      EFI_GENERIC_STUB_INITRD_CMDLINE_LOADER y
+      FSL_MC_UAPI_SUPPORT y
+    '';
+  }];
 
   boot.initrd.availableKernelModules = [ "nvme" ];
   boot.kernelParams = [
