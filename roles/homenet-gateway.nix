@@ -93,8 +93,9 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    # Setting useDHCP manually on one interface implicitly disables it on other
-    # interfaces, which is the behavior we want..
+    networking.useNetworkd = true;
+    networking.useDHCP = false;
+
     networking.interfaces."${cfg.upstreamIface}" = {
       useDHCP = true;
     };
@@ -108,17 +109,18 @@ in {
       ];
     };
 
-    # Enable DHCPv6 prefix delegation request on the upstream DHCP client, and
-    # be more resilient to DHCP failures by keeping our IPv6 and not falling
-    # back to link local.
-    networking.dhcpcd.extraConfig = ''
-      interface ${cfg.upstreamIface}
-        persistent
-        noipv4ll
-        nodelay
-        ia_na 1
-        ia_pd 2 ${cfg.downstreamBridge}/0
-    '';
+    # TODO: Expose this as a proper nixos option later down the line.
+    systemd.network.networks."40-${cfg.upstreamIface}" = {
+      dhcpV6Config.PrefixDelegationHint = "::/48";
+      # XXX: This should not be needed, but for some reason part of networkd
+      # isn't seeing the RAs and not triggering DHCPv6. Even though some other
+      # part of networkd is properly seeing them and logging accordingly.
+      dhcpV6Config.WithoutRA = "solicit";
+    };
+    systemd.network.networks."40-${cfg.downstreamBridge}" = {
+      networkConfig.IPv6SendRA = true;
+      networkConfig.DHCPv6PrefixDelegation = true;
+    };
 
     networking.nat = {
       enable = true;
