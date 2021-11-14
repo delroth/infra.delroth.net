@@ -9,6 +9,8 @@ in {
   boot.initrd.includeDefaultModules = false;
   boot.extraModulePackages = [
     kernelPackages.al_eth
+    # TODO: stabilize before enabling by default
+    # kernelPackages.al_nand
     kernelPackages.al_thermal
   ];
   boot.kernelParams = [
