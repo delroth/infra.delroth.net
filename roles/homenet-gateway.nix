@@ -120,6 +120,7 @@ in {
     systemd.network.networks."40-${cfg.downstreamBridge}" = {
       networkConfig.IPv6SendRA = true;
       networkConfig.DHCPv6PrefixDelegation = true;
+      ipv6SendRAConfig.Managed = true;
     };
 
     networking.nat = {
