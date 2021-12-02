@@ -58,6 +58,7 @@ in {
         me: delroth
         acme: delroth
         tor: delroth
+        ripe: delroth
         delroth: delroth@gmail.com
         devnull: /dev/null
 
