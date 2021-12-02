@@ -21,8 +21,8 @@ in {
   };
   nix.trustedUsers = [ "root" "@wheel" ];
 
-  nix.daemonNiceLevel = 10;
-  nix.daemonIONiceLevel = 5;
+  nix.daemonCPUSchedPolicy = "idle";
+  nix.daemonIOSchedClass = "idle";
 
   # Support using nix-shell for temporary package installs on infra machines.
   environment.etc.nixpkgs.source = lib.cleanSource pkgs.path;
