@@ -12,6 +12,7 @@ in {
   my.networking.externalInterface = "enp5s0";
 
   my.roles = {
+    archiveteam-warrior.enable = true;
     fiber7-prober.enable = true;
     fifoci-worker.enable = true;
     nix-builder.enable = true;
