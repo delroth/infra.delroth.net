@@ -6,7 +6,7 @@ in {
   config = lib.mkMerge [{
     # Let's Encrypt related configuration.
     security.acme.acceptTerms = true;
-    security.acme.email = "acme@delroth.net";
+    security.acme.defaults.email = "acme@delroth.net";
 
     # User namespaces are required for sandboxing. Better than nothing imo.
     security.allowUserNamespaces = true;
