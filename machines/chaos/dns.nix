@@ -6,19 +6,13 @@ let
     "204.42.254.5"  # puck.nether.net
   ];
 in {
-  # Move stubby to a separate port since we run Bind in front of it.
-  services.stubby.listenAddresses = [
-    "127.0.0.1@8053"
-    "0::1@8053"
-  ];
-
   services.bind = {
     enable = true;
     cacheNetworks = [
       "127.0.0.0/24"
       "::1/128"
     ];
-    forwarders = ["127.0.0.1 port 8053"];
+    forwarders = ["127.0.0.53 port 53"];
     extraOptions = ''
       notify yes;
     '';
