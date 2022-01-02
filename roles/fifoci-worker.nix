@@ -144,6 +144,7 @@ in {
         ExecStart = "${fifociShell}/bin/fifoci-shell -c 'exec ${pkgs.python3Packages.twisted}/bin/twistd --nodaemon --pidfile= --logfile=- --python ${workerDir}/buildbot.tac'";
         Restart = "always";
         RestartSec = "10";
+        Nice = 10;
       };
     };
   };
