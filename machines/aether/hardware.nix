@@ -3,16 +3,8 @@
 {
   nixpkgs.localSystem = lib.systems.examples.aarch64-multiplatform;
 
-  # Use the latest (5.14+) kernel with a few extra options.
+  # Use the latest (5.14+) kernel for proper hardware support.
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelPatches = [{
-    name = "honeycomb-support";
-    patch = null;
-    extraConfig = ''
-      EFI_GENERIC_STUB_INITRD_CMDLINE_LOADER y
-      FSL_MC_UAPI_SUPPORT y
-    '';
-  }];
 
   boot.initrd.availableKernelModules = [ "nvme" ];
   boot.kernelParams = [
