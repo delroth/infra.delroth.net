@@ -59,7 +59,7 @@ in {
     };
 
     environment.systemPackages = with pkgs; [
-      diffoscope qemu morph nix-review
+      colmena diffoscope qemu nix-review
     ];
   };
 }
