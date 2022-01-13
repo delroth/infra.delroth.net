@@ -53,6 +53,7 @@
         }
 
         protocol kernel {
+          scan time 20;
           ipv6 {
             import none;
             export filter {
@@ -73,7 +74,9 @@
               if source = RTS_STATIC then accept; else reject;
             };
             import filter {
-              if net ~ 2a0d:d742:40::/44 then reject; else accept;
+              if net ~ 2a0d:d742:40::/44 then reject;
+              if net ~ fd00:2::/64 then reject;
+              accept;
             };
           };
         }
