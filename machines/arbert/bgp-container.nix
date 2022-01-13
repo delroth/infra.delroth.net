@@ -39,7 +39,6 @@
       services.bird2.enable = true;
       services.bird2.config = ''
         router id 1.2.3.4;
-        debug protocols all;
 
         protocol device {
           scan time 10;
