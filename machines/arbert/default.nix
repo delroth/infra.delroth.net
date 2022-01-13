@@ -4,6 +4,7 @@ let
   my = import ../..;
 in {
   imports = [
+    ./bgp-container.nix
     ./hardware.nix
 
     my.modules
