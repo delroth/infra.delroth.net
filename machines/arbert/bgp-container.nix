@@ -29,11 +29,20 @@
         interfaces.wg-bgp-transit = {
           ipv6.addresses = [
             { address = "fd00:2::2"; prefixLength = 64; }
+          ];
+        };
+
+        interfaces.lo = {
+          ipv6.addresses = [
             { address = "2a0d:d742:40::1"; prefixLength = 44; }
           ];
         };
 
-        firewall.allowPing = true;
+        firewall = {
+          allowPing = true;
+          logRefusedConnections = false;
+          allowedTCPPorts = [ 179 ];
+        };
       };
 
       services.bird2.enable = true;
