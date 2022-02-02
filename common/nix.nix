@@ -3,23 +3,26 @@
 let
   my = import ../.;
 in {
-  nix.package = pkgs.nixUnstable;
-  nix.extraOptions = ''
-    experimental-features = nix-command
-  '';
-
-  nix.autoOptimiseStore = true;
   documentation = {
     doc.enable = false;
     info.enable = false;
     man.enable = true;
     nixos.enable = false;
   };
+
+  nix.package = pkgs.nixUnstable;
+  nix.extraOptions = ''
+    experimental-features = nix-command
+  '';
+
+  nix.settings = {
+    auto-optimise-store = true;
+    trusted-users = [ "root" "@wheel" ];
+  };
   nix.gc = {
     automatic = true;
     options = "--delete-older-than 14d";
   };
-  nix.trustedUsers = [ "root" "@wheel" ];
 
   nix.daemonCPUSchedPolicy = "idle";
   nix.daemonIOSchedClass = "idle";
