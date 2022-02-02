@@ -80,7 +80,7 @@ in {
     systemd = let
       patchedServices = lib.genAttrs cfg.isolateServices (svcname: {
         bindsTo = [ "wireguard.service" ];
-        after = [ "wireguard.service "];
+        after = [ "wireguard.service"];
         unitConfig.JoinsNamespaceOf = "wireguard-netns.service";
         serviceConfig = {
           PrivateNetwork = true;
