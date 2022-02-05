@@ -25,7 +25,7 @@ in {
     boot.kernel.randstructSeed = "${secrets.randstructSeed}";
 
     # Imported from hardened.nix.
-    nix.allowedUsers = lib.mkDefault [ "@users" ];
+    nix.settings.allowed-users = lib.mkDefault [ "@users" ];
     security.lockKernelModules = lib.mkDefault true;
     security.protectKernelImage = lib.mkDefault true;
     security.apparmor.enable = lib.mkDefault true;

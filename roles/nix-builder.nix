@@ -49,6 +49,6 @@ in {
     };
     users.groups."${cfg.user}" = {};
 
-    nix.trustedUsers = [ cfg.user ];
+    nix.settings.trusted-users = [ cfg.user ];
   };
 }
