@@ -1,4 +1,4 @@
-{ lib, machineName, pkgs, ... }:
+{ config, lib, machineName, pkgs, ... }:
 
 {
   options.my.networking = with lib; {
@@ -42,6 +42,11 @@
 
     # Too spammy on most servers that get scanned.
     networking.firewall.logRefusedConnections = false;
+
+    # Leaks IPv6 route table entries due to kernel bug. This leads to degraded
+    # IPv6 performance in some situations.
+    networking.firewall.checkReversePath =
+        config.boot.kernelPackages.kernelAtLeast "5.16";
 
     boot.kernel.sysctl = {
       "net.ipv4.tcp_fastopen" = 3;  # Enable for incoming and outgoing.
