@@ -13,6 +13,7 @@
     ./matrix-synapse.nix
     ./music-server.nix
     ./nas.nix
+    ./nas-client.nix
     ./nix-builder.nix
     ./publibike-locator.nix
     ./repology-notifier.nix

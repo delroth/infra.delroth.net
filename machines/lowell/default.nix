@@ -31,9 +31,6 @@ in {
   programs.ssh.startAgent = true;
 
   boot.kernelModules = [
-    # For CIFS mounting.
-    "cifs" "cmac" "hmac" "md4" "md5" "sha256" "sha512"
-
     # FTDI / Serial
     "ftdi_sio" "pl2303"
 
@@ -53,6 +50,10 @@ in {
   my.roles = {
     gaming-client.enable = true;
     infra-dev-machine.enable = true;
+    nas-client = {
+      enable = true;
+      server = "smol.delroth.net";
+    };
     syncthing-mirror.enable = true;
     wireguard-peer.enable = true;
   };
