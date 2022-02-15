@@ -11,7 +11,7 @@ in {
   ];
 
   my.roles = {
-    file-server = {
+    nas = {
       enable = true;
       root = "/data";
       shareName = "data";

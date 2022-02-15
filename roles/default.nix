@@ -4,7 +4,6 @@
     ./blackbox-prober.nix
     ./fiber7-prober.nix
     ./fifoci-worker.nix
-    ./file-server.nix
     ./gaming-client.nix
     ./homenet-gateway.nix
     ./infra-dev-machine.nix
@@ -13,6 +12,7 @@
     ./matrix-client.nix
     ./matrix-synapse.nix
     ./music-server.nix
+    ./nas.nix
     ./nix-builder.nix
     ./publibike-locator.nix
     ./repology-notifier.nix

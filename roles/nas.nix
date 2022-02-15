@@ -1,9 +1,9 @@
 { config, lib, machineName, secrets, ... }:
 
 let
-  cfg = config.my.roles.file-server;
+  cfg = config.my.roles.nas;
 in {
-  options.my.roles.file-server = with lib; {
+  options.my.roles.nas = with lib; {
     enable = mkEnableOption "File server";
     root = mkOption {
       type = types.str;
