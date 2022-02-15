@@ -59,7 +59,7 @@ in {
 
   my.homenet = {
     enable = true;
-    macAddress = "a4:34:d9:af:15:db";
+    macAddress = "4c:03:4f:fc:48:38";
     ipSuffix = 10;
   };
 }
