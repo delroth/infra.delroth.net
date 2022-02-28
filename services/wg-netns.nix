@@ -144,7 +144,7 @@ in {
               # Note: creating the iface in the outer netns means that wg will
               # "remember" the packets need to go through the outer netns.
               ${pkgs.iproute}/bin/ip link add wireguard type wireguard
-              ${pkgs.wireguard}/bin/wg set wireguard \
+              ${pkgs.wireguard-tools}/bin/wg set wireguard \
                   private-key ${privKey} \
                   peer '${cfg.peerPublicKey}' \
                   endpoint '${cfg.endpointAddr}' \
