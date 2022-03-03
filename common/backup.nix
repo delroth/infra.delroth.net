@@ -75,6 +75,9 @@
 
     systemd.services.borgbackup-job-default.wants = [ "network-online.target" ];
 
+    # Ignore warnings, e.g. "file has changed during backup".
+    systemd.services.borgbackup-job-default.serviceConfig.SuccessExitStatus = "1";
+
     # To allow mounting remote backups.
     boot.kernelModules = [ "fuse" ];
   };
