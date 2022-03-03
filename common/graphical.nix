@@ -16,7 +16,7 @@
     fonts = {
       enableDefaultFonts = true;
       fonts = with pkgs; [
-        google-fonts liberation_ttf opensans-ttf roboto roboto-mono
+        google-fonts liberation_ttf open-sans roboto roboto-mono
         kochi-substitute
       ];
     };
