@@ -42,7 +42,7 @@
         "*.vdi" "*.qcow2" "*.vmdk" "*.ova"
       ] ++ config.my.backup.extraExclude;
 
-      extraCreateArgs = "--one-file-system";
+      extraCreateArgs = "--one-file-system --stats";
 
       startAt = "daily";
       prune = {
