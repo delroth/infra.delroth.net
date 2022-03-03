@@ -1,4 +1,4 @@
-{ pkgs, secrets, ... }:
+{ pkgs, secrets, nodes, ... }:
 {
   networking.wireguard.interfaces.wg-bgp-transit = {
     listenPort = 51821;
@@ -17,7 +17,6 @@
 
   containers.bgp = {
     autoStart = true;
-    ephemeral = true;
     privateNetwork = true;
     interfaces = [ "wg-bgp-transit" ];
     config = {
@@ -44,6 +43,8 @@
           allowedTCPPorts = [ 179 ];
         };
       };
+
+      environment.etc."resolv.conf".text = "nameserver 2001:4860:4860::8844\n";
 
       services.bird2.enable = true;
       services.bird2.config = ''
@@ -90,6 +91,38 @@
           };
         }
       '';
+
+      services.tor = {
+        enable = true;
+        openFirewall = true;
+
+        relay = {
+          enable = true;
+          role = "relay";
+        };
+
+        settings = {
+          ContactInfo = "tor+delrothnet@delroth.net";
+          ControlPort = 9051;
+
+          # XXX: kind of a hack, but meh.
+          MyFamily = nodes."arbert.delroth.net".config.services.tor.settings.MyFamily;
+          Nickname = "arbertDelrothNet";
+          NumCPUs = 1;
+          ORPort = [
+            # This one is just to make Tor happy, we're not actually reachable
+            # over IPv4.
+            { addr = "0.0.0.0"; port = 143; }
+            { addr = "[2a0d:d742:40::1]"; port = 143; }
+          ];
+
+          # Don't abuse the fair use transit too much.
+          AccountingStart = "day 0:00";
+          AccountingMax = "100 GBytes";
+          RelayBandwidthRate = "1 MBytes";
+          RelayBandwidthBurst = "10 MBytes";
+        };
+      };
 
       environment.systemPackages = with pkgs; [
         tcpdump
