@@ -40,8 +40,8 @@ in {
   environment.variables.NIX_AUTO_RUN = "1";
   programs.command-not-found.dbPath = let
     channelTarball = pkgs.fetchurl {
-      url = "https://releases.nixos.org/nixos/unstable/nixos-21.05pre275822.916ee862e87/nixexprs.tar.xz";
-      sha256 = "0zg4crz5i01myblc7jf87rk6ql1ymf0q4j6babkmaa7r7ichsghs";
+      url = "https://releases.nixos.org/nixos/unstable/nixos-22.05pre358986.062a0c5437b/nixexprs.tar.xz";
+      sha256 = "sha256-ca8tlBaVowbYJKoHQb8T4FdYccaGODeKPdEz/L0EbJM=";
     };
   in
     pkgs.runCommand "programs.sqlite" {} ''
