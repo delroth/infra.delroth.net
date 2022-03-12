@@ -10,6 +10,7 @@
     ./iot-gateway.nix
     ./irc-client.nix
     ./matrix-client.nix
+    ./matrix-synatainer.nix
     ./matrix-synapse.nix
     ./music-server.nix
     ./nas.nix

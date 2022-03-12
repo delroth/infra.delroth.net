@@ -31,6 +31,7 @@ in {
     iot-gateway.enable = true;
     irc-client.enable = true;
     matrix-client.enable = true;
+    matrix-synatainer.enable = true;
     matrix-synapse.enable = true;
     music-server.enable = true;
     nix-builder.enable = true;
