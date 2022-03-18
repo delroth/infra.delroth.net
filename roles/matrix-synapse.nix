@@ -18,34 +18,33 @@ in {
 
     services.matrix-synapse = {
       enable = true;
-      server_name = domain;
-      public_baseurl = "https://matrix.${domain}";
 
-      registration_shared_secret = secrets.matrix.registrationSharedSecret;
+      settings = {
+        server_name = domain;
+        public_baseurl = "https://matrix.${domain}";
 
-      listeners = [
-        # Federation
-        {
-          bind_address = "127.0.0.1";
-          port = federationPort.private;
-          tls = false;  # Terminated by nginx.
-          x_forwarded = true;
-          resources = [ { names = [ "federation" ]; compress = false; } ];
-        }
+        registration_shared_secret = secrets.matrix.registrationSharedSecret;
 
-        # Client
-        {
-          bind_address = "127.0.0.1";
-          port = clientPort.private;
-          tls = false;  # Terminated by nginx.
-          x_forwarded = true;
-          resources = [ { names = [ "client" ]; compress = false; } ];
-        }
-      ];
+        listeners = [
+          # Federation
+          {
+            bind_addresses = [ "127.0.0.1" ];
+            port = federationPort.private;
+            tls = false;  # Terminated by nginx.
+            x_forwarded = true;
+            resources = [ { names = [ "federation" ]; compress = false; } ];
+          }
 
-      extraConfig = ''
-        experimental_features: { spaces_enabled: true }
-      '';
+          # Client
+          {
+            bind_addresses = [ "127.0.0.1" ];
+            port = clientPort.private;
+            tls = false;  # Terminated by nginx.
+            x_forwarded = true;
+            resources = [ { names = [ "client" ]; compress = false; } ];
+          }
+        ];
+      };
     };
 
     services.nginx = {
