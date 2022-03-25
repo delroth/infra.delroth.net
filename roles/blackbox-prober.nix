@@ -29,6 +29,11 @@ let
           { send = "QUIT"; }
         ];
       };
+
+      icmp = {
+        prober = "icmp";
+        timeout = "5s";
+      };
     };
   };
 in {

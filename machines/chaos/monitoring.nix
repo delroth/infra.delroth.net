@@ -115,6 +115,19 @@
         ];
       })
 
+      (blackboxTargets {
+        job_name = "icmp_probe";
+        scrape_interval = "1m";
+        modules = ["icmp"];
+        targets = [
+          "8.8.8.8"
+          "2001:4860:4860::8844"
+          "aether.delroth.net"
+          "chaos.delroth.net"
+          "eden.delroth.net"
+        ];
+      })
+
       (snmpTargets {
         job_name = "snmp_homenet";
         scrape_interval = "1m";
