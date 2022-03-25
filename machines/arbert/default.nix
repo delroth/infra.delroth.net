@@ -14,6 +14,7 @@ in {
 
   my.roles = {
     archiveteam-warrior.enable = true;
+    blackbox-prober.enable = true;
     fiber7-prober.enable = true;
     fifoci-worker.enable = true;
     land-drake.enable = true;
