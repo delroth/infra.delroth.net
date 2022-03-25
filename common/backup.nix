@@ -78,6 +78,9 @@
     # Ignore warnings, e.g. "file has changed during backup".
     systemd.services.borgbackup-job-default.serviceConfig.SuccessExitStatus = "1";
 
+    # Be a bit more resilient to transient network failures.
+    systemd.services.borgbackup-job-default.serviceConfig.Restart = "on-failure";
+
     # To allow mounting remote backups.
     boot.kernelModules = [ "fuse" ];
   };
