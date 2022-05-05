@@ -3,7 +3,7 @@ groups:
   rules:
 
   - record: home_temperature
-    expr: rtl_433_temperature_celsius{channel="1",id="160"}
+    expr: rtl_433_temperature_celsius{channel="1",id="146"}
     labels:
       location: outside
 
