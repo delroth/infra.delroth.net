@@ -43,6 +43,9 @@ in {
     # Wi-Fi dependency
     "libarc4" "ccm"
 
+    # USB audio
+    "snd-usb-audio"
+
     # TODO: Temporary.
     "wireguard"
   ];
