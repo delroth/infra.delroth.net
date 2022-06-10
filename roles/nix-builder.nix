@@ -38,6 +38,15 @@ in {
         Supported features for package builds on this machine.
       '';
     };
+
+    systems = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ config.nixpkgs.localSystem.system ];
+      description = ''
+        System types that this builder can build for. Example: x86_64-linux,
+        aarch64-linux, etc.
+      '';
+    };
   };
 
   config = lib.mkIf cfg.enable {
