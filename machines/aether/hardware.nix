@@ -13,6 +13,7 @@
       "pci=pcie_bus_perf"
       "arm-smmu.disable_bypass=0"
       "iommu.passthrough=1"
+      "mitigations=off"  # Significant performance boost, not multi-user.
   ];
 
   boot.loader.systemd-boot.enable = true;
