@@ -25,6 +25,14 @@ in {
   };
 
   config = lib.mkIf config.my.roles.smtp-server.enable {
+    services.opendkim = {
+      enable = true;
+      user = "postfix";
+      group = "postfix";
+      domains = "csl:${config.networking.domain}";
+      selector = "default";
+    };
+
     services.postfix = {
       enable = true;
       enableSubmission = true;
@@ -37,11 +45,14 @@ in {
       recipientDelimiter = "+";
       rootAlias = "delroth";
 
-      config = {
+      config = rec {
         cyrus_sasl_config_path = "${sasl-conf-dir}";
         smtpd_sasl_auth_enable = true;
         smtpd_tls_auth_only = true;
         smtpd_sasl_local_domain = config.my.networking.fqdn;
+
+        smtpd_milters = "unix:/run/opendkim/opendkim.sock";
+        non_smtpd_milters = smtpd_milters;
       };
       destination = [
         config.my.networking.fqdn
