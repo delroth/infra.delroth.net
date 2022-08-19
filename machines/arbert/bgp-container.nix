@@ -4,6 +4,7 @@
     listenPort = 51821;
     privateKey = secrets.bgp.tunnel.privkey;
     ips = [ "fd00:2::2/64" ];
+    allowedIPsAsRoutes = false;
     peers = [
       {
         name = "bgp-transit";
@@ -22,6 +23,10 @@
     config = {
       networking = {
         hostName = "bgp";
+        useHostResolvConf = false;
+        useNetworkd = true;
+
+        nameservers = [ "2001:4860:4860::8844" ];
         domain = "delroth.net";
         search = [ "delroth.net" ];
 
@@ -43,8 +48,6 @@
           allowedTCPPorts = [ 179 ];
         };
       };
-
-      environment.etc."resolv.conf".text = "nameserver 2001:4860:4860::8844\n";
 
       services.bird2.enable = true;
       services.bird2.config = ''
@@ -130,4 +133,9 @@
       ];
     };
   };
+
+  # Add some dependencies on the VPN tunnel being properly configured before
+  # stealing the network interface from the host.
+  systemd.services."container@bgp".after = [ "wireguard-wg-bgp-transit.service" ];
+  systemd.services."container@bgp".bindsTo = [ "wireguard-wg-bgp-transit.service" ];
 }
