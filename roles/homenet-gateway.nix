@@ -109,8 +109,19 @@ in {
       ];
     };
 
+    networking.vlans.iot = {
+      id = 66;
+      interface = cfg.downstreamBridge;
+    };
+    networking.interfaces.iot = {
+      ipv4.addresses = [
+        { address = "192.168.66.254"; prefixLength = 24; }
+      ];
+    };
+
     # TODO: Expose this as a proper nixos option later down the line.
     systemd.network.networks."40-${cfg.upstreamIface}" = {
+      networkConfig.KeepConfiguration = "dhcp";
       dhcpV6Config.PrefixDelegationHint = "::/48";
       # XXX: This should not be needed, but for some reason part of networkd
       # isn't seeing the RAs and not triggering DHCPv6. Even though some other
@@ -126,7 +137,10 @@ in {
     networking.nat = {
       enable = true;
       externalInterface = cfg.upstreamIface;
-      internalInterfaces = [ cfg.downstreamBridge ];
+      internalInterfaces = [
+        cfg.downstreamBridge
+        "iot@downstream"
+      ];
       forwardPorts = portMaps;
     };
 
