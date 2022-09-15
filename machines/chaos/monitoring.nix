@@ -162,7 +162,7 @@
       configuration = {
         global = {
           smtp_smarthost = "127.0.0.1:25";
-          smtp_from = "alerts@chaos.delroth.net";
+          smtp_from = "alerts@delroth.net";
           smtp_require_tls = false;
         };
 
