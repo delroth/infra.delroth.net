@@ -8,7 +8,7 @@ groups:
       location: outside
 
   - record: home_temperature
-    expr: rtl_433_temperature_celsius{channel="2",id="63"}
+    expr: rtl_433_temperature_celsius{channel="2",id="241"}
     labels:
       location: living-room
 
