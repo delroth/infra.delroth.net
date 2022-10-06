@@ -14,23 +14,37 @@ let
   chaosVpn4 = "${wgcfg.subnet4}.${toString chaosPeer}";
   chaosVpn6 = "${wgcfg.subnet6}::${toString chaosPeer}";
 in {
-  networking.dhcpcd.enable = false;
+  networking.useNetworkd = true;
   networking.interfaces.ens3 = {
     ipv4.addresses = [
       { address = "195.201.9.37"; prefixLength = 26; }
       { address = vpnIn4; prefixLength = 26; }
     ];
+    ipv4.routes = [
+      {
+        address = "0.0.0.0";
+        prefixLength = 0;
+        via = "195.201.9.58";
+        options.src = "195.201.9.37";
+        options.onlink = true;
+      }
+    ];
+
     ipv6.addresses = [
       { address = "2a01:4f8:13b:f15::1"; prefixLength = 64; }
       { address = vpnIn6; prefixLength = 64; }
     ];
+    ipv6.routes = [
+      {
+        address = "::";
+        prefixLength = 0;
+        via = "fe80::1";
+        options.src = "2a01:4f8:13b:f15::1";
+        options.onlink = true;
+      }
+    ];
   };
-  networking.defaultGateway = "195.201.9.58";
-  networking.defaultGateway6 = {
-    address = "fe80::1";
-    interface = "ens3";
-    sourceAddress = "2a01:4f8:13b:f15::1";
-  };
+
   my.networking.externalInterface = "ens3";
 
   # Routing configuration for vpn-in to lowell.
