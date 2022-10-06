@@ -45,6 +45,11 @@ in {
     ];
   };
 
+  # XXX: Disable RAs on the interface.
+  systemd.network.networks."40-ens3".networkConfig.IPv6AcceptRA = false;
+
+  systemd.services.systemd-networkd.environment.SYSTEMD_LOG_LEVEL = "debug";
+
   my.networking.externalInterface = "ens3";
 
   # Routing configuration for vpn-in to lowell.
