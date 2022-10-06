@@ -17,7 +17,7 @@ in {
     wget chromium most mpv feh lxqt.pavucontrol-qt acpi gitFull dex gnupg
     cifs-utils tpm2-tools git-crypt python3 pwgen keepassxc vulnix electrum
     lm_sensors picocom whois transmission scrot imgurbash2 vim_delroth
-    gnome3.eog evince libnotify hexedit blitzloop wireguard-tools notify-osd
+    gnome.eog evince libnotify hexedit blitzloop wireguard-tools notify-osd
     glome file unzip
 
     config.boot.kernelPackages.perf

@@ -9,7 +9,7 @@ let
       sha256 = "76383bb3e59efa6ce0be1797ed70207d7d1e421611df3aceb269673c4a77c2cc";
     };
 
-    buildInputs = with python3Packages; [ setuptools_scm ];
+    buildInputs = with python3Packages; [ setuptools-scm ];
     propagatedBuildInputs = [ freetype ];
     checkInputs = with python3Packages; [ pytest ];
 
@@ -89,7 +89,7 @@ python3Packages.buildPythonApplication rec {
 
   propagatedBuildInputs = with python3Packages; [
     bottle
-    ConfigArgParse
+    configargparse
     freetype-py
     jaconv
     pympv

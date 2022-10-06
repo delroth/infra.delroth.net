@@ -65,7 +65,7 @@ in {
     };
 
     environment.systemPackages = with pkgs; [
-      colmena diffoscope qemu nix-review
+      colmena diffoscope qemu nixpkgs-review
     ];
   };
 }
