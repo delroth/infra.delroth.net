@@ -119,6 +119,8 @@ in {
       ];
     };
 
+    systemd.services.systemd-networkd.environment.SYSTEMD_LOG_LEVEL = "debug";
+
     # TODO: Expose this as a proper nixos option later down the line.
     systemd.network.networks."40-${cfg.upstreamIface}" = {
       networkConfig.KeepConfiguration = "dhcp";
