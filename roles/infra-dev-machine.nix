@@ -33,21 +33,16 @@ in {
               node.config.my.roles.nix-builder.enable
             );
 
-          builderSystemNodes = lib.flatten (lib.flip builtins.map builderNodes (node:
-            lib.flip builtins.map node.config.my.roles.nix-builder.systems (system:
-              node // { inherit system; }
-            )
-          ));
-
           extraNodes = lib.flip builtins.map cfg.extraBuilders (node: {
             sshKey = "/etc/${distbuildPrivKeyEtcPath}";
           } // node);
         in
-          lib.flip builtins.map builderSystemNodes (node: {
+          lib.flip builtins.map builderNodes (node: {
             hostName = node.config.networking.hostName;
             sshUser = node.config.my.roles.nix-builder.user;
             sshKey = "/etc/${distbuildPrivKeyEtcPath}";
-            system = node.system;
+            protocol = "ssh-ng";
+            systems = node.config.my.roles.nix-builder.systems;
             maxJobs = node.config.my.roles.nix-builder.maxJobs;
             speedFactor = node.config.my.roles.nix-builder.speedFactor;
             supportedFeatures =
