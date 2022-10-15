@@ -132,7 +132,9 @@ in {
     };
     systemd.network.networks."40-${cfg.downstreamBridge}" = {
       networkConfig.IPv6SendRA = true;
-      networkConfig.DHCPv6PrefixDelegation = true;
+      networkConfig.DHCPPrefixDelegation = true;
+      dhcpPrefixDelegationConfig.UplinkInterface = "upstream";
+      dhcpPrefixDelegationConfig.Token = "::ff";
       ipv6SendRAConfig.Managed = true;
     };
 
