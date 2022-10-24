@@ -190,12 +190,12 @@
 
   services.grafana = {
     enable = true;
-    domain = "mon.delroth.net";
-    rootUrl = "https://mon.delroth.net/";
-    security.secretKey = secrets.grafanaSecretKey;
-    extraOptions = {
-      AUTH_PROXY_ENABLED = "true";
-      AUTH_PROXY_HEADER_NAME = "X-User";
+    settings = {
+      server.domain = "mon.delroth.net";
+      server.root_url = "https://mon.delroth.net/";
+      security.secret_key = secrets.grafanaSecretKey;
+      "auth.proxy".enabled = true;
+      "auth.proxy".header_name = "X-User";
     };
   };
 }

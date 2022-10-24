@@ -157,7 +157,7 @@
 
       "mon.delroth.net" = withSso {
         appName = "grafana";
-        vhost = localReverseProxy config.services.grafana.port;
+        vhost = localReverseProxy config.services.grafana.settings.server.http_port;
       };
       "am.delroth.net" = withSso {
         appName = "alertmanager";
@@ -174,7 +174,7 @@
 
       # Allow Grafana snapshot access without auth.
       "mon-public.delroth.net" = let
-        vhost = (localReverseProxy config.services.grafana.port).locations."/";
+        vhost = (localReverseProxy config.services.grafana.settings.server.http_port).locations."/";
       in withSsl {
         locations."/api/snapshots" = vhost;
         locations."/dashboard/snapshot" = vhost;
