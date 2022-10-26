@@ -1,7 +1,11 @@
 { config, lib, pkgs, ... }:
 
 let
-  kernelPackages = import ./kernel.nix { inherit pkgs; };
+  kernelPackages = import ./kernel.nix {
+    pkgs = import <nixpkgs> {
+      crossSystem = config.nixpkgs.localSystem;
+    };
+  };
 in {
   nixpkgs.localSystem = lib.systems.examples.aarch64-multiplatform;
 
