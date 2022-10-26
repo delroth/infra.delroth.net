@@ -1,10 +1,15 @@
 { config, lib, pkgs, ... }:
 
-{
+let
+  pkgsCross = import <nixpkgs> {
+    crossSystem = lib.systems.examples.aarch64-multiplatform;
+  };
+in {
   nixpkgs.localSystem = lib.systems.examples.aarch64-multiplatform;
 
-  # Use the latest (5.14+) kernel for proper hardware support.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # Use the latest (5.14+) kernel for proper hardware support. Cross-compile
+  # for more build capacity.
+  boot.kernelPackages = pkgsCross.linuxPackages_latest;
 
   boot.initrd.availableKernelModules = [ "nvme" ];
   boot.kernelParams = [
