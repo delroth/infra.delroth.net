@@ -22,6 +22,7 @@ in {
         (name: repocfg: {
           path = "${cfg.basePath}/${name}";
           authorizedKeys = repocfg.keys;
+          quota = repocfg.quota;
         })
         secrets.backup.repos;
     in
