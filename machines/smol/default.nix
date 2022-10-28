@@ -11,6 +11,7 @@ in {
   ];
 
   my.roles = {
+    backup-receiver.enable = true;
     nas = {
       enable = true;
       root = "/data";

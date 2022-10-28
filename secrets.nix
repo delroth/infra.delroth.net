@@ -8,6 +8,7 @@ in
     backup = {
       location = builtins.readFile ./secrets/backup-location;
       pass = import ./secrets/backup-pass.nix;
+      repos = import ./secrets/backup-repos.nix;
       sshHostPub = ./secrets/backup-ssh-host-pub;
       sshKey = ./secrets/backup-ssh-key;
     };

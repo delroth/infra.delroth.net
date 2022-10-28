@@ -1,6 +1,7 @@
 {
   imports = [
     ./archiveteam-warrior.nix
+    ./backup-receiver.nix
     ./blackbox-prober.nix
     ./fiber7-prober.nix
     ./fifoci-worker.nix
