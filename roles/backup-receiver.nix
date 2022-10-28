@@ -26,5 +26,8 @@ in {
         secrets.backup.repos;
     in
       repos;
+
+    # Don't backup the backups.
+    my.backup.extraExclude = [ cfg.basePath ];
   };
 }
