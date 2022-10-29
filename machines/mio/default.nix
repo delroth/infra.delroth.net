@@ -12,6 +12,7 @@ in {
   my.networking.externalInterface = "eth0";
 
   my.roles = {
+    infra-dev-machine.enable = true;
     nix-builder.enable = true;
   };
 
