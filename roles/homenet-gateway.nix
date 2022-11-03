@@ -131,6 +131,7 @@ in {
       dhcpV6Config.WithoutRA = "solicit";
     };
     systemd.network.networks."40-${cfg.downstreamBridge}" = {
+      networkConfig.IPv6AcceptRA = false;
       networkConfig.IPv6SendRA = true;
       networkConfig.DHCPPrefixDelegation = true;
       dhcpPrefixDelegationConfig.UplinkInterface = "upstream";
