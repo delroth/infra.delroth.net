@@ -28,6 +28,11 @@ in {
     ipSuffix = 12;
   };
 
+  # Network configuration.
+  networking.useNetworkd = true;
+  networking.useDHCP = false;
+  networking.interfaces.enp0s2.useDHCP = true;
+
   # ZFS configuration.
   boot.supportedFilesystems = [ "zfs" ];
   fileSystems."/data" = {
