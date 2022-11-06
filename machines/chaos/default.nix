@@ -30,6 +30,7 @@ in {
     blackbox-prober.enable = true;
     iot-gateway.enable = true;
     irc-client.enable = true;
+    mastodon-server.enable = true;
     matrix-client.enable = true;
     matrix-synatainer.enable = true;
     matrix-synapse.enable = true;

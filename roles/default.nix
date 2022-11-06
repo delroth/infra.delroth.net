@@ -10,6 +10,7 @@
     ./infra-dev-machine.nix
     ./iot-gateway.nix
     ./irc-client.nix
+    ./mastodon-server.nix
     ./matrix-client.nix
     ./matrix-synatainer.nix
     ./matrix-synapse.nix
