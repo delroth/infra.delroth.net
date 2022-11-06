@@ -8,7 +8,7 @@ buildLinux (args // rec {
     owner = "delroth";
     repo = "linux-qnap-tsx32x";
     rev = "qnap-tsx32x";
-    hash = "sha256-4D4RE7WZBp3HzZWO7vmCQBcXsphat0Dk8YrX/u/KHkU=";
+    hash = "sha256-LMR8P6C5UZxC06QG3g5VebyRA1QrzUAtP31a/J32DNI=";
   };
 
   defconfig = "qnap-tsx32x_defconfig";
