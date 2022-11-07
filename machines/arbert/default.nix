@@ -10,7 +10,7 @@ in {
     my.modules
   ];
 
-  my.networking.externalInterface = "enp5s0";
+  my.networking.externalInterface = "eno1";
 
   my.roles = {
     archiveteam-warrior.enable = true;
