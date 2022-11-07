@@ -25,6 +25,10 @@
 
     networking.firewall.allowPing = true;
 
+    # Default to systemd-networkd usage.
+    networking.useNetworkd = lib.mkDefault true;
+    systemd.network.wait-online.anyInterface = lib.mkDefault config.networking.useDHCP;
+
     # Use systemd-resolved for DoT support.
     services.resolved = {
       enable = true;

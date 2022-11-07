@@ -14,7 +14,7 @@ let
   chaosVpn4 = "${wgcfg.subnet4}.${toString chaosPeer}";
   chaosVpn6 = "${wgcfg.subnet6}::${toString chaosPeer}";
 in {
-  networking.useNetworkd = true;
+  networking.useDHCP = false;
   networking.interfaces.ens3 = {
     ipv4.addresses = [
       { address = "195.201.9.37"; prefixLength = 26; }

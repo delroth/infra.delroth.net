@@ -93,7 +93,6 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    networking.useNetworkd = true;
     networking.useDHCP = false;
 
     networking.interfaces."${cfg.upstreamIface}" = {

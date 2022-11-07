@@ -29,7 +29,6 @@ in {
   };
 
   # Network configuration.
-  networking.useNetworkd = true;
   networking.useDHCP = false;
   networking.interfaces.enp0s2.useDHCP = true;
 
