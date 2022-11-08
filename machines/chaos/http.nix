@@ -157,6 +157,11 @@
             return 301 https://mastodon.delroth.net$request_uri;
           '';
         };
+        locations."/.well-known/nodeinfo" = {
+          extraConfig = ''
+            return 301 https://mastodon.delroth.net$request_uri;
+          '';
+        };
       };
       "japan2018.delroth.net" = localRoot "/srv/http/japan2018";
 
