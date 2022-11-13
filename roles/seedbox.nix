@@ -51,6 +51,14 @@ in {
       };
     };
 
+    # Transmission 3.0 leaks memory like crazy, restrict it to 2GB RAM and auto
+    # restart.
+    systemd.services.transmission.serviceConfig = {
+      Restart = "always";
+      RestartSec = 5;
+      MemoryMax = "2G";
+    };
+
     services.flexget = {
       enable = true;
       user = "transmission";
