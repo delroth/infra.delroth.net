@@ -36,6 +36,7 @@
       extraGroups = [ "video" ];
     };
 
+    my.monitoring.roaming = lib.mkDefault true;
     my.stateless.enable = lib.mkDefault false;
   };
 }

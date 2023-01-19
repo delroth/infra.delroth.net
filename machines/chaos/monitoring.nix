@@ -73,7 +73,7 @@
           nodesWithExporter =
               builtins.filter hasExporter (builtins.attrValues nodes);
 
-          nodeIsRoaming = node: node.config.my.laptop.enable;
+          nodeIsRoaming = node: node.config.my.monitoring.roaming;
           partByRoaming = builtins.partition nodeIsRoaming nodesWithExporter;
 
           nodeTarget = node: "${node.config.my.networking.fqdn}:443";
