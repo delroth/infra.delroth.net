@@ -80,7 +80,7 @@ let
   ]);
 
   fifociEnvPackages = with pkgs; [
-    bash ccache ffmpeg fifociPython git imagemagick ninja python3Packages.poetry
+    bash ccache ffmpeg fifociPython git imagemagick ninja poetry
   ];
 in {
   options.my.roles.fifoci-worker = {
