@@ -74,7 +74,7 @@ let
   '';
 
   fifociPython = pkgs.python3.withPackages (p: [
-    p.buildbot-worker p.pillow p.requests
+    p.buildbot-worker
   ]);
 
   fifociEnvPackages = with pkgs; [
@@ -124,8 +124,6 @@ in {
         if ! [ -d fifoci ]; then
           git clone https://github.com/dolphin-emu/fifoci
         fi
-
-        rm -f python && ln -sf ${fifociPython}/bin/python python
 
         # Clean up build directories since cmake can't figure out paths might
         # have changes when a new system is pushed.
