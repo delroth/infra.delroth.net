@@ -8,9 +8,6 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    # nginx can't resolve the hostname at build time otherwise.
-    services.nginx.validateConfig = false;
-
     services.nginx.virtualHosts = {
       # Used to bypass CORS.
       "publibike-api.delroth.net" = {
