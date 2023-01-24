@@ -4,6 +4,16 @@ let
   pkgsCross = import <nixpkgs> {
     crossSystem = lib.systems.examples.aarch64-multiplatform;
   };
+
+  restool = pkgs.restool.overrideAttrs (prev: final: {
+    version = "2.3";
+
+    src = pkgs.fetchgit {
+      url = "https://source.codeaurora.org/external/qoriq/qoriq-components/restool";
+      rev = "f0cec094e4c6d1c975b377203a3bf994ba9325a9";
+      hash = "sha256-BdHdG+jjxJJJlFdCEtySCcj2GcnUqM7lgaHE5yRm86k=";
+    };
+  });
 in {
   nixpkgs.localSystem = lib.systems.examples.aarch64-multiplatform;
 
@@ -26,9 +36,9 @@ in {
 
   # Setup SFP+ network interfaces early so systemd can pick everything up.
   boot.initrd.extraUtilsCommands = ''
-    copy_bin_and_libs ${pkgs.restool}/bin/restool
-    copy_bin_and_libs ${pkgs.restool}/bin/ls-main
-    copy_bin_and_libs ${pkgs.restool}/bin/ls-addni
+    copy_bin_and_libs ${restool}/bin/restool
+    copy_bin_and_libs ${restool}/bin/ls-main
+    copy_bin_and_libs ${restool}/bin/ls-addni
 
     # Patch paths
     sed -i "1i #!$out/bin/sh" $out/bin/ls-main
