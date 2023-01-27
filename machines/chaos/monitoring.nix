@@ -86,6 +86,7 @@
       };
 
     in [
+      (whiteboxJob "apcupsd")
       (whiteboxJob "nginx")
       (whiteboxJob "node")
       (whiteboxJob "rtl_433")

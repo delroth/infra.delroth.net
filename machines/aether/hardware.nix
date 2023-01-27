@@ -62,4 +62,10 @@ in {
   };
 
   nix.settings.max-jobs = lib.mkDefault 16;
+
+  services.apcupsd.enable = true;
+  services.prometheus.exporters.apcupsd = {
+    enable = true;
+    listenAddress = "127.0.0.1";
+  };
 }
