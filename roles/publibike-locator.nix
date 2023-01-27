@@ -22,7 +22,10 @@ in {
             proxy_set_header Host api.publibike.ch;
             proxy_set_header Origin "";
             proxy_set_header Referer "";
-            add_header Access-Control-Allow-Origin "https://delroth.net";
+
+            if ($http_origin ~* "^https://(publibike[.])?delroth[.]net$") {
+              add_header Access-Control-Allow-Origin "$http_origin";
+            }
           '';
         };
       };
@@ -31,6 +34,17 @@ in {
         forceSSL = true;
         enableACME = true;
         locations."/publibike/" = {
+          alias = "${pkgs.publibike-locator}/";
+          extraConfig = ''
+            add_header Cache-Control "no-cache, max-age=0";
+          '';
+        };
+      };
+
+      "publibike.delroth.net" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = {
           alias = "${pkgs.publibike-locator}/";
           extraConfig = ''
             add_header Cache-Control "no-cache, max-age=0";
