@@ -6,4 +6,5 @@
   lowell = ./lowell;
   mio = ./mio;
   smol = ./smol;
+  sunny = ./sunny;
 }
