@@ -10,10 +10,14 @@ in {
   nixpkgs.localSystem = lib.systems.examples.aarch64-multiplatform;
   boot.kernelPackages = pkgsCross.linuxPackages_latest;
 
-  boot.loader.efi.efiSysMountPoint = "/boot/EFI";
+  boot.loader.efi = {
+    efiSysMountPoint = "/boot/EFI";
+    canTouchEfiVariables = false;
+  };
 
   boot.loader.grub = {
     efiSupport = true;
+    efiInstallAsRemovable = true;
     device = "nodev";
   };
 
