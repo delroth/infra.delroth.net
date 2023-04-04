@@ -12,4 +12,6 @@ in {
   my.roles = {
     nix-builder.enable = true;
   };
+
+  my.roles.nix-builder.speedFactor = 4;
 }
