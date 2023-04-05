@@ -5,7 +5,7 @@ let
     crossSystem = lib.systems.examples.aarch64-multiplatform;
   };
 
-  restool = pkgs.restool.overrideAttrs (prev: final: {
+  restool = pkgs.restool.overrideAttrs (final: prev: {
     version = "2.3";
 
     src = pkgs.fetchgit {
@@ -13,6 +13,13 @@ let
       rev = "f0cec094e4c6d1c975b377203a3bf994ba9325a9";
       hash = "sha256-BdHdG+jjxJJJlFdCEtySCcj2GcnUqM7lgaHE5yRm86k=";
     };
+
+    patches = (prev.patches or []) ++ [
+      (pkgs.fetchpatch {
+        url = "https://github.com/nxp-qoriq/restool/commit/802764f8ed76f927dff494558332b0b77de7ac65.patch";
+        hash = "sha256-3/zyeJOBGRtSmYqPlAwE770Nyyc+vPNC2vDCWGjdd5Q=";
+      })
+    ];
   });
 in {
   nixpkgs.localSystem = lib.systems.examples.aarch64-multiplatform;
