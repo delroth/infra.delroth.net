@@ -28,6 +28,7 @@ in {
     nix.settings.allowed-users = lib.mkDefault [ "@users" ];
     security.lockKernelModules = lib.mkDefault true;
     security.protectKernelImage = lib.mkDefault true;
+    security.unprivilegedUsernsClone = lib.mkDefault true;
     security.apparmor.enable = lib.mkDefault true;
     boot.kernel.sysctl."kernel.yama.ptrace_scope" = lib.mkOverride 500 1;
     boot.kernel.sysctl."kernel.kptr_restrict" = lib.mkOverride 500 2;
