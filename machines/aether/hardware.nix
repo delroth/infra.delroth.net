@@ -9,7 +9,7 @@ let
     version = "2.3";
 
     src = pkgs.fetchgit {
-      url = "https://source.codeaurora.org/external/qoriq/qoriq-components/restool";
+      url = "https://github.com/nxp-qoriq/restool";
       rev = "f0cec094e4c6d1c975b377203a3bf994ba9325a9";
       hash = "sha256-BdHdG+jjxJJJlFdCEtySCcj2GcnUqM7lgaHE5yRm86k=";
     };
