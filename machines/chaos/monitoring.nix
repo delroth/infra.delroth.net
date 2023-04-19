@@ -98,12 +98,6 @@
         modules = ["https_2xx"];
         targets = [
           "https://delroth.net"
-
-          "https://dolphin-emu.org"
-          "https://forums.dolphin-emu.org"
-          "https://wiki.dolphin-emu.org"
-          "https://dl.dolphin-emu.org/robots.txt"
-          "https://dolp.in"
         ];
       })
 
