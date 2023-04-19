@@ -16,7 +16,6 @@ in {
     archiveteam-warrior.enable = true;
     blackbox-prober.enable = true;
     fiber7-prober.enable = true;
-    fifoci-worker.enable = true;
     land-drake.enable = true;
     nix-builder.enable = true;
     tor-relay.enable = true;
@@ -24,7 +23,6 @@ in {
   };
 
   my.roles.fiber7-prober.probeId = "0x30ad7256";
-  my.roles.fifoci-worker.info = "Intel NUC8i7HVK, NixOS unstable";
   my.roles.nix-builder.speedFactor = 2;
 
   my.homenet = {
