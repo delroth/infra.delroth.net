@@ -11,6 +11,7 @@ in {
 
   my.roles = {
     nix-builder.enable = true;
+    tor-relay.enable = true;
   };
 
   my.roles.nix-builder.speedFactor = 4;
