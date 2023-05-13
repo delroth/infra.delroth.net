@@ -6,11 +6,11 @@ rec {
   secrets = import ./secrets.nix;
   services = import ./services;
 
-  modules = {
+  modules = { pkgs, ... }: {
     imports = [
       common
       roles
-      secrets.roles
+      (secrets { inherit pkgs; }).roles
       services
     ];
   };

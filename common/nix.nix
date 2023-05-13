@@ -2,6 +2,8 @@
 
 let
   my = import ../.;
+
+  secrets = my.secrets { inherit pkgs; };
 in {
   documentation = {
     doc.enable = false;
@@ -32,7 +34,7 @@ in {
   nix.nixPath = [ "nixpkgs=/etc/nixpkgs" ];
 
   # Add custom package set to overlays.
-  nixpkgs.overlays = [ my.pkgs my.secrets.pkgs ];
+  nixpkgs.overlays = [ my.pkgs secrets.pkgs ];
 
   # Add support for command-not-found. For simplicity, hardcode a Nix channel
   # revision that has the programs.sqlite pregenerated instead of building it
@@ -49,5 +51,5 @@ in {
     '';
 
   # Inject secrets through module arguments while evaluating configs.
-  _module.args.secrets = my.secrets;
+  _module.args.secrets = secrets;
 }

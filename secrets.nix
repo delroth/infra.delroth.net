@@ -1,5 +1,6 @@
+{ pkgs, ... }:
+
 let
-  pkgs = import <nixpkgs> {};
   canaryHash = builtins.hashFile "sha256" ./secrets/canary;
   expectedHash = "27a6153adee6291f22bd145f29a5596cef0e87abbc87762576204bc4c8a1cf93";
 in
