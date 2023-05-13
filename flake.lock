@@ -22,10 +22,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1683985127,
-        "narHash": "sha256-KNDfoKnyc35KPdGVetaC+EReUrD7Fv9wqbO0T9G8bG4=",
+        "lastModified": 1683995204,
+        "narHash": "sha256-CaT8s5vDIO++z5aP1/yVykhO0N0KzfPVCzasH7k34xE=",
         "ref": "refs/heads/master",
-        "rev": "cca0f323398a3e78301aa8e66e2a42af1c6a2995",
+        "rev": "f17f182e1dd83b7d27dabbd4f5b7d414c6e5a1d6",
         "revCount": 483882,
         "type": "git",
         "url": "file:///home/delroth/work/nixpkgs"
