@@ -1,7 +1,7 @@
-{ lib, modulesPath, pkgs, ... }:
+{ lib, modulesPath, pkgs, nixpkgs, ... }:
 
 let
-  pkgsCross = import <nixpkgs> {
+  pkgsCross = import nixpkgs {
     crossSystem = lib.systems.examples.aarch64-multiplatform;
   };
 in {

@@ -1,8 +1,8 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, nixpkgs, ... }:
 
 let
   kernelPackages = import ./kernel.nix {
-    pkgs = import <nixpkgs> {
+    pkgs = import nixpkgs {
       crossSystem = config.nixpkgs.localSystem;
     };
   };
