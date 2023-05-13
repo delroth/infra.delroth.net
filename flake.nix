@@ -2,7 +2,10 @@
   # TODO: Figure out how to override this locally.
   inputs.nixpkgs.url = "git+file:///home/delroth/work/nixpkgs";
 
-  outputs = { self, nixpkgs, ... }@attrs: {
+  inputs.home-manager.url = "github:nix-community/home-manager";
+  inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+  outputs = { self, nixpkgs, home-manager, ... }@attrs: {
     colmena = let
       pkgs = import nixpkgs { system = "x86_64-linux"; };
 
@@ -14,7 +17,11 @@
           _module.args.machineName = name;
           deployment.targetHost = config.my.networking.fqdn;
 
-          imports = [ machineMod ];
+          imports = [
+            home-manager.nixosModules.home-manager
+
+            machineMod
+          ];
         };
       };
     in {
