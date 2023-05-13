@@ -1,0 +1,26 @@
+{
+  "nodes": {
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1683985127,
+        "narHash": "sha256-KNDfoKnyc35KPdGVetaC+EReUrD7Fv9wqbO0T9G8bG4=",
+        "ref": "refs/heads/master",
+        "rev": "cca0f323398a3e78301aa8e66e2a42af1c6a2995",
+        "revCount": 483882,
+        "type": "git",
+        "url": "file:///home/delroth/work/nixpkgs"
+      },
+      "original": {
+        "type": "git",
+        "url": "file:///home/delroth/work/nixpkgs"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
