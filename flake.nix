@@ -5,9 +5,17 @@
   inputs.home-manager.url = "github:nix-community/home-manager";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-  outputs = { self, nixpkgs, home-manager, ... }@attrs: {
+  inputs.delroth-net.url = "git+https://github.com/delroth/delroth.net?submodules=1";
+  inputs.delroth-net.inputs.nixpkgs.follows = "nixpkgs";
+
+  outputs = { self, delroth-net, nixpkgs, home-manager, ... }@attrs: {
     colmena = let
-      pkgs = import nixpkgs { system = "x86_64-linux"; };
+      pkgs = import nixpkgs {
+        system = "x86_64-linux";
+        overlays = [
+          delroth-net.overlay
+        ];
+      };
 
       machines = import ./machines;
 

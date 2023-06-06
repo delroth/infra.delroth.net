@@ -137,7 +137,22 @@
 
       "login.delroth.net" = localReverseProxy sso.configuration.listen.port;
 
-      "delroth.net" = lib.recursiveUpdate (localRoot "/srv/http/public") {
+      "delroth.net" = withSsl {
+        extraConfig = ''
+          error_page 404 /404.html;
+        '';
+
+        locations."/" = {
+          extraConfig = ''
+            root ${pkgs.delroth-net-website};
+            try_files $uri $uri/ @data;
+          '';
+        };
+
+        locations."@data" = {
+          root = "/srv/http/public";
+        };
+
         locations."/.well-known/matrix/client" = {
           extraConfig = ''
             return 200 '{"m.homeserver": {"base_url": "https://matrix.delroth.net"}}';
