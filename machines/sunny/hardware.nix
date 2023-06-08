@@ -2,6 +2,7 @@
 
 let
   pkgsCross = import nixpkgs {
+    system = "x86_64-linux";
     crossSystem = lib.systems.examples.aarch64-multiplatform;
   };
 in {

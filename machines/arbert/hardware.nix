@@ -3,7 +3,7 @@
 let
   kernelPackages = import ./kernel.nix { inherit pkgs; };
 in {
-  imports = [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix> ];
+  hardware.enableRedistributableFirmware = true;
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "usbhid" "sd_mod" "sdhci_pci" ];
   boot.kernelModules = [ "kvm-intel" ];

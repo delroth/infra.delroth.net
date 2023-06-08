@@ -3,6 +3,7 @@
 let
   kernelPackages = import ./kernel.nix {
     pkgs = import nixpkgs {
+      system = "x86_64-linux";
       crossSystem = config.nixpkgs.localSystem;
     };
   };

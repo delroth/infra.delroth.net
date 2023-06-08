@@ -1,7 +1,7 @@
-{ lib, ... }:
+{ lib, modulesPath, ... }:
 
 {
-  imports = [ <nixpkgs/nixos/modules/profiles/qemu-guest.nix> ];
+  imports = [ "${modulesPath}/profiles/qemu-guest.nix" ];
 
   boot.initrd.availableKernelModules = [ "virtio_pci" "ahci" "sd_mod" ];
   fileSystems."/" = { device = "/dev/sda"; fsType = "ext4"; };
