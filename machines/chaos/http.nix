@@ -140,6 +140,20 @@
       "delroth.net" = withSsl {
         extraConfig = ''
           error_page 404 /404.html;
+
+          gzip on;
+          gzip_types
+            text/plain
+            text/css
+            text/js
+            text/xml
+            text/javascript
+            application/javascript
+            application/json
+            application/xml
+            application/rss+xml
+            application/x-javascript
+            image/svg+xml;
         '';
 
         locations."/" = {
