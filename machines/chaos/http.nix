@@ -154,6 +154,12 @@
             application/rss+xml
             application/x-javascript
             image/svg+xml;
+
+          location ~ ^/(css|js|images|fonts)/ {
+            expires 30d;
+            add_header Cache-Control "public";
+            root ${pkgs.delroth-net-website};
+          }
         '';
 
         locations."/" = {
