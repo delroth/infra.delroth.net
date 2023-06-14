@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1686585202,
-        "narHash": "sha256-CgWWKcawSMGoPp3YFstiAy/7eQKVdUjKNseWt2kEAPM=",
+        "lastModified": 1686709050,
+        "narHash": "sha256-cx00ufVnoRkiilw9EF14+0SM9umZEwTaHeB+LskBf0s=",
         "ref": "refs/heads/master",
-        "rev": "4f5ff98e74b5f8feb9611b5f77f89e6f10f29bf6",
-        "revCount": 27,
+        "rev": "951529c46daae3204e4a09368c65bf6600a71a45",
+        "revCount": 35,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/delroth/delroth.net"
@@ -48,11 +48,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1686564129,
-        "narHash": "sha256-jzb2mHvQEZJL3a3ANhTeLIaa1nyjFJ/RzUJjCJme/V4=",
+        "lastModified": 1686693747,
+        "narHash": "sha256-pf0rcQeKejsBfv6NPZCXAo1gN2XtRYm2jzRwHswYeEc=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "9e37a1b6f9507ed27080518ff4007988a50c957e",
+        "rev": "62f111ef1e50e518dbb3f0782a31dcd244a0a2d7",
         "type": "github"
       },
       "original": {
