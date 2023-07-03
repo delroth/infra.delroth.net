@@ -22,6 +22,7 @@ in {
         echo "${secrets.email.smtp-password}" > $out
       ''}";
 
+      extraConfig.AUTHORIZED_FETCH = "true";
       extraConfig.WEB_DOMAIN = "mastodon.delroth.net";
       extraConfig.SINGLE_USER_MODE = "true";
     };
