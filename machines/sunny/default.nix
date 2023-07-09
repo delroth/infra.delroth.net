@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 
 let
   my = import ../..;
@@ -15,4 +15,7 @@ in {
   };
 
   my.roles.nix-builder.speedFactor = 4;
+
+  # This machine isn't very important.
+  security.lockKernelModules = lib.mkForce false;
 }
