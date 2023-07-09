@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 
 {
   # Rename interfaces to logical semantic names.
@@ -40,5 +40,9 @@
     "down-10g-bl"
     "down-10g-br"
     "down-1g"
+  ];
+
+  systemd.network.wait-online.ignoredInterfaces = config.networking.bridges.downstream.interfaces ++ [
+    "downstream"
   ];
 }
