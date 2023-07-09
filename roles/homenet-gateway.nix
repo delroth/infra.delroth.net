@@ -11,18 +11,16 @@ let
       )
     );
 
-  portMaps = let
-    makePortMap = proto: mapName: lib.flatten (
-      lib.mapAttrsToList (name: node:
-        map (port: {
-          inherit proto;
-          sourcePort = port;
-          destination = "${cfg.homenetIp4}${toString node.ipSuffix}";
-        }) node."${mapName}"
-      ) homenetNodes
-    );
-  in
-    (makePortMap "tcp" "ip4TcpPortForward") ++ (makePortMap "udp" "ip4UdpPortForward");
+  makePortMap = mapName: lib.flatten (
+    lib.mapAttrsToList (name: node:
+      map (port: {
+        sourcePort = port;
+        destination = "${cfg.homenetIp4}${toString node.ipSuffix}";
+      }) node."${mapName}"
+    ) homenetNodes
+  );
+  tcpPortMap = makePortMap "ip4TcpPortForward";
+  udpPortMap = makePortMap "ip4UdpPortForward";
 
   dhcpHosts =
     let
@@ -42,6 +40,18 @@ let
         "dhcp-host=${info.mac},${cfg.homenetIp4}${toString info.ip},[::${toString info.ip}],${info.name}"
       ) (homenetHosts ++ extraHosts);
     in builtins.concatStringsSep "\n" lines;
+
+    formatPortsList = l:
+      let
+        strL = builtins.map builtins.toString l;
+      in
+        builtins.concatStringsSep ", " strL;
+
+    formatPortRangesList = l:
+      let
+        strL = builtins.map (a: "${builtins.toString a.from}-${builtins.toString a.to}") l;
+      in
+        (if builtins.length l == 0 then "" else ", ") + builtins.concatStringsSep ", " strL;
 in {
   options.my.roles.homenet-gateway = with lib; {
     enable = mkEnableOption "Home Network Gateway";
@@ -138,24 +148,100 @@ in {
       ipv6SendRAConfig.Managed = true;
     };
 
-    networking.nat = {
+    # We define our own nftables-based firewall ruleset.
+    networking.nat.enable = false;
+    networking.firewall.enable = false;
+    networking.nftables = {
       enable = true;
-      externalInterface = cfg.upstreamIface;
-      internalInterfaces = [
-        cfg.downstreamBridge
-        "iot@downstream"
-      ];
-      forwardPorts = portMaps;
+      ruleset = ''
+        table inet filter {
+          set tcp_open_ports {
+            typeof tcp dport
+            flags interval
+            counter
+            elements = { ${ formatPortsList config.networking.firewall.allowedTCPPorts } ${ formatPortRangesList config.networking.firewall.allowedTCPPortRanges } }
+          }
+
+          set udp_open_ports {
+            typeof udp dport
+            flags interval
+            counter
+            elements = { ${ formatPortsList config.networking.firewall.allowedUDPPorts } ${ formatPortRangesList config.networking.firewall.allowedUDPPortRanges } }
+          }
+
+          flowtable f {
+            hook ingress priority 0;
+            devices = { "upstream", "${cfg.downstreamBridge}" };
+          }
+
+          chain input {
+            type filter hook input priority 0
+            policy drop
+
+            iif lo accept
+
+            ct state { established, related } counter accept
+            tcp dport @tcp_open_ports accept
+            udp dport @udp_open_ports accept
+            meta l4proto ipv6-icmp accept
+            meta l4proto icmp accept
+          }
+
+          chain output {
+            type filter hook output priority 0
+            policy accept
+          }
+
+          chain forward {
+            type filter hook forward priority 0
+            policy accept
+
+            ip protocol { tcp, udp } flow offload @f;
+            ip6 nexthdr { tcp, udp } flow offload @f;
+          }
+        }
+
+        table ip nat {
+          chain prerouting {
+            type nat hook output priority 0
+            policy accept
+
+            ${builtins.concatStringsSep "\n" (map (e:
+              "tcp dport ${builtins.toString e.sourcePort} dnat to ${e.destination}"
+              ) tcpPortMap)}
+
+            ${builtins.concatStringsSep "\n" (map (e:
+              "udp dport ${builtins.toString e.sourcePort} dnat to ${e.destination}"
+              ) udpPortMap)}
+          }
+
+          chain postrouting {
+            type nat hook postrouting priority 0
+            policy accept
+
+            iifname { "${cfg.downstreamBridge}", "iot@downstream" } oifname "upstream" masquerade
+          }
+        }
+      '';
+
+      preCheckRuleset = ''
+        sed 's/devices = {.*/devices = { lo };/g' -i ruleset.conf
+      '';
     };
+
+    # XXX: https://github.com/NixOS/nixpkgs/issues/141802
+    systemd.services.nftables.before = lib.mkForce [];
+    systemd.services.nftables.after = [ "network-pre.target" ];
 
     # Enable IPv6 forwarding.
     boot.kernel.sysctl = {
+      "net.ipv4.ip_forward" = true;
       "net.ipv6.conf.all.forwarding" = true;
       "net.ipv6.conf.default.forwarding" = true;
     };
 
     # DHCPv4 / DHCPv6
-    networking.firewall.allowedUDPPorts = [ 67 547 ];
+    networking.firewall.allowedUDPPorts = [ 67 546 547 ];
 
     services.dnsmasq = {
       enable = true;
