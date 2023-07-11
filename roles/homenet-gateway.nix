@@ -203,7 +203,7 @@ in {
 
         table ip nat {
           chain prerouting {
-            type nat hook output priority 0
+            type nat hook prerouting priority 0
             policy accept
 
             ${builtins.concatStringsSep "\n" (map (e:
