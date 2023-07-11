@@ -207,11 +207,11 @@ in {
             policy accept
 
             ${builtins.concatStringsSep "\n" (map (e:
-              "tcp dport ${builtins.toString e.sourcePort} dnat to ${e.destination}"
+              "iifname \"upstream\" tcp dport ${builtins.toString e.sourcePort} dnat to ${e.destination}"
               ) tcpPortMap)}
 
             ${builtins.concatStringsSep "\n" (map (e:
-              "udp dport ${builtins.toString e.sourcePort} dnat to ${e.destination}"
+              "ifname \"upstream\" udp dport ${builtins.toString e.sourcePort} dnat to ${e.destination}"
               ) udpPortMap)}
           }
 
