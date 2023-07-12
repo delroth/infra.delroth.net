@@ -1,4 +1,4 @@
-{ config, lib, nodes, ... }:
+{ config, lib, nodes, pkgs, secrets, ... }:
 
 let
   cfg = config.my.roles.homenet-gateway;
@@ -128,6 +128,64 @@ in {
       ];
     };
 
+    systemd.network.config.routeTables.pub = 99;
+
+    networking.vlans.pub = {
+      id = 99;
+      interface = cfg.downstreamBridge;
+    };
+    networking.interfaces.pub = {
+      ipv4.addresses = [
+        { address = "192.168.99.254"; prefixLength = 24; }
+      ];
+    };
+
+    systemd.network.networks."40-pub".routingPolicyRules = [
+      {
+        routingPolicyRuleConfig = {
+          Family = "both";
+          IncomingInterface = "pub";
+          Table = "pub";
+        };
+      }
+    ];
+
+    systemd.network.netdevs."40-wg-pub" = {
+      enable = true;
+      netdevConfig = {
+        Kind = "wireguard";
+        Name = "wg-pub";
+      };
+      wireguardConfig = {
+        PrivateKeyFile = pkgs.writeText "vpn-private-key" secrets.homenet.public-vpn.private-key;
+      };
+      wireguardPeers = [
+        {
+          wireguardPeerConfig = {
+            PublicKey = secrets.homenet.public-vpn.public-key;
+            Endpoint = secrets.homenet.public-vpn.endpoint;
+            AllowedIPs = "0.0.0.0/0";
+          };
+        }
+      ];
+    };
+
+    systemd.network.networks."40-wg-pub" = {
+      enable = true;
+      name = "wg-pub";
+      networkConfig = {
+        Address = "${secrets.homenet.public-vpn.ip}/32";
+      };
+      routes = [
+        {
+          routeConfig = {
+            Gateway = "0.0.0.0";
+            Table = "pub";
+          };
+        }
+      ];
+    };
+
     systemd.services.systemd-networkd.environment.SYSTEMD_LOG_LEVEL = "debug";
 
     # TODO: Expose this as a proper nixos option later down the line.
@@ -170,12 +228,12 @@ in {
           }
 
           flowtable f {
-            hook ingress priority 0;
-            devices = { "${cfg.upstreamIface}", "${cfg.downstreamBridge}" };
+            hook ingress priority filter
+            devices = { "${cfg.upstreamIface}", "${cfg.downstreamBridge}", "wg-pub" }
           }
 
           chain input {
-            type filter hook input priority 0
+            type filter hook input priority filter
             policy drop
 
             iif lo accept
@@ -188,12 +246,12 @@ in {
           }
 
           chain output {
-            type filter hook output priority 0
+            type filter hook output priority filter
             policy accept
           }
 
           chain forward {
-            type filter hook forward priority 0
+            type filter hook forward priority filter
             policy drop
 
             ip protocol { tcp, udp } flow offload @f;
@@ -201,19 +259,22 @@ in {
 
             iifname . oifname {
               "${cfg.downstreamBridge}" . "${cfg.downstreamBridge}",
-              "${cfg.downstreamBridge}" . "${cfg.upstreamIface}"
-            } accept;
+              "${cfg.downstreamBridge}" . "${cfg.upstreamIface}",
+              "pub" .  "pub",
+              "${cfg.downstreamBridge}" . "pub",
+              "pub" . "wg-pub"
+            } accept
 
-            meta nfproto ipv6 iifname "${cfg.upstreamIface}" oifname "${cfg.downstreamBridge}" accept;
+            meta nfproto ipv6 iifname "${cfg.upstreamIface}" oifname "${cfg.downstreamBridge}" accept
 
-            ct status dnat accept;
-            ct state { established, related } accept;
+            ct status dnat accept
+            ct state { established, related } accept
           }
         }
 
         table ip nat {
-          chain prerouting {
-            type nat hook prerouting priority 0
+          chain port_redirects {
+            type nat hook prerouting priority dstnat
             policy accept
 
             ${builtins.concatStringsSep "\n" (map (e:
@@ -225,11 +286,12 @@ in {
               ) udpPortMap)}
           }
 
-          chain postrouting {
-            type nat hook postrouting priority 0
+          chain nat_masquerade {
+            type nat hook postrouting priority srcnat
             policy accept
 
-            iifname { "${cfg.downstreamBridge}", "iot@downstream" } oifname "${cfg.upstreamIface}" masquerade
+            iifname "${cfg.downstreamBridge}" oifname "${cfg.upstreamIface}" masquerade
+            iifname "pub" oifname "wg-pub" masquerade
           }
         }
       '';
@@ -259,7 +321,8 @@ in {
       extraConfig = ''
         port=0  # Disable DNS
 
-        interface=downstream
+        interface=${cfg.downstreamBridge}
+        interface=pub
         bind-interfaces
 
         dhcp-authoritative
@@ -267,6 +330,9 @@ in {
         dhcp-range=set:downstream,::ff00,::ffff,constructor:downstream,slaac,15m
 
         dhcp-option=tag:downstream,option:router,${cfg.homenetGatewayIp4}
+
+        dhcp-range=pub,192.168.99.50,192.168.99.100,15m
+        dhcp-option=pub,option:router,192.168.99.254
 
         dhcp-option=option:dns-server,8.8.8.8,8.8.4.4
         dhcp-option=option6:dns-server,2001:4860:4860::8888,2001:4860:4860::8844
