@@ -171,7 +171,7 @@ in {
 
           flowtable f {
             hook ingress priority 0;
-            devices = { "upstream", "${cfg.downstreamBridge}" };
+            devices = { "${cfg.upstreamIface}", "${cfg.downstreamBridge}" };
           }
 
           chain input {
@@ -194,10 +194,20 @@ in {
 
           chain forward {
             type filter hook forward priority 0
-            policy accept
+            policy drop
 
             ip protocol { tcp, udp } flow offload @f;
             ip6 nexthdr { tcp, udp } flow offload @f;
+
+            iifname . oifname {
+              "${cfg.downstreamBridge}" . "${cfg.downstreamBridge}",
+              "${cfg.downstreamBridge}" . "${cfg.upstreamIface}"
+            } accept;
+
+            meta nfproto ipv6 iifname "${cfg.upstreamIface}" oifname "${cfg.downstreamBridge}" accept;
+
+            ct status dnat accept;
+            ct state { established, related } accept;
           }
         }
 
@@ -207,11 +217,11 @@ in {
             policy accept
 
             ${builtins.concatStringsSep "\n" (map (e:
-              "iifname \"upstream\" tcp dport ${builtins.toString e.sourcePort} dnat to ${e.destination}"
+              "iifname \"${cfg.upstreamIface}\" tcp dport ${builtins.toString e.sourcePort} dnat to ${e.destination}"
               ) tcpPortMap)}
 
             ${builtins.concatStringsSep "\n" (map (e:
-              "ifname \"upstream\" udp dport ${builtins.toString e.sourcePort} dnat to ${e.destination}"
+              "ifname \"${cfg.upstreamIface}\" udp dport ${builtins.toString e.sourcePort} dnat to ${e.destination}"
               ) udpPortMap)}
           }
 
@@ -219,7 +229,7 @@ in {
             type nat hook postrouting priority 0
             policy accept
 
-            iifname { "${cfg.downstreamBridge}", "iot@downstream" } oifname "upstream" masquerade
+            iifname { "${cfg.downstreamBridge}", "iot@downstream" } oifname "${cfg.upstreamIface}" masquerade
           }
         }
       '';
