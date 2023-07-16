@@ -16,7 +16,6 @@ in {
     archiveteam-warrior.enable = true;
     blackbox-prober.enable = true;
     fiber7-prober.enable = true;
-    land-drake.enable = true;
     nix-builder.enable = true;
     tor-relay.enable = true;
     wireguard-peer.enable = true;
