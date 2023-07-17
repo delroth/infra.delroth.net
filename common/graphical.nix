@@ -25,7 +25,7 @@
       enable = true;
 
       layout = "ca";
-      xkbVariant = "multi";
+      xkbVariant = "multix";
       xkbOptions = "caps:escape";
       libinput.enable = true;
 
