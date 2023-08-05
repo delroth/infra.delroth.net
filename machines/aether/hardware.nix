@@ -76,4 +76,8 @@ in {
     enable = true;
     listenAddress = "127.0.0.1";
   };
+
+  systemd.watchdog.device = "/dev/watchdog";
+  systemd.watchdog.runtimeTime = "30s";
+  systemd.watchdog.rebootTime = "30s";
 }
