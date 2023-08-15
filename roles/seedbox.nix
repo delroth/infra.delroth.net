@@ -6,7 +6,6 @@ let
   hostname = "seedbox.delroth.net";
 
   transmissionRpcPort = 9091;
-  transmissionExternalPort = secrets.seedbox-vpn.publicPort;
 
   downloadBase = "/data/seedbox";
 in {
@@ -22,7 +21,6 @@ in {
       peerPublicKey = secrets.seedbox-vpn.publicKey;
       endpointAddr = secrets.seedbox-vpn.endpointAddr;
       ip4 = secrets.seedbox-vpn.ip4;
-      ip6 = secrets.seedbox-vpn.ip6;
 
       isolateServices = [ "transmission" ];
       forwardPorts = [ transmissionRpcPort ];
@@ -35,8 +33,6 @@ in {
       settings = {
         download-dir = "${downloadBase}/default";
         incomplete-dir = "${downloadBase}/incomplete";
-
-        peer-port = transmissionExternalPort;
 
         rpc-enabled = true;
         rpc-port = transmissionRpcPort;
@@ -86,11 +82,6 @@ in {
       locations."/" = {
         proxyPass = "http://127.0.0.1:${toString transmissionRpcPort}";
       };
-    };
-
-    networking.firewall = {
-      allowedTCPPorts = [ transmissionExternalPort ];
-      allowedUDPPorts = [ transmissionExternalPort ];
     };
   };
 }

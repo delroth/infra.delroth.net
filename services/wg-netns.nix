@@ -48,13 +48,6 @@ in {
       '';
     };
 
-    ip6 = mkOption {
-      type = types.str;
-      description = ''
-        Local IPv6 of this host on the Wireguard interface.
-      '';
-    };
-
     isolateServices = mkOption {
       type = types.listOf types.str;
       default = [ ];
@@ -151,7 +144,6 @@ in {
                   allowed-ips '0.0.0.0/0,::0/0'
               ${pkgs.iproute2}/bin/ip link set wireguard netns wireguard up
               ${pkgs.iproute2}/bin/ip -n wireguard addr add ${cfg.ip4}/32 dev wireguard
-              ${pkgs.iproute2}/bin/ip -n wireguard -6 addr add ${cfg.ip6}/128 dev wireguard
               ${pkgs.iproute2}/bin/ip -n wireguard route add default dev wireguard
               ${pkgs.iproute2}/bin/ip -n wireguard -6 route add default dev wireguard
             '';
