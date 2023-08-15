@@ -37,6 +37,7 @@ in {
       "arm-smmu.disable_bypass=0"
       "iommu.passthrough=1"
       "mitigations=off"  # Significant performance boost, not multi-user.
+      "pcie_aspm=off"
   ];
 
   boot.loader.systemd-boot.enable = true;
