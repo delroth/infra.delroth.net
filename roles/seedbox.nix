@@ -1,4 +1,4 @@
-{ config, lib, machineName, secrets, ... }:
+{ config, lib, machineName, pkgs, secrets, ... }:
 
 let
   cfg = config.my.roles.seedbox;
@@ -28,6 +28,7 @@ in {
 
     services.transmission = {
       enable = true;
+      package = pkgs.transmission_4;
       group = "nas";
 
       settings = {
