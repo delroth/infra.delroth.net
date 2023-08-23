@@ -22,7 +22,7 @@ in {
       endpointAddr = secrets.seedbox-vpn.endpointAddr;
       ip4 = secrets.seedbox-vpn.ip4;
 
-      isolateServices = [ "transmission" ];
+      isolateServices = [ "transmission" "protonvpn-pmp-transmission" ];
       forwardPorts = [ transmissionRpcPort ];
     };
 
@@ -54,6 +54,17 @@ in {
       Restart = "always";
       RestartSec = 5;
       MemoryMax = "2G";
+    };
+
+    systemd.services.protonvpn-pmp-transmission = {
+      description = "ProtonVPN PMP Transmission notifier";
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Type = "simple";
+        DynamicUser = true;
+        ExecStart = "${pkgs.protonvpn-pmp-transmission}/bin/protonvpn-pmp-transmission --transmission_url http://delroth:${secrets.transmissionPassword}@127.0.0.1:${toString transmissionRpcPort} --pmp_gateway ${secrets.seedbox-vpn.gatewayIp4}";
+      };
     };
 
     services.flexget = {

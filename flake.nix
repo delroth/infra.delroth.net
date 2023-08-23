@@ -8,12 +8,16 @@
   inputs.delroth-net.url = "git+https://github.com/delroth/delroth.net?submodules=1";
   inputs.delroth-net.inputs.nixpkgs.follows = "nixpkgs";
 
-  outputs = { self, delroth-net, nixpkgs, home-manager, ... }@attrs: {
+  inputs.protonvpn-pmp-transmission.url = "github:delroth/protonvpn-pmp-transmission";
+  inputs.protonvpn-pmp-transmission.inputs.nixpkgs.follows = "nixpkgs";
+
+  outputs = { self, delroth-net, nixpkgs, home-manager, protonvpn-pmp-transmission, ... }@attrs: {
     colmena = let
       pkgs = import nixpkgs {
         system = "x86_64-linux";
         overlays = [
           delroth-net.overlay
+          protonvpn-pmp-transmission.overlay
         ];
       };
 
