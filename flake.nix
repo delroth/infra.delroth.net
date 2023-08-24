@@ -8,15 +8,19 @@
   inputs.delroth-net.url = "git+https://github.com/delroth/delroth.net?submodules=1";
   inputs.delroth-net.inputs.nixpkgs.follows = "nixpkgs";
 
+  inputs.glome-nixos.url = "github:delroth/glome-nixos";
+  inputs.glome-nixos.inputs.nixpkgs.follows = "nixpkgs";
+
   inputs.protonvpn-pmp-transmission.url = "github:delroth/protonvpn-pmp-transmission";
   inputs.protonvpn-pmp-transmission.inputs.nixpkgs.follows = "nixpkgs";
 
-  outputs = { self, delroth-net, nixpkgs, home-manager, protonvpn-pmp-transmission, ... }@attrs: {
+  outputs = { self, delroth-net, glome-nixos, nixpkgs, home-manager, protonvpn-pmp-transmission, ... }@attrs: {
     colmena = let
       pkgs = import nixpkgs {
         system = "x86_64-linux";
         overlays = [
           delroth-net.overlay
+          glome-nixos.overlay
           protonvpn-pmp-transmission.overlay
         ];
       };
@@ -30,6 +34,7 @@
           deployment.targetHost = config.my.networking.fqdn;
 
           imports = [
+            glome-nixos.nixosModules.glome
             home-manager.nixosModules.home-manager
 
             machineMod
