@@ -18,7 +18,11 @@
   inputs.protonvpn-pmp-transmission.inputs.nixpkgs.follows = "nixpkgs";
   inputs.protonvpn-pmp-transmission.inputs.poetry2nix.follows = "poetry2nix";
 
-  outputs = { self, delroth-net, glome-nixos, nixpkgs, home-manager, protonvpn-pmp-transmission, ... }@attrs: {
+  inputs.label-approved.url = "git+file:///home/delroth/work/label-approved";
+  inputs.label-approved.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.label-approved.inputs.poetry2nix.follows = "poetry2nix";
+
+  outputs = { self, delroth-net, glome-nixos, nixpkgs, home-manager, label-approved, protonvpn-pmp-transmission, ... }@attrs: {
     colmena = let
       pkgs = import nixpkgs {
         system = "x86_64-linux";
@@ -40,6 +44,7 @@
           imports = [
             glome-nixos.nixosModules.glome
             home-manager.nixosModules.home-manager
+            label-approved.nixosModules.default
 
             machineMod
           ];

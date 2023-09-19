@@ -24,6 +24,7 @@ in
       (f: builtins.readFile (./secrets/dnssec + "/${f}"));
     email = import ./secrets/email.nix;
     flexget-config = import ./secrets/flexget-config.nix;
+    gh-token = builtins.readFile ./secrets/gh-token;
     glome = import ./secrets/glome.nix;
     grafanaSecretKey = builtins.readFile ./secrets/grafana-secret-key;
     homenet = import ./secrets/homenet.nix;

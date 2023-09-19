@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, secrets, ... }:
 
 let
   my = import ../..;
@@ -48,4 +48,11 @@ in {
 
   my.roles.nix-builder.speedFactor = 2;
   my.roles.nix-builder.systems = [ "x86_64-linux" "i686-linux" ];
+
+  services.label-approved = {
+    enable = true;
+    environmentFile = pkgs.writeText "label-approved-env" ''
+      GITHUB_TOKEN=${secrets.gh-token}
+    '';
+  };
 }
