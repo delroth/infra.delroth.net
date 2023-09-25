@@ -31,6 +31,9 @@
           glome-nixos.overlay
           protonvpn-pmp-transmission.overlay
         ];
+        config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
+          "elasticsearch"
+        ];
       };
 
       machines = import ./machines;

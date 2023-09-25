@@ -9,6 +9,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     services.postgresql.enable = true;
+    services.elasticsearch.enable = true;
 
     services.mastodon = {
       enable = true;
@@ -21,6 +22,8 @@ in {
       smtp.passwordFile = "${pkgs.runCommand "smtp-password" {} ''
         echo "${secrets.email.smtp-password}" > $out
       ''}";
+
+      elasticsearch.host = "127.0.0.1";
 
       extraConfig.AUTHORIZED_FETCH = "true";
       extraConfig.WEB_DOMAIN = "mastodon.delroth.net";
