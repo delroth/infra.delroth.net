@@ -1,4 +1,4 @@
-{ config, lib, machineName, secrets, ... }:
+{ config, lib, machineName, pkgs, secrets, ... }:
 
 {
   options.my.backup = with lib; {
@@ -61,11 +61,24 @@
         passphrase = secrets.backup.pass."${machineName}";
       };
 
-      # SSH insists on having secure unix permissions on SSH private keys. We
-      # don't really care since these are single user systems.
       preHook = ''
+        # SSH insists on having secure unix permissions on SSH private keys. We
+        # don't really care since these are single user systems.
         cp ${secrets.backup.sshKey} /tmp/backup-ssh-key
         chmod 600 /tmp/backup-ssh-key
+
+        # Ignore warning return code.
+        realBorg="$(${pkgs.which}/bin/which borg)"
+        borg() {
+          returnCode=0
+          "$realBorg" "$@" || returnCode=$?
+
+          if [[ $returnCode -eq 1 ]]; then
+            return 0
+          else
+            return $returnCode
+          fi
+        }
       '';
 
       environment = {
@@ -74,9 +87,6 @@
     };
 
     systemd.services.borgbackup-job-default.wants = [ "network-online.target" ];
-
-    # Ignore warnings, e.g. "file has changed during backup".
-    systemd.services.borgbackup-job-default.serviceConfig.SuccessExitStatus = "1";
 
     # Be a bit more resilient to transient network failures.
     systemd.services.borgbackup-job-default.serviceConfig.Restart = "on-failure";
