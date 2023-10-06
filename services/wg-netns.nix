@@ -113,6 +113,7 @@ in {
             Type = "oneshot";
             RemainAfterExit = true;
             PrivateNetwork = true;
+            PrivateMounts = false;
 
             ExecStart = pkgs.writers.writeDash "wireguard-netns-up" ''
               ${pkgs.iproute2}/bin/ip netns add wireguard
