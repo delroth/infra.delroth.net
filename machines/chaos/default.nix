@@ -33,6 +33,7 @@ in {
     mastodon-server.enable = true;
     matrix-client.enable = true;
     matrix-irc-bridge.enable = true;
+    matrix-signal-bridge.enable = true;
     matrix-synatainer.enable = true;
     matrix-synapse.enable = true;
     music-server.enable = true;
