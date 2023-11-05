@@ -18,6 +18,9 @@
   inputs.protonvpn-pmp-transmission.inputs.nixpkgs.follows = "nixpkgs";
   inputs.protonvpn-pmp-transmission.inputs.poetry2nix.follows = "poetry2nix";
 
+  inputs.publibike-locator.url = "github:delroth/publibike-locator";
+  inputs.publibike-locator.inputs.nixpkgs.follows = "nixpkgs";
+
   inputs.label-approved.url = "git+file:///home/delroth/work/label-approved";
   inputs.label-approved.inputs.nixpkgs.follows = "nixpkgs";
   inputs.label-approved.inputs.poetry2nix.follows = "poetry2nix";

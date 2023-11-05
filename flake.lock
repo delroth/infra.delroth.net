@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1686799076,
-        "narHash": "sha256-FzfATzVcE9h9MGGLjFlyGhYB83JyuQtSj/isbdX9CS8=",
+        "lastModified": 1699068520,
+        "narHash": "sha256-e1UvUvtPovPHPx+wdKTqxlt67ddWz/NOaxmNhs+QeIg=",
         "ref": "refs/heads/master",
-        "rev": "054aaa326fbd0cdbb3ee4e7532722d035152f168",
-        "revCount": 37,
+        "rev": "78e4ad8fb2da99af6f7f2b6c433314cb5d35632d",
+        "revCount": 40,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/delroth/delroth.net"
@@ -44,11 +44,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1685518550,
-        "narHash": "sha256-o2d0KcvaXzTrPRIo0kOLV0/QXHhDQ5DTi+OxcjO8xqY=",
+        "lastModified": 1694529238,
+        "narHash": "sha256-zsNZZGTGnMOf9YpHKJqMSsa0dXbfmxeoJ7xHlrt+xmY=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "a1720a10a6cfe8234c0e93907ffe81be440f4cef",
+        "rev": "ff7b65b44d01cf9ba6a71320833626af21126384",
         "type": "github"
       },
       "original": {
@@ -129,6 +129,21 @@
         "type": "github"
       }
     },
+    "flake-utils_6": {
+      "locked": {
+        "lastModified": 1656928814,
+        "narHash": "sha256-RIFfgBuKz6Hp89yRr7+NR5tzIAbn52h8vT6vXkYjZoM=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "7e2a3b3dfd9af950a856d66b0a7d01e3c18aa249",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "glome": {
       "flake": false,
       "locked": {
@@ -174,11 +189,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1696940889,
-        "narHash": "sha256-p2Wic74A1tZpFcld1wSEbFQQbrZ/tPDuLieCnspamQo=",
+        "lastModified": 1699025595,
+        "narHash": "sha256-e+o4PoSu2Z6Ww8y/AVUmMU200rNZoRK+p2opQ7Db8Rg=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "6bba64781e4b7c1f91a733583defbd3e46b49408",
+        "rev": "8765d4e38aa0be53cdeee26f7386173e6c65618d",
         "type": "github"
       },
       "original": {
@@ -199,11 +214,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1694589898,
-        "narHash": "sha256-GcDT+Jy7mMnEqNUMtdRqgJiEIlA6l+DmJLsN/2draCc=",
+        "lastModified": 1698772989,
+        "narHash": "sha256-ZlqLXBZHfOT3Z0iXMAuQAgnzi4LQy/CWbKKD7nmkuO4=",
         "ref": "refs/heads/master",
-        "rev": "1cf86446f7ce15f612760c758dbc1ecf4b9b16b0",
-        "revCount": 41,
+        "rev": "400c948b753fcdd37e49d3b9de6e5d414a34bbb0",
+        "revCount": 42,
         "type": "git",
         "url": "file:///home/delroth/work/label-approved"
       },
@@ -235,11 +250,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1697138504,
-        "narHash": "sha256-bT2ZqQViYfr+yYDBjtdJpqVjrIeHgChziFjxda2g5m8=",
+        "lastModified": 1698912140,
+        "narHash": "sha256-zo5dftallqhAz1WK6aNBmoNeZIrfd1f85S1gTfxEvt0=",
         "ref": "refs/heads/master",
-        "rev": "8372c3b2b4ea8fbfeb24ee1af36fb49fb12470bb",
-        "revCount": 535137,
+        "rev": "99ca061e8725a2501c1af84f5c82ee19b918ba4d",
+        "revCount": 543372,
         "type": "git",
         "url": "file:///home/delroth/work/nixpkgs"
       },
@@ -295,6 +310,27 @@
         "type": "github"
       }
     },
+    "publibike-locator": {
+      "inputs": {
+        "flake-utils": "flake-utils_6",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1699145086,
+        "narHash": "sha256-A1xo3xB/M1p2HTUrTRCJWRDtrHmUiHuALfdyfR0Z/0A=",
+        "owner": "delroth",
+        "repo": "publibike-locator",
+        "rev": "ffaf989677722509ac3290f4f407621cf358662b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "delroth",
+        "repo": "publibike-locator",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "delroth-net": "delroth-net",
@@ -303,7 +339,8 @@
         "label-approved": "label-approved",
         "nixpkgs": "nixpkgs",
         "poetry2nix": "poetry2nix",
-        "protonvpn-pmp-transmission": "protonvpn-pmp-transmission"
+        "protonvpn-pmp-transmission": "protonvpn-pmp-transmission",
+        "publibike-locator": "publibike-locator"
       }
     },
     "systems": {

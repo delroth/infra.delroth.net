@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, publibike-locator, ... }:
 
 let
   cfg = config.my.roles.publibike-locator;
@@ -34,7 +34,7 @@ in {
         forceSSL = true;
         enableACME = true;
         locations."/publibike/" = {
-          alias = "${pkgs.publibike-locator}/";
+          alias = "${publibike-locator.packages.x86_64-linux.publibike-locator}/";
           extraConfig = ''
             add_header Cache-Control "no-cache, max-age=0";
           '';
@@ -45,7 +45,7 @@ in {
         forceSSL = true;
         enableACME = true;
         locations."/" = {
-          alias = "${pkgs.publibike-locator}/";
+          alias = "${publibike-locator.packages.x86_64-linux.publibike-locator}/";
           extraConfig = ''
             add_header Cache-Control "no-cache, max-age=0";
           '';
