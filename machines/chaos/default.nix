@@ -23,6 +23,8 @@ in {
     whois gnupg git-crypt vim_delroth
   ];
 
+  services.postgresql.package = pkgs.postgresql_14;
+
   # Extra paths to backup.
   my.backup.extraPaths = [ "/srv" ];
 
