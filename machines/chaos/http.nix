@@ -129,7 +129,7 @@
           extraConfig = reverseProxyHeaders;
         };
       };
-      localReverseProxy = port: localReverseProxyAddr "localhost:${toString port}";
+      localReverseProxy = port: localReverseProxyAddr "127.0.0.1:${toString port}";
     in {
 
       # Used for ACME to generate a TLS cert for the MX.

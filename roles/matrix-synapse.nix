@@ -56,7 +56,7 @@ in {
 
       virtualHosts = let
         passToMatrix = port: {
-          proxyPass = "http://localhost:${toString port}";
+          proxyPass = "http://127.0.0.1:${toString port}";
         };
       in {
         "matrix.${domain}" = {
