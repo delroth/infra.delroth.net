@@ -1,4 +1,10 @@
-{ config, lib, machineName, secrets, ... }:
+{
+  config,
+  lib,
+  machineName,
+  secrets,
+  ...
+}:
 
 {
   options.my.monitoring = with lib; {
@@ -12,7 +18,11 @@
   config = {
     services.prometheus.exporters.node = {
       enable = true;
-      enabledCollectors = [ "interrupts" "systemd" "tcpstat" ];
+      enabledCollectors = [
+        "interrupts"
+        "systemd"
+        "tcpstat"
+      ];
       listenAddress = "127.0.0.1";
       port = 9101;
     };
@@ -23,41 +33,42 @@
       "${machineName}.delroth.net" = {
         forceSSL = true;
         enableACME = true;
-        basicAuth = { prometheus = secrets.nodeMetricsKey; };
+        basicAuth = {
+          prometheus = secrets.nodeMetricsKey;
+        };
 
         locations = builtins.listToAttrs (
           let
             enabledExporters =
-              lib.filterAttrs
-                (exporterName: exporter: (exporter ? enable) && exporter.enable)
+              lib.filterAttrs (exporterName: exporter: (exporter ? enable) && exporter.enable)
                 config.services.prometheus.exporters;
-          in (
-            lib.mapAttrsToList (
-              exporterName: exporter: {
-                name = "/metrics/${exporterName}";
-                value = {
-                  proxyPass = "http://127.0.0.1:${toString exporter.port}/metrics";
-                };
-              })
-              enabledExporters
-          ) ++ (
-            lib.mapAttrsToList (
-              exporterName: exporter: {
-                name = "/probe/${exporterName}";
-                value = {
-                  proxyPass = "http://127.0.0.1:${toString exporter.port}/probe";
-                };
-              })
-              enabledExporters
-          ) ++ (
-            lib.mapAttrsToList (
-              exporterName: exporter: {
-                name = "/snmp/${exporterName}";
-                value = {
-                  proxyPass = "http://127.0.0.1:${toString exporter.port}/snmp";
-                };
-              })
-              enabledExporters
+          in
+          (lib.mapAttrsToList
+            (exporterName: exporter: {
+              name = "/metrics/${exporterName}";
+              value = {
+                proxyPass = "http://127.0.0.1:${toString exporter.port}/metrics";
+              };
+            })
+            enabledExporters
+          )
+          ++ (lib.mapAttrsToList
+            (exporterName: exporter: {
+              name = "/probe/${exporterName}";
+              value = {
+                proxyPass = "http://127.0.0.1:${toString exporter.port}/probe";
+              };
+            })
+            enabledExporters
+          )
+          ++ (lib.mapAttrsToList
+            (exporterName: exporter: {
+              name = "/snmp/${exporterName}";
+              value = {
+                proxyPass = "http://127.0.0.1:${toString exporter.port}/snmp";
+              };
+            })
+            enabledExporters
           )
         );
       };

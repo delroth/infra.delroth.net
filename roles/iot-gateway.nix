@@ -1,11 +1,17 @@
-{ config, lib, secrets, ... }:
+{
+  config,
+  lib,
+  secrets,
+  ...
+}:
 
 let
   cfg = config.my.roles.iot-gateway;
 
   hostname = "hass.delroth.net";
   port = 8123;
-in {
+in
+{
   options.my.roles.iot-gateway = {
     enable = lib.mkEnableOption "IoT gateway";
   };
@@ -22,8 +28,8 @@ in {
           use_x_forwarded_for = true;
           trusted_proxies = [ "127.0.0.1" ];
         };
-        frontend = {};
-        history = {};
+        frontend = { };
+        history = { };
 
         netatmo = {
           api_key = secrets.iot.netatmo.api_key;
@@ -31,7 +37,7 @@ in {
           username = secrets.iot.netatmo.username;
           password = secrets.iot.netatmo.password;
         };
-        prometheus = {};
+        prometheus = { };
 
         sensor = [
           {

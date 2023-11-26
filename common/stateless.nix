@@ -2,7 +2,8 @@
 
 let
   my = import ../.;
-in {
+in
+{
   options.my.stateless.enable = lib.mkOption {
     type = lib.types.bool;
     default = true;

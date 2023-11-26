@@ -1,15 +1,24 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.my.roles.irc-client;
   port = 11337;
-in {
+in
+{
   options.my.roles.irc-client = {
     enable = lib.mkEnableOption "IRC Client";
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ screen weechat ];
+    environment.systemPackages = with pkgs; [
+      screen
+      weechat
+    ];
 
     # TODO(delroth): Define weechat as an actual service, and configure the
     # relay port through NixOS configuration.

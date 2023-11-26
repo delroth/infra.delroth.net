@@ -1,8 +1,14 @@
-{ config, lib, publibike-locator, ... }:
+{
+  config,
+  lib,
+  publibike-locator,
+  ...
+}:
 
 let
   cfg = config.my.roles.publibike-locator;
-in {
+in
+{
   options.my.roles.publibike-locator = {
     enable = lib.mkEnableOption "Publibike Locator web app";
   };

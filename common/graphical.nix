@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   config = lib.mkIf config.my.laptop.enable {
@@ -16,7 +21,11 @@
     fonts = {
       enableDefaultFonts = true;
       fonts = with pkgs; [
-        google-fonts liberation_ttf open-sans roboto roboto-mono
+        google-fonts
+        liberation_ttf
+        open-sans
+        roboto
+        roboto-mono
         kochi-substitute
       ];
     };
@@ -40,7 +49,11 @@
 
     hardware.opengl = {
       enable = true;
-      extraPackages = with pkgs; [ vaapiIntel vaapiVdpau libvdpau-va-gl ];
+      extraPackages = with pkgs; [
+        vaapiIntel
+        vaapiVdpau
+        libvdpau-va-gl
+      ];
     };
 
     environment.systemPackages = with pkgs; [ alacritty ];

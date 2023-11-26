@@ -1,4 +1,9 @@
-{ stdenv, fetchFromGitHub, fetchpatch, kernel }:
+{
+  stdenv,
+  fetchFromGitHub,
+  fetchpatch,
+  kernel,
+}:
 
 stdenv.mkDerivation rec {
   pname = "intel_nuc_led";
@@ -11,13 +16,14 @@ stdenv.mkDerivation rec {
     sha256 = "1swpkxyn2i6xq8giqdv4pp0zv9d0hgpa77hsyadvpvvcb42f1z0x";
   };
 
-  patches = [
-    # proc: convert to struct proc_ops
-    (fetchpatch {
-      url = "https://github.com/nomego/intel_nuc_led/commit/4e0aefc83d29b9df6e10224a3f21a9c8ba91b4a5.patch";
-      sha256 = "03fx1s6rhmvpnkwvyqscy2b3nxwdkdqglyvv8jyv0lfijrpbifwz";
-    })
-  ];
+  patches =
+    [
+      # proc: convert to struct proc_ops
+      (fetchpatch {
+        url = "https://github.com/nomego/intel_nuc_led/commit/4e0aefc83d29b9df6e10224a3f21a9c8ba91b4a5.patch";
+        sha256 = "03fx1s6rhmvpnkwvyqscy2b3nxwdkdqglyvv8jyv0lfijrpbifwz";
+      })
+    ];
 
   nativeBuildInputs = kernel.moduleBuildDependencies;
 

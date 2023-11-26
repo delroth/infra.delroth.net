@@ -1,8 +1,15 @@
-{ config, lib, pkgs, secrets, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  secrets,
+  ...
+}:
 
 let
   cfg = config.my.roles.nix-builder;
-in {
+in
+{
   options.my.roles.nix-builder = {
     enable = lib.mkEnableOption "Remote Nix builder";
 
@@ -33,7 +40,11 @@ in {
 
     supportedFeatures = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = [ "big-parallel" "kvm" "nixos-test" ];
+      default = [
+        "big-parallel"
+        "kvm"
+        "nixos-test"
+      ];
       description = ''
         Supported features for package builds on this machine.
       '';
@@ -56,7 +67,7 @@ in {
       openssh.authorizedKeys.keys = [ secrets.distbuild.ssh-public ];
       group = cfg.user;
     };
-    users.groups."${cfg.user}" = {};
+    users.groups."${cfg.user}" = { };
 
     nix.settings.trusted-users = [ cfg.user ];
   };

@@ -1,4 +1,10 @@
-{ config, lib, pkgs, nixpkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  nixpkgs,
+  ...
+}:
 
 let
   pkgsCross = import nixpkgs {
@@ -6,23 +12,26 @@ let
     crossSystem = lib.systems.examples.aarch64-multiplatform;
   };
 
-  restool = pkgs.restool.overrideAttrs (final: prev: {
-    version = "2.3";
+  restool = pkgs.restool.overrideAttrs (
+    final: prev: {
+      version = "2.3";
 
-    src = pkgs.fetchgit {
-      url = "https://github.com/nxp-qoriq/restool";
-      rev = "f0cec094e4c6d1c975b377203a3bf994ba9325a9";
-      hash = "sha256-BdHdG+jjxJJJlFdCEtySCcj2GcnUqM7lgaHE5yRm86k=";
-    };
+      src = pkgs.fetchgit {
+        url = "https://github.com/nxp-qoriq/restool";
+        rev = "f0cec094e4c6d1c975b377203a3bf994ba9325a9";
+        hash = "sha256-BdHdG+jjxJJJlFdCEtySCcj2GcnUqM7lgaHE5yRm86k=";
+      };
 
-    patches = (prev.patches or []) ++ [
-      (pkgs.fetchpatch {
-        url = "https://github.com/nxp-qoriq/restool/commit/802764f8ed76f927dff494558332b0b77de7ac65.patch";
-        hash = "sha256-3/zyeJOBGRtSmYqPlAwE770Nyyc+vPNC2vDCWGjdd5Q=";
-      })
-    ];
-  });
-in {
+      patches = (prev.patches or [ ]) ++ [
+        (pkgs.fetchpatch {
+          url = "https://github.com/nxp-qoriq/restool/commit/802764f8ed76f927dff494558332b0b77de7ac65.patch";
+          hash = "sha256-3/zyeJOBGRtSmYqPlAwE770Nyyc+vPNC2vDCWGjdd5Q=";
+        })
+      ];
+    }
+  );
+in
+{
   nixpkgs.localSystem = lib.systems.examples.aarch64-multiplatform;
 
   # Use the latest (5.14+) kernel for proper hardware support. Cross-compile
@@ -31,13 +40,13 @@ in {
 
   boot.initrd.availableKernelModules = [ "nvme" ];
   boot.kernelParams = [
-      "console=ttyAMA0,115200"
-      "earlycon=pl011,mmio32,0x21c0000"
-      "pci=pcie_bus_perf"
-      "arm-smmu.disable_bypass=0"
-      "iommu.passthrough=1"
-      "mitigations=off"  # Significant performance boost, not multi-user.
-      "pcie_aspm=off"
+    "console=ttyAMA0,115200"
+    "earlycon=pl011,mmio32,0x21c0000"
+    "pci=pcie_bus_perf"
+    "arm-smmu.disable_bypass=0"
+    "iommu.passthrough=1"
+    "mitigations=off" # Significant performance boost, not multi-user.
+    "pcie_aspm=off"
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -62,7 +71,10 @@ in {
   fileSystems."/" = {
     device = "/dev/disk/by-label/root";
     fsType = "ext4";
-    options = [ "noatime" "discard" ];
+    options = [
+      "noatime"
+      "discard"
+    ];
   };
 
   fileSystems."/boot" = {

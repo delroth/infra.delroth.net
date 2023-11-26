@@ -1,4 +1,11 @@
-{ config, lib, machineName, pkgs, secrets, ... }:
+{
+  config,
+  lib,
+  machineName,
+  pkgs,
+  secrets,
+  ...
+}:
 
 let
   cfg = config.my.roles.seedbox;
@@ -8,10 +15,9 @@ let
   transmissionRpcPort = 9091;
 
   downloadBase = "/data/seedbox";
-in {
-  options.my.roles.seedbox = with lib; {
-    enable = mkEnableOption "Seedbox";
-  };
+in
+{
+  options.my.roles.seedbox = with lib; { enable = mkEnableOption "Seedbox"; };
 
   config = lib.mkIf cfg.enable {
     my.services.wg-netns = {
@@ -22,7 +28,10 @@ in {
       endpointAddr = secrets.seedbox-vpn.endpointAddr;
       ip4 = secrets.seedbox-vpn.ip4;
 
-      isolateServices = [ "transmission" "protonvpn-pmp-transmission" ];
+      isolateServices = [
+        "transmission"
+        "protonvpn-pmp-transmission"
+      ];
       forwardPorts = [ transmissionRpcPort ];
     };
 
@@ -77,9 +86,7 @@ in {
 
     services.minidlna = {
       enable = true;
-      mediaDirs = [
-        "${downloadBase}/watchqueue"
-      ];
+      mediaDirs = [ "${downloadBase}/watchqueue" ];
       announceInterval = 10;
     };
 

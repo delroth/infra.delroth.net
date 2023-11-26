@@ -1,8 +1,14 @@
-{ config, lib, machineName, ...}:
+{
+  config,
+  lib,
+  machineName,
+  ...
+}:
 
 let
   cfg = config.my.roles.syncthing-relay;
-in {
+in
+{
   options.my.roles.syncthing-relay = {
     enable = lib.mkEnableOption "Syncthing Relay";
   };
@@ -15,8 +21,8 @@ in {
 
       providedBy = "delroth (${machineName})";
 
-      globalRateBps = lib.mkDefault (20 * 1024 * 1024);  # 20MB/s
-      perSessionRateBps = lib.mkDefault (5 * 1024 * 1024);  # 5MB/s
+      globalRateBps = lib.mkDefault (20 * 1024 * 1024); # 20MB/s
+      perSessionRateBps = lib.mkDefault (5 * 1024 * 1024); # 5MB/s
     };
 
     networking.firewall.allowedTCPPorts = [

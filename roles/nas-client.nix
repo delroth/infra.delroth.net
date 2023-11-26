@@ -1,8 +1,14 @@
-{ config, lib, secrets, ... }:
+{
+  config,
+  lib,
+  secrets,
+  ...
+}:
 
 let
   cfg = config.my.roles.nas-client;
-in {
+in
+{
   options.my.roles.nas-client = with lib; {
     enable = mkEnableOption "NAS client";
     mountPoint = mkOption {
@@ -18,19 +24,31 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    boot.kernelModules = [ "cifs" "cmac" "hmac" "md4" "md5" "sha256" "sha512" ];
+    boot.kernelModules = [
+      "cifs"
+      "cmac"
+      "hmac"
+      "md4"
+      "md5"
+      "sha256"
+      "sha512"
+    ];
 
-    systemd.mounts = [{
-      description = "Mount for NAS ${cfg.server}";
-      what = "//${cfg.server}/data";
-      where = cfg.mountPoint;
-      options = "username=nas,password=${secrets.nasPassword},uid=1000,gid=1000,rw";
-    }];
+    systemd.mounts = [
+      {
+        description = "Mount for NAS ${cfg.server}";
+        what = "//${cfg.server}/data";
+        where = cfg.mountPoint;
+        options = "username=nas,password=${secrets.nasPassword},uid=1000,gid=1000,rw";
+      }
+    ];
 
-    systemd.automounts = [{
-      description = "Automount for NAS ${cfg.server}";
-      where = cfg.mountPoint;
-      wantedBy = [ "multi-user.target" ];
-    }];
+    systemd.automounts = [
+      {
+        description = "Automount for NAS ${cfg.server}";
+        where = cfg.mountPoint;
+        wantedBy = [ "multi-user.target" ];
+      }
+    ];
   };
 }

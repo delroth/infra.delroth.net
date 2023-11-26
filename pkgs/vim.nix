@@ -5,9 +5,7 @@ vim_configurable.customize {
   vimrcConfig = {
     vam = {
       knownPlugins = vimPlugins;
-      pluginDictionaries = [
-        { name = "vim-nix"; }
-      ];
+      pluginDictionaries = [ { name = "vim-nix"; } ];
     };
   };
 }

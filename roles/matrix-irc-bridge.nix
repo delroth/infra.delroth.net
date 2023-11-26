@@ -2,7 +2,8 @@
 
 let
   cfg = config.my.roles.matrix-irc-bridge;
-in {
+in
+{
   options.my.roles.matrix-irc-bridge = {
     enable = lib.mkEnableOption "Matrix IRC Bridge";
   };

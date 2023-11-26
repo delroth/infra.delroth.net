@@ -21,13 +21,13 @@
     ip4TcpPortForward = mkOption {
       type = types.listOf types.port;
       description = "List of TCP ports being forwarded from the router's external IPv4.";
-      default = [];
+      default = [ ];
     };
 
     ip4UdpPortForward = mkOption {
       type = types.listOf types.port;
       description = "List of UDP ports being forwarded from the router's external IPv4.";
-      default = [];
+      default = [ ];
     };
   };
 }

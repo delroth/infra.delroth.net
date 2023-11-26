@@ -1,8 +1,15 @@
-{ config, lib, machineName, secrets, ... }:
+{
+  config,
+  lib,
+  machineName,
+  secrets,
+  ...
+}:
 
 let
   cfg = config.my.roles.nas;
-in {
+in
+{
   options.my.roles.nas = with lib; {
     enable = mkEnableOption "File server";
     root = mkOption {
@@ -48,8 +55,14 @@ in {
     };
 
     networking.firewall = {
-      allowedTCPPorts = [ 139 445 ];
-      allowedUDPPorts = [ 137 138 ];
+      allowedTCPPorts = [
+        139
+        445
+      ];
+      allowedUDPPorts = [
+        137
+        138
+      ];
     };
 
     my.backup.extraPaths = [ cfg.root ];

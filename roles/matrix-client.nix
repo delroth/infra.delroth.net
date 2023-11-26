@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.my.roles.matrix-client;
@@ -20,7 +25,8 @@ let
       disable_guests = true;
     };
   };
-in {
+in
+{
   options.my.roles.matrix-client = {
     enable = lib.mkEnableOption "Matrix client (Element)";
   };

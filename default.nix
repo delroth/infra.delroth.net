@@ -6,12 +6,14 @@ rec {
   secrets = import ./secrets.nix;
   services = import ./services;
 
-  modules = { pkgs, ... }: {
-    imports = [
-      common
-      roles
-      (secrets { inherit pkgs; }).roles
-      services
-    ];
-  };
+  modules =
+    { pkgs, ... }:
+    {
+      imports = [
+        common
+        roles
+        (secrets { inherit pkgs; }).roles
+        services
+      ];
+    };
 }

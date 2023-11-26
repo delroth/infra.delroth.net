@@ -1,8 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   my = import ../..;
-in {
+in
+{
   imports = [
     ./bgp-container.nix
     ./hardware.nix
@@ -31,7 +37,10 @@ in {
   };
 
   # Used as a serial host.
-  boot.kernelModules = [ "ftdi_sio" "pl2303" ];
+  boot.kernelModules = [
+    "ftdi_sio"
+    "pl2303"
+  ];
   environment.systemPackages = with pkgs; [ picocom ];
 
   services.atftpd.enable = true;

@@ -1,8 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.my.roles.fiber7-prober;
-in {
+in
+{
   options.my.roles.fiber7-prober = with lib; {
     enable = mkEnableOption "Fiber7 prober (https://prober7.zekjur.net/)";
 

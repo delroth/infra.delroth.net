@@ -3,12 +3,17 @@
 rec {
   users.mutableUsers = false;
 
-  users.groups.delroth = { gid = 1000; };
+  users.groups.delroth = {
+    gid = 1000;
+  };
   users.users.delroth = {
     isNormalUser = true;
     uid = 1000;
     group = "delroth";
-    extraGroups = [ "users" "wheel" ];
+    extraGroups = [
+      "users"
+      "wheel"
+    ];
     hashedPassword = lib.mkDefault null;
     openssh.authorizedKeys.keys = [
       # Personal laptop

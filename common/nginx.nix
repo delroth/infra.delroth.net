@@ -3,7 +3,7 @@
 {
   services.nginx = {
     enable = true;
-    statusPage = true;  # For monitoring scraping.
+    statusPage = true; # For monitoring scraping.
 
     recommendedGzipSettings = true;
     recommendedOptimisation = true;
@@ -16,5 +16,8 @@
     port = 9113;
   };
 
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
 }

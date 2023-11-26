@@ -1,4 +1,9 @@
-{ stdenv, lib, fetchFromGitHub, python3Packages }:
+{
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  python3Packages,
+}:
 
 stdenv.mkDerivation rec {
   pname = "repology-notifier";
@@ -31,7 +36,7 @@ stdenv.mkDerivation rec {
 
   meta = with lib; {
     description = "Notifies of outdated maintained packages on Repology";
-    homepage = https://github.com/delroth/repology-outdated-notify;
+    homepage = "https://github.com/delroth/repology-outdated-notify";
     license = licenses.mit;
     maintainers = with maintainers; [ delroth ];
   };

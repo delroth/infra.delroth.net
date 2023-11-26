@@ -1,8 +1,15 @@
-{ config, lib, pkgs, secrets, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  secrets,
+  ...
+}:
 
 let
   my = import ../..;
-in {
+in
+{
   imports = [
     ./hardware.nix
     ./networking.nix
@@ -19,8 +26,18 @@ in {
   my.stateless.enable = false;
 
   environment.systemPackages = with pkgs; [
-    wget rsync git mailutils openssl binutils ncdu youtube-dl
-    whois gnupg git-crypt vim_delroth
+    wget
+    rsync
+    git
+    mailutils
+    openssl
+    binutils
+    ncdu
+    youtube-dl
+    whois
+    gnupg
+    git-crypt
+    vim_delroth
   ];
 
   services.postgresql.package = pkgs.postgresql_14;
@@ -50,7 +67,10 @@ in {
   };
 
   my.roles.nix-builder.speedFactor = 2;
-  my.roles.nix-builder.systems = [ "x86_64-linux" "i686-linux" ];
+  my.roles.nix-builder.systems = [
+    "x86_64-linux"
+    "i686-linux"
+  ];
 
   services.label-approved = {
     enable = true;

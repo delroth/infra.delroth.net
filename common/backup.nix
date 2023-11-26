@@ -1,4 +1,11 @@
-{ config, lib, machineName, pkgs, secrets, ... }:
+{
+  config,
+  lib,
+  machineName,
+  pkgs,
+  secrets,
+  ...
+}:
 
 {
   options.my.backup = with lib; {
@@ -37,9 +44,22 @@
         "/home/*/.local/share/Steam"
 
         # List of "heavy" files which are fine to exclude from offsite backups.
-        "*.mkv" "*.avi" "*.mp4" "*.mp3" "*.ogg" "*.flac" "*.VOB"
-        "*.iso" "*.gcm" "*.gcz" "*.cso" "*.sdc"
-        "*.vdi" "*.qcow2" "*.vmdk" "*.ova"
+        "*.mkv"
+        "*.avi"
+        "*.mp4"
+        "*.mp3"
+        "*.ogg"
+        "*.flac"
+        "*.VOB"
+        "*.iso"
+        "*.gcm"
+        "*.gcz"
+        "*.cso"
+        "*.sdc"
+        "*.vdi"
+        "*.qcow2"
+        "*.vmdk"
+        "*.ova"
       ] ++ config.my.backup.extraExclude;
 
       extraCreateArgs = "--one-file-system --stats";

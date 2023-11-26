@@ -1,4 +1,9 @@
-{ pkgs, secrets, nodes, ... }:
+{
+  pkgs,
+  secrets,
+  nodes,
+  ...
+}:
 {
   networking.wireguard.interfaces.wg-bgp-transit = {
     listenPort = 51821;
@@ -32,13 +37,19 @@
 
         interfaces.wg-bgp-transit = {
           ipv6.addresses = [
-            { address = "fd00:2::2"; prefixLength = 64; }
+            {
+              address = "fd00:2::2";
+              prefixLength = 64;
+            }
           ];
         };
 
         interfaces.lo = {
           ipv6.addresses = [
-            { address = "2a0d:d742:40::1"; prefixLength = 44; }
+            {
+              address = "2a0d:d742:40::1";
+              prefixLength = 44;
+            }
           ];
         };
 
@@ -115,8 +126,14 @@
           ORPort = [
             # This one is just to make Tor happy, we're not actually reachable
             # over IPv4.
-            { addr = "0.0.0.0"; port = 143; }
-            { addr = "[2a0d:d742:40::1]"; port = 143; }
+            {
+              addr = "0.0.0.0";
+              port = 143;
+            }
+            {
+              addr = "[2a0d:d742:40::1]";
+              port = 143;
+            }
           ];
 
           # Don't abuse the fair use transit too much.

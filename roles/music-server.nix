@@ -5,7 +5,8 @@ let
 
   hostname = "music.delroth.net";
   port = 4040;
-in {
+in
+{
   options.my.roles.music-server = {
     enable = lib.mkEnableOption "Music server";
   };

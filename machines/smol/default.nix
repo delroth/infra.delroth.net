@@ -1,9 +1,15 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   my = import ../..;
   kernelPackages = config.boot.kernelPackages;
-in {
+in
+{
   imports = [
     ./hardware.nix
 
@@ -40,7 +46,13 @@ in {
   };
   services.zfs.autoScrub.enable = true;
   environment.systemPackages = with pkgs; [
-    fio gdb kernelPackages.perf kernelPackages.tmon lm_sensors screen sysstat
+    fio
+    gdb
+    kernelPackages.perf
+    kernelPackages.tmon
+    lm_sensors
+    screen
+    sysstat
   ];
 
   # SMART monitoring.

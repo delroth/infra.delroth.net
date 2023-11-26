@@ -4,8 +4,10 @@ let
   canaryHash = builtins.hashFile "sha256" ./secrets/canary;
   expectedHash = "27a6153adee6291f22bd145f29a5596cef0e87abbc87762576204bc4c8a1cf93";
 in
-  if canaryHash != expectedHash then abort "Secrets are not readable. Have you run `git-crypt unlock`?"
-  else {
+if canaryHash != expectedHash then
+  abort "Secrets are not readable. Have you run `git-crypt unlock`?"
+else
+  {
     backup = {
       location = builtins.readFile ./secrets/backup-location;
       pass = import ./secrets/backup-pass.nix;
@@ -19,9 +21,9 @@ in
       ssh-public = builtins.readFile ./secrets/distbuild-ssh-pub;
       ssh-private = builtins.readFile ./secrets/distbuild-ssh-priv;
     };
-    dnssec = pkgs.lib.genAttrs
-      (builtins.attrNames (builtins.readDir ./secrets/dnssec))
-      (f: builtins.readFile (./secrets/dnssec + "/${f}"));
+    dnssec = pkgs.lib.genAttrs (builtins.attrNames (builtins.readDir ./secrets/dnssec)) (
+      f: builtins.readFile (./secrets/dnssec + "/${f}")
+    );
     email = import ./secrets/email.nix;
     flexget-config = import ./secrets/flexget-config.nix;
     gh-token = builtins.readFile ./secrets/gh-token;

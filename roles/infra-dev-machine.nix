@@ -1,16 +1,24 @@
-{ config, lib, nodes, pkgs, secrets, ... }:
+{
+  config,
+  lib,
+  nodes,
+  pkgs,
+  secrets,
+  ...
+}:
 
 let
   cfg = config.my.roles.infra-dev-machine;
 
   distbuildPrivKeyEtcPath = "nix/distbuild-ssh.priv";
-in {
+in
+{
   options.my.roles.infra-dev-machine = with lib; {
     enable = mkEnableOption "Infra dev machine";
 
     extraBuilders = mkOption {
       type = types.listOf types.attrs;
-      default = [];
+      default = [ ];
       description = ''
         Extra builders to configure outside of the infra.delroth.net
         deployment. The distbuild ssh key is automatically set.
@@ -27,17 +35,25 @@ in {
 
       buildMachines =
         let
-          builderNodes =
-            lib.flip builtins.filter (builtins.attrValues nodes) (node:
-              (lib.hasAttrByPath [ "my" "roles" "nix-builder" ] node.config) &&
-              node.config.my.roles.nix-builder.enable
-            );
+          builderNodes = lib.flip builtins.filter (builtins.attrValues nodes) (
+            node:
+            (lib.hasAttrByPath
+              [
+                "my"
+                "roles"
+                "nix-builder"
+              ]
+              node.config
+            )
+            && node.config.my.roles.nix-builder.enable
+          );
 
-          extraNodes = lib.flip builtins.map cfg.extraBuilders (node: {
-            sshKey = "/etc/${distbuildPrivKeyEtcPath}";
-          } // node);
+          extraNodes = lib.flip builtins.map cfg.extraBuilders (
+            node: { sshKey = "/etc/${distbuildPrivKeyEtcPath}"; } // node
+          );
         in
-          lib.flip builtins.map builderNodes (node: {
+        lib.flip builtins.map builderNodes (
+          node: {
             hostName = node.config.networking.hostName;
             sshUser = node.config.my.roles.nix-builder.user;
             sshKey = "/etc/${distbuildPrivKeyEtcPath}";
@@ -45,9 +61,10 @@ in {
             systems = node.config.my.roles.nix-builder.systems;
             maxJobs = node.config.my.roles.nix-builder.maxJobs;
             speedFactor = node.config.my.roles.nix-builder.speedFactor;
-            supportedFeatures =
-              node.config.my.roles.nix-builder.supportedFeatures;
-          }) ++ extraNodes;
+            supportedFeatures = node.config.my.roles.nix-builder.supportedFeatures;
+          }
+        )
+        ++ extraNodes;
     };
 
     # To work around ssh private key permissions issues, copy the private key
@@ -60,7 +77,10 @@ in {
     };
 
     environment.systemPackages = with pkgs; [
-      colmena diffoscope qemu nixpkgs-review
+      colmena
+      diffoscope
+      qemu
+      nixpkgs-review
     ];
   };
 }

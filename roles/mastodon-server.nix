@@ -1,8 +1,15 @@
-{ config, lib, pkgs, secrets, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  secrets,
+  ...
+}:
 
 let
   cfg = config.my.roles.mastodon-server;
-in {
+in
+{
   options.my.roles.mastodon-server = {
     enable = lib.mkEnableOption "Mastodon server";
   };
@@ -19,7 +26,7 @@ in {
       smtp.fromAddress = "mastodon@delroth.net";
       smtp.authenticate = true;
       smtp.user = secrets.email.smtp-user;
-      smtp.passwordFile = "${pkgs.runCommand "smtp-password" {} ''
+      smtp.passwordFile = "${pkgs.runCommand "smtp-password" { } ''
         echo "${secrets.email.smtp-password}" > $out
       ''}";
 

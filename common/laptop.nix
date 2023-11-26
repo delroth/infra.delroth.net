@@ -1,4 +1,10 @@
-{ config, lib, pkgs, secrets, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  secrets,
+  ...
+}:
 
 {
   options = {
@@ -13,11 +19,10 @@
 
     # Disable systemd-networkd-wait-online since by default all interfaces are
     # managed by NM.
-    systemd.services.systemd-networkd-wait-online.serviceConfig.ExecStart =
-      lib.mkForce [
-        ""
-        "${pkgs.coreutils}/bin/true"
-      ];
+    systemd.services.systemd-networkd-wait-online.serviceConfig.ExecStart = lib.mkForce [
+      ""
+      "${pkgs.coreutils}/bin/true"
+    ];
 
     services.tlp.enable = true;
     services.upower.enable = true;

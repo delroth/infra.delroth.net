@@ -1,18 +1,25 @@
-{ config, lib, pkgs, secrets, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  secrets,
+  ...
+}:
 
 let
   secondaryDnsServers = [
-    "69.65.50.192"  # ns2.afraid.org
-    "204.42.254.5"  # puck.nether.net
+    "69.65.50.192" # ns2.afraid.org
+    "204.42.254.5" # puck.nether.net
   ];
-in {
+in
+{
   services.bind = {
     enable = true;
     cacheNetworks = [
       "127.0.0.0/24"
       "::1/128"
     ];
-    forwarders = ["127.0.0.53 port 53"];
+    forwarders = [ "127.0.0.53 port 53" ];
     extraOptions = ''
       notify yes;
     '';
@@ -37,15 +44,18 @@ in {
     ];
   };
 
-  environment.etc = lib.mapAttrs' (filename: contents: {
-    name = "bind/keys/${filename}";
-    value = {
-      user = "named";
-      group = "root";
-      mode = "0400";
-      text = contents;
-    };
-  }) secrets.dnssec;
+  environment.etc =
+    lib.mapAttrs'
+      (filename: contents: {
+        name = "bind/keys/${filename}";
+        value = {
+          user = "named";
+          group = "root";
+          mode = "0400";
+          text = contents;
+        };
+      })
+      secrets.dnssec;
 
   networking.firewall.allowedTCPPorts = [ 53 ];
   networking.firewall.allowedUDPPorts = [ 53 ];

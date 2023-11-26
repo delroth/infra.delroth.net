@@ -2,7 +2,8 @@
 
 let
   my = import ../..;
-in {
+in
+{
   imports = [
     ./hardware.nix
 
@@ -23,7 +24,10 @@ in {
   };
 
   my.roles.nix-builder.speedFactor = 4;
-  my.roles.nix-builder.systems = [ "x86_64-linux" "i686-linux" ];
+  my.roles.nix-builder.systems = [
+    "x86_64-linux"
+    "i686-linux"
+  ];
 
-  my.monitoring.roaming = true;  # Host regularly goes to sleep.
+  my.monitoring.roaming = true; # Host regularly goes to sleep.
 }

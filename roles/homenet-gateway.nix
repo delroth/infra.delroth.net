@@ -1,58 +1,92 @@
-{ config, lib, nodes, pkgs, secrets, ... }:
+{
+  config,
+  lib,
+  nodes,
+  pkgs,
+  secrets,
+  ...
+}:
 
 let
   cfg = config.my.roles.homenet-gateway;
 
-  homenetNodes =
-    lib.mapAttrs (name: node: node.config.my.homenet) (
-      lib.flip lib.filterAttrs nodes (name: node:
-        (lib.hasAttrByPath [ "my" "homenet" ] node.config) &&
-        node.config.my.homenet.enable
+  homenetNodes = lib.mapAttrs (name: node: node.config.my.homenet) (
+    lib.flip lib.filterAttrs nodes (
+      name: node:
+      (lib.hasAttrByPath
+        [
+          "my"
+          "homenet"
+        ]
+        node.config
       )
-    );
-
-  makePortMap = mapName: lib.flatten (
-    lib.mapAttrsToList (name: node:
-      map (port: {
-        sourcePort = port;
-        destination = "${cfg.homenetIp4}${toString node.ipSuffix}";
-      }) node."${mapName}"
-    ) homenetNodes
+      && node.config.my.homenet.enable
+    )
   );
+
+  makePortMap =
+    mapName:
+    lib.flatten (
+      lib.mapAttrsToList
+        (
+          name: node:
+          map
+            (port: {
+              sourcePort = port;
+              destination = "${cfg.homenetIp4}${toString node.ipSuffix}";
+            })
+            node."${mapName}"
+        )
+        homenetNodes
+    );
   tcpPortMap = makePortMap "ip4TcpPortForward";
   udpPortMap = makePortMap "ip4UdpPortForward";
 
   dhcpHosts =
     let
-      homenetHosts = lib.mapAttrsToList (name: node: {
-        inherit name;
-        mac = node.macAddress;
-        ip = node.ipSuffix;
-      }) homenetNodes;
+      homenetHosts =
+        lib.mapAttrsToList
+          (name: node: {
+            inherit name;
+            mac = node.macAddress;
+            ip = node.ipSuffix;
+          })
+          homenetNodes;
 
-      extraHosts = lib.mapAttrsToList (name: info: {
-        inherit name;
-        mac = info.mac;
-        ip = info.ip;
-      }) cfg.homenetExtraHosts;
+      extraHosts =
+        lib.mapAttrsToList
+          (name: info: {
+            inherit name;
+            mac = info.mac;
+            ip = info.ip;
+          })
+          cfg.homenetExtraHosts;
 
-      lines = builtins.map (info:
-        "dhcp-host=${info.mac},${cfg.homenetIp4}${toString info.ip},[::${toString info.ip}],${info.name}"
-      ) (homenetHosts ++ extraHosts);
-    in builtins.concatStringsSep "\n" lines;
+      lines =
+        builtins.map
+          (
+            info:
+            "dhcp-host=${info.mac},${cfg.homenetIp4}${toString info.ip},[::${toString info.ip}],${info.name}"
+          )
+          (homenetHosts ++ extraHosts);
+    in
+    builtins.concatStringsSep "\n" lines;
 
-    formatPortsList = l:
-      let
-        strL = builtins.map builtins.toString l;
-      in
-        builtins.concatStringsSep ", " strL;
+  formatPortsList =
+    l:
+    let
+      strL = builtins.map builtins.toString l;
+    in
+    builtins.concatStringsSep ", " strL;
 
-    formatPortRangesList = l:
-      let
-        strL = builtins.map (a: "${builtins.toString a.from}-${builtins.toString a.to}") l;
-      in
-        (if builtins.length l == 0 then "" else ", ") + builtins.concatStringsSep ", " strL;
-in {
+  formatPortRangesList =
+    l:
+    let
+      strL = builtins.map (a: "${builtins.toString a.from}-${builtins.toString a.to}") l;
+    in
+    (if builtins.length l == 0 then "" else ", ") + builtins.concatStringsSep ", " strL;
+in
+{
   options.my.roles.homenet-gateway = with lib; {
     enable = mkEnableOption "Home Network Gateway";
 
@@ -96,8 +130,14 @@ in {
       type = types.attrs;
       description = "Extra hosts to include in the home network configuration for DNS / DHCP.";
       example = {
-        host1 = { mac = "11:22:33:44:55:66"; ipSuffix = 42; };
-        host2 = { mac = "1a:2a:3a:4a:5a:6a"; ipSuffix = 51; };
+        host1 = {
+          mac = "11:22:33:44:55:66";
+          ipSuffix = 42;
+        };
+        host2 = {
+          mac = "1a:2a:3a:4a:5a:6a";
+          ipSuffix = 51;
+        };
       };
     };
   };
@@ -124,7 +164,10 @@ in {
     };
     networking.interfaces.iot = {
       ipv4.addresses = [
-        { address = "192.168.66.254"; prefixLength = 24; }
+        {
+          address = "192.168.66.254";
+          prefixLength = 24;
+        }
       ];
     };
 
@@ -136,7 +179,10 @@ in {
     };
     networking.interfaces.pub = {
       ipv4.addresses = [
-        { address = "192.168.99.254"; prefixLength = 24; }
+        {
+          address = "192.168.99.254";
+          prefixLength = 24;
+        }
       ];
     };
 
@@ -217,14 +263,14 @@ in {
             typeof tcp dport
             flags interval
             counter
-            elements = { ${ formatPortsList config.networking.firewall.allowedTCPPorts } ${ formatPortRangesList config.networking.firewall.allowedTCPPortRanges } }
+            elements = { ${formatPortsList config.networking.firewall.allowedTCPPorts} ${formatPortRangesList config.networking.firewall.allowedTCPPortRanges} }
           }
 
           set udp_open_ports {
             typeof udp dport
             flags interval
             counter
-            elements = { ${ formatPortsList config.networking.firewall.allowedUDPPorts } ${ formatPortRangesList config.networking.firewall.allowedUDPPortRanges } }
+            elements = { ${formatPortsList config.networking.firewall.allowedUDPPorts} ${formatPortRangesList config.networking.firewall.allowedUDPPortRanges} }
           }
 
           flowtable f {
@@ -274,13 +320,25 @@ in {
             type nat hook prerouting priority dstnat
             policy accept
 
-            ${builtins.concatStringsSep "\n" (map (e:
-              "iifname \"${cfg.upstreamIface}\" tcp dport ${builtins.toString e.sourcePort} dnat to ${e.destination}"
-              ) tcpPortMap)}
+            ${builtins.concatStringsSep "\n" (
+          map
+            (
+              e:
+              ''
+                iifname "${cfg.upstreamIface}" tcp dport ${builtins.toString e.sourcePort} dnat to ${e.destination}''
+            )
+            tcpPortMap
+        )}
 
-            ${builtins.concatStringsSep "\n" (map (e:
-              "ifname \"${cfg.upstreamIface}\" udp dport ${builtins.toString e.sourcePort} dnat to ${e.destination}"
-              ) udpPortMap)}
+            ${builtins.concatStringsSep "\n" (
+          map
+            (
+              e:
+              ''
+                ifname "${cfg.upstreamIface}" udp dport ${builtins.toString e.sourcePort} dnat to ${e.destination}''
+            )
+            udpPortMap
+        )}
           }
 
           chain nat_masquerade {
@@ -299,7 +357,7 @@ in {
     };
 
     # XXX: https://github.com/NixOS/nixpkgs/issues/141802
-    systemd.services.nftables.before = lib.mkForce [];
+    systemd.services.nftables.before = lib.mkForce [ ];
     systemd.services.nftables.after = [ "network-pre.target" ];
 
     # Enable IPv6 forwarding.
@@ -310,7 +368,11 @@ in {
     };
 
     # DHCPv4 / DHCPv6
-    networking.firewall.allowedUDPPorts = [ 67 546 547 ];
+    networking.firewall.allowedUDPPorts = [
+      67
+      546
+      547
+    ];
 
     services.dnsmasq = {
       enable = true;

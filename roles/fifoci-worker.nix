@@ -1,4 +1,11 @@
-{ config, lib, machineName, pkgs, secrets, ... }:
+{
+  config,
+  lib,
+  machineName,
+  pkgs,
+  secrets,
+  ...
+}:
 
 let
   cfg = config.my.roles.fifoci-worker;
@@ -13,54 +20,62 @@ let
   # Setting up a development environment with NixOS is tricky, since this
   # requires running package hooks to get e.g. the proper PKG_CONFIG_PATH and
   # more.
-  fifociShell = let
-    dol = pkgs.dolphinEmuMaster;
-    inputAttrs = [
-      "buildInputs"
-      "nativeBuildInputs"
-      "propagatedBuildInputs"
-      "propagatedNativeBuildInputs"
-    ];
-    deps = lib.concatMapStringsSep "\n" (attr:
-      let
-        l = dol."${attr}";
-        spaceSeparated = lib.concatMapStringsSep " " (drv: "${drv}") l;
-      in
-        "${attr}=\"${spaceSeparated}\""
-    ) inputAttrs;
-  in pkgs.runCommand "fifoci-shell" {
-    passthru = {
-      shellPath = "/bin/fifoci-shell";
-    };
-  } ''
-    mkdir -p $out/bin $out/share
+  fifociShell =
+    let
+      dol = pkgs.dolphinEmuMaster;
+      inputAttrs = [
+        "buildInputs"
+        "nativeBuildInputs"
+        "propagatedBuildInputs"
+        "propagatedNativeBuildInputs"
+      ];
+      deps =
+        lib.concatMapStringsSep "\n"
+          (
+            attr:
+            let
+              l = dol."${attr}";
+              spaceSeparated = lib.concatMapStringsSep " " (drv: "${drv}") l;
+            in
+            ''${attr}="${spaceSeparated}"''
+          )
+          inputAttrs;
+    in
+    pkgs.runCommand "fifoci-shell"
+      {
+        passthru = {
+          shellPath = "/bin/fifoci-shell";
+        };
+      }
+      ''
+        mkdir -p $out/bin $out/share
 
-    cat > $out/bin/fifoci-shell <<EOF
-    #! /bin/sh
-    rc=$out/share/rcfile
-    BASH_ENV=\$rc exec ${pkgs.bashInteractive}/bin/bash --rcfile \$rc "\$@"
-    EOF
-    chmod +x $out/bin/fifoci-shell
+        cat > $out/bin/fifoci-shell <<EOF
+        #! /bin/sh
+        rc=$out/share/rcfile
+        BASH_ENV=\$rc exec ${pkgs.bashInteractive}/bin/bash --rcfile \$rc "\$@"
+        EOF
+        chmod +x $out/bin/fifoci-shell
 
-    # Lifted from the nix-shell implementation.
-    export NIX_BUILD_TOP=/tmp
-    export NIX_STORE=/nix/store
-    export IN_NIX_SHELL=impure
-    export NIX_ENFORCE_PURITY=0
+        # Lifted from the nix-shell implementation.
+        export NIX_BUILD_TOP=/tmp
+        export NIX_STORE=/nix/store
+        export IN_NIX_SHELL=impure
+        export NIX_ENFORCE_PURITY=0
 
-    ${deps}
+        ${deps}
 
-    source ${pkgs.stdenv}/setup
+        source ${pkgs.stdenv}/setup
 
-    unset SSL_CERT_FILE NIX_SSL_CERT_FILE HOME PWD TMP TMPDIR TEMPDIR TEMP
+        unset SSL_CERT_FILE NIX_SSL_CERT_FILE HOME PWD TMP TMPDIR TEMPDIR TEMP
 
-    ${pkgs.coreutils}/bin/env |
-      ${pkgs.gnused}/bin/sed -r 's/^([^=]+)=(.*)$/export \1="\2"/'> $out/share/rcfile
+        ${pkgs.coreutils}/bin/env |
+          ${pkgs.gnused}/bin/sed -r 's/^([^=]+)=(.*)$/export \1="\2"/'> $out/share/rcfile
 
-    ${pkgs.gnused}/bin/sed -ri 's/^(export PATH=.*)"$/\1:$PATH"/' $out/share/rcfile
-  '';
+        ${pkgs.gnused}/bin/sed -ri 's/^(export PATH=.*)"$/\1:$PATH"/' $out/share/rcfile
+      '';
 
-  workerPackage = pkgs.runCommand "fifoci-buildbot-worker" {} ''
+  workerPackage = pkgs.runCommand "fifoci-buildbot-worker" { } ''
     mkdir $out
     ${pkgs.python3Packages.buildbot-worker}/bin/buildbot-worker \
         create-worker \
@@ -73,14 +88,20 @@ let
     EOF
   '';
 
-  fifociPython = pkgs.python3.withPackages (p: [
-    p.buildbot-worker
-  ]);
+  fifociPython = pkgs.python3.withPackages (p: [ p.buildbot-worker ]);
 
   fifociEnvPackages = with pkgs; [
-    bash ccache ffmpeg fifociPython git imagemagick ninja poetry
+    bash
+    ccache
+    ffmpeg
+    fifociPython
+    git
+    imagemagick
+    ninja
+    poetry
   ];
-in {
+in
+{
   options.my.roles.fifoci-worker = {
     enable = lib.mkEnableOption "FifoCI worker";
 
@@ -105,7 +126,7 @@ in {
       shell = fifociShell;
       packages = fifociEnvPackages;
     };
-    users.groups.fifoci = {};
+    users.groups.fifoci = { };
 
     systemd.services.fifoci-buildbot-worker = {
       description = "FifoCI Buildbot Worker";

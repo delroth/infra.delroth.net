@@ -3,8 +3,15 @@
 {
   imports = [ "${modulesPath}/profiles/qemu-guest.nix" ];
 
-  boot.initrd.availableKernelModules = [ "virtio_pci" "ahci" "sd_mod" ];
-  fileSystems."/" = { device = "/dev/sda"; fsType = "ext4"; };
+  boot.initrd.availableKernelModules = [
+    "virtio_pci"
+    "ahci"
+    "sd_mod"
+  ];
+  fileSystems."/" = {
+    device = "/dev/sda";
+    fsType = "ext4";
+  };
   nix.settings.max-jobs = 1;
 
   boot.loader.grub = {

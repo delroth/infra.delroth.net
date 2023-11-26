@@ -1,11 +1,24 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   kernelPackages = import ./kernel.nix { inherit pkgs; };
-in {
+in
+{
   hardware.enableRedistributableFirmware = true;
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "usbhid" "sd_mod" "sdhci_pci" ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "nvme"
+    "usb_storage"
+    "usbhid"
+    "sd_mod"
+    "sdhci_pci"
+  ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.blacklistedKernelModules = [ "dvb_usb_rtl28xxu" ];
 
@@ -26,9 +39,7 @@ in {
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   boot.kernelPackages = lib.mkForce kernelPackages;
-  boot.extraModulePackages = [
-    kernelPackages.intel_nuc_led
-  ];
+  boot.extraModulePackages = [ kernelPackages.intel_nuc_led ];
   boot.kernel.sysctl."net.core.bpf_jit_enable" = null;
 
   # Disable annoying gamer LEDs.

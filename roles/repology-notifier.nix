@@ -1,4 +1,10 @@
-{ config, lib, pkgs, secrets, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  secrets,
+  ...
+}:
 
 let
   cfg = config.my.roles.repology-notifier;
@@ -9,7 +15,8 @@ let
     githubRepo = "delroth/maintained-packages";
     githubToken = secrets.repologyNotifierGhToken;
   };
-in {
+in
+{
   options.my.roles.repology-notifier.enable = lib.mkEnableOption "Repology notifier";
 
   config = lib.mkIf cfg.enable {

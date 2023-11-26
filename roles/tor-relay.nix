@@ -1,4 +1,9 @@
-{ config, lib, machineName, ... }:
+{
+  config,
+  lib,
+  machineName,
+  ...
+}:
 
 let
   cfg = config.my.roles.tor-relay;
@@ -15,7 +20,8 @@ let
     # sunny
     "75018790F33716C820745B8F7E27D08DAA3E3877"
   ];
-in {
+in
+{
   options.my.roles.tor-relay = {
     enable = lib.mkEnableOption "Tor Relay";
   };
@@ -36,9 +42,7 @@ in {
         MyFamily = builtins.concatStringsSep "," myFamily;
         Nickname = "${builtins.replaceStrings [ "-" ] [ "" ] machineName}Delroth";
         NumCPUs = 0;
-        ORPort = [
-          { port = 143; }
-        ];
+        ORPort = [ { port = 143; } ];
       };
     };
 

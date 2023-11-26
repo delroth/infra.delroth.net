@@ -1,10 +1,16 @@
-{ lib, machineName, pkgs, ... }:
+{
+  lib,
+  machineName,
+  pkgs,
+  ...
+}:
 
 let
   my = import ../.;
 
   secrets = my.secrets { inherit pkgs; };
-in {
+in
+{
   documentation = {
     doc.enable = false;
     info.enable = false;
@@ -19,7 +25,10 @@ in {
 
   nix.settings = {
     auto-optimise-store = true;
-    trusted-users = [ "root" "@wheel" ];
+    trusted-users = [
+      "root"
+      "@wheel"
+    ];
   };
   nix.gc = {
     automatic = true;
@@ -34,19 +43,23 @@ in {
   nix.nixPath = [ "nixpkgs=/etc/nixpkgs" ];
 
   # Add custom package set to overlays.
-  nixpkgs.overlays = [ my.pkgs secrets.pkgs ];
+  nixpkgs.overlays = [
+    my.pkgs
+    secrets.pkgs
+  ];
 
   # Add support for command-not-found. For simplicity, hardcode a Nix channel
   # revision that has the programs.sqlite pregenerated instead of building it
   # ourselves since that's expensive.
   environment.variables.NIX_AUTO_RUN = "1";
-  programs.command-not-found.dbPath = let
-    channelTarball = pkgs.fetchurl {
-      url = "https://releases.nixos.org/nixos/unstable/nixos-22.05pre358986.062a0c5437b/nixexprs.tar.xz";
-      sha256 = "sha256-ca8tlBaVowbYJKoHQb8T4FdYccaGODeKPdEz/L0EbJM=";
-    };
-  in
-    pkgs.runCommand "programs.sqlite" {} ''
+  programs.command-not-found.dbPath =
+    let
+      channelTarball = pkgs.fetchurl {
+        url = "https://releases.nixos.org/nixos/unstable/nixos-22.05pre358986.062a0c5437b/nixexprs.tar.xz";
+        sha256 = "sha256-ca8tlBaVowbYJKoHQb8T4FdYccaGODeKPdEz/L0EbJM=";
+      };
+    in
+    pkgs.runCommand "programs.sqlite" { } ''
       tar xf ${channelTarball} --wildcards "nixos*/programs.sqlite" -O > $out
     '';
 

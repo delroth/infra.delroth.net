@@ -1,14 +1,25 @@
-{ config, lib, machineName, pkgs, secrets, ... }:
+{
+  config,
+  lib,
+  machineName,
+  pkgs,
+  secrets,
+  ...
+}:
 
 let
   cfg = config.my.roles.syncthing-mirror;
 
-  devices = builtins.mapAttrs (name: info: {
-    inherit name;
-    id = info.id;
-    introducer = true;
-  }) secrets.syncthing;
-in {
+  devices =
+    builtins.mapAttrs
+      (name: info: {
+        inherit name;
+        id = info.id;
+        introducer = true;
+      })
+      secrets.syncthing;
+in
+{
   options.my.roles.syncthing-mirror = {
     enable = lib.mkEnableOption "Syncthing mirror role";
   };
@@ -34,7 +45,7 @@ in {
           type = "staggered";
           params = {
             cleanInterval = "3600";
-            maxAge = "31536000";  # 365d
+            maxAge = "31536000"; # 365d
           };
         };
       };

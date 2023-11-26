@@ -1,4 +1,8 @@
-{ stdenv, fetchFromGitHub, kernel }:
+{
+  stdenv,
+  fetchFromGitHub,
+  kernel,
+}:
 
 stdenv.mkDerivation rec {
   pname = "al_thermal";

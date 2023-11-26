@@ -1,8 +1,15 @@
-{ config, lib, pkgs, secrets, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  secrets,
+  ...
+}:
 
 let
   my = import ../..;
-in {
+in
+{
   imports = [
     ./hardware.nix
 
@@ -14,11 +21,40 @@ in {
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    wget chromium most mpv feh lxqt.pavucontrol-qt acpi gitFull dex gnupg
-    cifs-utils tpm2-tools git-crypt python3 pwgen keepassxc vulnix electrum
-    lm_sensors picocom whois transmission scrot imgurbash2 vim_delroth
-    gnome.eog evince libnotify hexedit wireguard-tools notify-osd
-    glome file unzip
+    wget
+    chromium
+    most
+    mpv
+    feh
+    lxqt.pavucontrol-qt
+    acpi
+    gitFull
+    dex
+    gnupg
+    cifs-utils
+    tpm2-tools
+    git-crypt
+    python3
+    pwgen
+    keepassxc
+    vulnix
+    electrum
+    lm_sensors
+    picocom
+    whois
+    transmission
+    scrot
+    imgurbash2
+    vim_delroth
+    gnome.eog
+    evince
+    libnotify
+    hexedit
+    wireguard-tools
+    notify-osd
+    glome
+    file
+    unzip
 
     config.boot.kernelPackages.perf
   ];
@@ -32,16 +68,22 @@ in {
 
   boot.kernelModules = [
     # FTDI / Serial
-    "ftdi_sio" "pl2303"
+    "ftdi_sio"
+    "pl2303"
 
     # USB mass storage
-    "usb_storage" "sd_mod" "vfat" "exfat" "mmc_block"
+    "usb_storage"
+    "sd_mod"
+    "vfat"
+    "exfat"
+    "mmc_block"
 
     # USB RJ45 dongle
     "r8152"
 
     # Wi-Fi dependency
-    "libarc4" "ccm"
+    "libarc4"
+    "ccm"
 
     # USB audio
     "snd-usb-audio"

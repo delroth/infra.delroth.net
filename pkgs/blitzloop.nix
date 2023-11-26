@@ -1,4 +1,11 @@
-{ lib, fetchFromGitHub, python3Packages, freetype, libjack2, mpv }:
+{
+  lib,
+  fetchFromGitHub,
+  python3Packages,
+  freetype,
+  libjack2,
+  mpv,
+}:
 
 let
   freetype-py = python3Packages.buildPythonPackage rec {
@@ -24,7 +31,7 @@ let
 
     meta = with lib; {
       description = "Python binding for the freetype library";
-      homepage = https://github.com/rougier/freetype-py;
+      homepage = "https://github.com/rougier/freetype-py";
       license = licenses.bsd3;
       maintainers = with maintainers; [ delroth ];
     };
@@ -42,7 +49,7 @@ let
 
     meta = with lib; {
       description = "Pure-Python Japanese character interconverter for Hiragana, Katakana, Hankaku and Zenkaku";
-      homepage = https://github.com/ikegami-yukino/jaconv;
+      homepage = "https://github.com/ikegami-yukino/jaconv";
       license = licenses.mit;
       maintainers = with maintainers; [ delroth ];
     };
@@ -63,7 +70,7 @@ let
 
     meta = with lib; {
       description = "A python wrapper for libmpv";
-      homepage = https://github.com/marcan/pympv;
+      homepage = "https://github.com/marcan/pympv";
       license = licenses.gpl3;
       maintainers = with maintainers; [ delroth ];
     };
@@ -81,11 +88,7 @@ python3Packages.buildPythonApplication rec {
     sha256 = "0rprg3847p05k2fbpfi308xzjmk7ql2dzhlbv38kc1a52c5hpg7r";
   };
 
-  buildInputs = [
-    libjack2
-  ] ++ (with python3Packages; [
-    cython
-  ]);
+  buildInputs = [ libjack2 ] ++ (with python3Packages; [ cython ]);
 
   propagatedBuildInputs = with python3Packages; [
     bottle
@@ -110,8 +113,11 @@ python3Packages.buildPythonApplication rec {
       video and lyrics, while control is provided remotely (via browser).
       Please note that watered down alcohol drinks are not included.
     '';
-    homepage = https://github.com/marcan/blitzloop;
-    license = with licenses; [ gpl2 gpl3 ];
+    homepage = "https://github.com/marcan/blitzloop";
+    license = with licenses; [
+      gpl2
+      gpl3
+    ];
     maintainers = with maintainers; [ delroth ];
   };
 }

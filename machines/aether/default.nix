@@ -1,9 +1,16 @@
-{ config, lib, pkgs, secrets, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  secrets,
+  ...
+}:
 
 let
   my = import ../..;
   kernelPackages = config.boot.kernelPackages;
-in {
+in
+{
   imports = [
     ./hardware.nix
     ./networking.nix
@@ -31,7 +38,12 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
-    ethtool fio htop kernelPackages.perf kernelPackages.tmon lm_sensors
+    ethtool
+    fio
+    htop
+    kernelPackages.perf
+    kernelPackages.tmon
+    lm_sensors
   ];
 
   # TODO: Fix kernel support for apparmor

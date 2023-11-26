@@ -1,4 +1,10 @@
-{ config, lib, pkgs, secrets, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  secrets,
+  ...
+}:
 
 let
   cfg = config.my.roles.matrix-signal-bridge;
@@ -32,8 +38,9 @@ let
     };
   };
 
-  settingsFileOrig = (pkgs.formats.json {}).generate "mautrix-signal.json" settings;
-in {
+  settingsFileOrig = (pkgs.formats.json { }).generate "mautrix-signal.json" settings;
+in
+{
   options.my.roles.matrix-signal-bridge = {
     enable = lib.mkEnableOption "Matrix Signal Bridge";
   };
@@ -47,14 +54,20 @@ in {
       home = dataDir;
       extraGroups = [ config.services.signald.group ];
     };
-    users.groups.mautrix-signal = {};
+    users.groups.mautrix-signal = { };
 
     systemd.services.mautrix-signal = {
       description = "Signal bridge for Matrix";
 
       wantedBy = [ "multi-user.target" ];
-      wants = [ "network-online.target" "matrix-synapse.service" ];
-      after = [ "network-online.target" "matrix-synapse.service" ];
+      wants = [
+        "network-online.target"
+        "matrix-synapse.service"
+      ];
+      after = [
+        "network-online.target"
+        "matrix-synapse.service"
+      ];
 
       preStart = ''
         cp ${settingsFileOrig} ${settingsFile}
@@ -74,7 +87,7 @@ in {
         Type = "simple";
         User = "mautrix-signal";
         Group = "mautrix-signal";
-        UMask = 0027;
+        UMask = 27;
         WorkingDirectory = dataDir;
         ExecStart = ''
           ${pkgs.mautrix-signal}/bin/mautrix-signal \
@@ -86,9 +99,7 @@ in {
       };
     };
 
-    services.matrix-synapse.settings.app_service_config_files = [
-      registrationFile
-    ];
+    services.matrix-synapse.settings.app_service_config_files = [ registrationFile ];
 
     services.nginx = {
       enable = true;

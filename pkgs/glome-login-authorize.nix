@@ -1,4 +1,11 @@
-{ stdenv, lib, fetchFromGitHub, makeWrapper, python3, python3Packages }:
+{
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  makeWrapper,
+  python3,
+  python3Packages,
+}:
 
 stdenv.mkDerivation rec {
   pname = "glome-login-authorize";
@@ -12,7 +19,10 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ makeWrapper ];
-  pythonDeps = with python3Packages; [ cryptography pyglome ];
+  pythonDeps = with python3Packages; [
+    cryptography
+    pyglome
+  ];
 
   installPhase = ''
     install -Dm644 glome-login-authorize.py -t $out/libexec

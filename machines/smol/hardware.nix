@@ -1,4 +1,10 @@
-{ config, lib, pkgs, nixpkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  nixpkgs,
+  ...
+}:
 
 let
   kernelPackages = import ./kernel.nix {
@@ -7,7 +13,8 @@ let
       crossSystem = config.nixpkgs.localSystem;
     };
   };
-in {
+in
+{
   nixpkgs.localSystem = lib.systems.examples.aarch64-multiplatform;
 
   boot.kernelPackages = lib.mkForce kernelPackages;
@@ -24,8 +31,8 @@ in {
     "panic=3"
   ];
   boot.kernelModules = [
-    "drivetemp"  # For drive temperature monitoring.
-    "i2c-mux-pca954x"  # For SFP+ link management.
+    "drivetemp" # For drive temperature monitoring.
+    "i2c-mux-pca954x" # For SFP+ link management.
   ];
 
   networking.hostId = "ca504f8f";
@@ -35,7 +42,10 @@ in {
   fileSystems."/" = {
     device = "/dev/disk/by-label/root";
     fsType = "ext4";
-    options = [ "noatime" "discard" ];
+    options = [
+      "noatime"
+      "discard"
+    ];
   };
 
   # Set fans at full speed on startup. Ideally this should be done by a kernel

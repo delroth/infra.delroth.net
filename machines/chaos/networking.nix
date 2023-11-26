@@ -13,12 +13,19 @@ let
   chaosPeer = secrets.wireguard.peers.chaos.clientNum;
   chaosVpn4 = "${wgcfg.subnet4}.${toString chaosPeer}";
   chaosVpn6 = "${wgcfg.subnet6}::${toString chaosPeer}";
-in {
+in
+{
   networking.useDHCP = false;
   networking.interfaces.ens3 = {
     ipv4.addresses = [
-      { address = "195.201.9.37"; prefixLength = 26; }
-      { address = vpnIn4; prefixLength = 26; }
+      {
+        address = "195.201.9.37";
+        prefixLength = 26;
+      }
+      {
+        address = vpnIn4;
+        prefixLength = 26;
+      }
     ];
     ipv4.routes = [
       {
@@ -31,8 +38,14 @@ in {
     ];
 
     ipv6.addresses = [
-      { address = "2a01:4f8:13b:f15::1"; prefixLength = 64; }
-      { address = vpnIn6; prefixLength = 64; }
+      {
+        address = "2a01:4f8:13b:f15::1";
+        prefixLength = 64;
+      }
+      {
+        address = vpnIn6;
+        prefixLength = 64;
+      }
     ];
     ipv6.routes = [
       {
