@@ -14,6 +14,8 @@
   inputs.glome-nixos.url = "github:delroth/glome-nixos";
   inputs.glome-nixos.inputs.nixpkgs.follows = "nixpkgs";
 
+  inputs.nixfmt-rfc.url = "github:piegamesde/nixfmt/rfc101-style";
+
   inputs.protonvpn-pmp-transmission.url = "github:delroth/protonvpn-pmp-transmission";
   inputs.protonvpn-pmp-transmission.inputs.nixpkgs.follows = "nixpkgs";
   inputs.protonvpn-pmp-transmission.inputs.poetry2nix.follows = "poetry2nix";
@@ -25,41 +27,58 @@
   inputs.label-approved.inputs.nixpkgs.follows = "nixpkgs";
   inputs.label-approved.inputs.poetry2nix.follows = "poetry2nix";
 
-  outputs = { self, delroth-net, glome-nixos, nixpkgs, home-manager, label-approved, protonvpn-pmp-transmission, ... }@attrs: {
-    colmena = let
-      pkgs = import nixpkgs {
-        system = "x86_64-linux";
-        overlays = [
-          delroth-net.overlay
-          glome-nixos.overlay
-          protonvpn-pmp-transmission.overlay
-        ];
-        config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
-          "elasticsearch"
-        ];
-      };
+  outputs =
+    {
+      self,
+      delroth-net,
+      glome-nixos,
+      nixpkgs,
+      home-manager,
+      label-approved,
+      nixfmt-rfc,
+      protonvpn-pmp-transmission,
+      ...
+    }@attrs:
+    {
+      formatter.x86_64-linux = nixfmt-rfc.packages.x86_64-linux.default;
 
-      machines = import ./machines;
+      colmena =
+        let
+          pkgs = import nixpkgs {
+            system = "x86_64-linux";
+            overlays = [
+              delroth-net.overlay
+              glome-nixos.overlay
+              protonvpn-pmp-transmission.overlay
+            ];
+            config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "elasticsearch" ];
+          };
 
-      mkNormalDeployment = name: machineMod: {
-        name = "${name}.delroth.net";
-        value = { config, ... }: {
-          _module.args.machineName = name;
-          deployment.targetHost = config.my.networking.fqdn;
+          machines = import ./machines;
 
-          imports = [
-            glome-nixos.nixosModules.glome
-            home-manager.nixosModules.home-manager
-            label-approved.nixosModules.default
+          mkNormalDeployment = name: machineMod: {
+            name = "${name}.delroth.net";
+            value =
+              { config, ... }:
+              {
+                _module.args.machineName = name;
+                deployment.targetHost = config.my.networking.fqdn;
 
-            machineMod
-          ];
-        };
-      };
-    in {
-      meta.name = "*.delroth.net prod infra";
-      meta.nixpkgs = pkgs;
-      meta.specialArgs = attrs;
-    } // (pkgs.lib.mapAttrs' mkNormalDeployment machines);
-  };
+                imports = [
+                  glome-nixos.nixosModules.glome
+                  home-manager.nixosModules.home-manager
+                  label-approved.nixosModules.default
+
+                  machineMod
+                ];
+              };
+          };
+        in
+        {
+          meta.name = "*.delroth.net prod infra";
+          meta.nixpkgs = pkgs;
+          meta.specialArgs = attrs;
+        }
+        // (pkgs.lib.mapAttrs' mkNormalDeployment machines);
+    };
 }
