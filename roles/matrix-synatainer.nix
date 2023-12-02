@@ -26,7 +26,7 @@ let
       systemd.services."synatainer-${name}" = {
         description = "Synatainer: ${description}";
 
-        requires = [ "matrix-synapse.service" ];
+        requires = ["matrix-synapse.service"];
 
         environment = {
           BEARER_TOKEN = secrets.matrix.adminToken;
@@ -53,7 +53,7 @@ let
 
       systemd.timers."synatainer-${name}" = {
         description = "Synatainer timer: ${description}";
-        wantedBy = [ "timers.target" ];
+        wantedBy = ["timers.target"];
         timerConfig = {
           OnCalendar = frequency;
           Persistent = true;

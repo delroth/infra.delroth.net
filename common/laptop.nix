@@ -29,16 +29,16 @@
 
     programs.mosh.enable = true;
 
-    environment.systemPackages = with pkgs; [ brightnessctl ];
+    environment.systemPackages = with pkgs; [brightnessctl];
 
     # For better power management support.
-    boot.extraModulePackages = [ config.boot.kernelPackages.acpi_call ];
-    boot.kernelModules = [ "acpi_call" ];
+    boot.extraModulePackages = [config.boot.kernelPackages.acpi_call];
+    boot.kernelModules = ["acpi_call"];
 
     # Set groups and a password for the main login user.
     users.users.delroth = {
       hashedPassword = lib.mkForce secrets.shadowHash;
-      extraGroups = [ "video" ];
+      extraGroups = ["video"];
     };
 
     my.monitoring.roaming = lib.mkDefault true;

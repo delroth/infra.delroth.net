@@ -33,8 +33,8 @@ in
 
     systemd.timers.fiber7-prober = {
       description = "Fiber7 prober (timer, probe id: ${cfg.probeId})";
-      wantedBy = [ "timers.target" ];
-      requires = [ "network-online.target" ];
+      wantedBy = ["timers.target"];
+      requires = ["network-online.target"];
       timerConfig = {
         OnCalendar = "minutely";
         Persistent = true;

@@ -16,8 +16,8 @@ stdenv.mkDerivation rec {
     sha256 = "1nlki3ic8dw0bs24wvx9gzrim5ybh5hdml7qnb5bwz29gqv46473";
   };
 
-  nativeBuildInputs = [ python3Packages.wrapPython ];
-  propagatedBuildInputs = [ python3Packages.python ];
+  nativeBuildInputs = [python3Packages.wrapPython];
+  propagatedBuildInputs = [python3Packages.python];
 
   pythonPath = with python3Packages; [
     feedparser
@@ -38,6 +38,6 @@ stdenv.mkDerivation rec {
     description = "Notifies of outdated maintained packages on Repology";
     homepage = "https://github.com/delroth/repology-outdated-notify";
     license = licenses.mit;
-    maintainers = with maintainers; [ delroth ];
+    maintainers = with maintainers; [delroth];
   };
 }

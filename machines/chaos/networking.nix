@@ -1,4 +1,4 @@
-{ lib, secrets, ... }:
+{lib, secrets, ...}:
 
 let
   vpnIn4 = "195.201.9.57";

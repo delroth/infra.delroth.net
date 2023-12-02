@@ -51,7 +51,7 @@
               glome-nixos.overlay
               protonvpn-pmp-transmission.overlay
             ];
-            config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "elasticsearch" ];
+            config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) ["elasticsearch"];
           };
 
           machines = import ./machines;
@@ -59,7 +59,7 @@
           mkNormalDeployment = name: machineMod: {
             name = "${name}.delroth.net";
             value =
-              { config, ... }:
+              {config, ...}:
               {
                 _module.args.machineName = name;
                 deployment.targetHost = config.my.networking.fqdn;

@@ -1,7 +1,7 @@
-{ lib, modulesPath, ... }:
+{lib, modulesPath, ...}:
 
 {
-  imports = [ "${modulesPath}/profiles/qemu-guest.nix" ];
+  imports = ["${modulesPath}/profiles/qemu-guest.nix"];
 
   boot.initrd.availableKernelModules = [
     "virtio_pci"
@@ -26,5 +26,5 @@
   };
   boot.loader.timeout = 10;
 
-  boot.kernelParams = [ "console=ttyS0,19200n8" ];
+  boot.kernelParams = ["console=ttyS0,19200n8"];
 }

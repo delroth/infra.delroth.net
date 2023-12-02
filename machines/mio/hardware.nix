@@ -1,7 +1,7 @@
-{ lib, ... }:
+{lib, ...}:
 
 {
-  boot.initrd.availableKernelModules = [ "sd_mod" ];
+  boot.initrd.availableKernelModules = ["sd_mod"];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/665806a9-4b36-4e37-ab5e-f4db07378edf";

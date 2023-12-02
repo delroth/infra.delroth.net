@@ -1,4 +1,4 @@
-{ buildLinux, fetchFromGitHub, ... }@args:
+{buildLinux, fetchFromGitHub, ...}@args:
 
 buildLinux (
   args
@@ -14,6 +14,6 @@ buildLinux (
     };
 
     defconfig = "qnap-tsx32x_defconfig";
-    kernelPatches = [ ];
+    kernelPatches = [];
   }
 )

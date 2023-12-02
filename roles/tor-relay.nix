@@ -40,9 +40,9 @@ in
         ContactInfo = "tor+${machineName}@delroth.net";
         ControlPort = 9051;
         MyFamily = builtins.concatStringsSep "," myFamily;
-        Nickname = "${builtins.replaceStrings [ "-" ] [ "" ] machineName}Delroth";
+        Nickname = "${builtins.replaceStrings ["-"] [""] machineName}Delroth";
         NumCPUs = 0;
-        ORPort = [ { port = 143; } ];
+        ORPort = [{port = 143;}];
       };
     };
 
@@ -56,10 +56,10 @@ in
       port = 9130;
     };
 
-    my.homenet.ip4TcpPortForward = [ 143 ];
+    my.homenet.ip4TcpPortForward = [143];
 
     # Exclude Tor diff cache from backups since it causes them to fail due to
     # temp files appearing / disappearing.
-    my.backup.extraExclude = [ "/var/lib/tor/diff-cache" ];
+    my.backup.extraExclude = ["/var/lib/tor/diff-cache"];
   };
 }

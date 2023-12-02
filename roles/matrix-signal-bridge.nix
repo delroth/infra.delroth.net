@@ -38,7 +38,7 @@ let
     };
   };
 
-  settingsFileOrig = (pkgs.formats.json { }).generate "mautrix-signal.json" settings;
+  settingsFileOrig = (pkgs.formats.json {}).generate "mautrix-signal.json" settings;
 in
 {
   options.my.roles.matrix-signal-bridge = {
@@ -52,14 +52,14 @@ in
       isSystemUser = true;
       group = "mautrix-signal";
       home = dataDir;
-      extraGroups = [ config.services.signald.group ];
+      extraGroups = [config.services.signald.group];
     };
-    users.groups.mautrix-signal = { };
+    users.groups.mautrix-signal = {};
 
     systemd.services.mautrix-signal = {
       description = "Signal bridge for Matrix";
 
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = ["multi-user.target"];
       wants = [
         "network-online.target"
         "matrix-synapse.service"
@@ -99,7 +99,7 @@ in
       };
     };
 
-    services.matrix-synapse.settings.app_service_config_files = [ registrationFile ];
+    services.matrix-synapse.settings.app_service_config_files = [registrationFile];
 
     services.nginx = {
       enable = true;

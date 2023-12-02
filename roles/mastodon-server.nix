@@ -26,7 +26,7 @@ in
       smtp.fromAddress = "mastodon@delroth.net";
       smtp.authenticate = true;
       smtp.user = secrets.email.smtp-user;
-      smtp.passwordFile = "${pkgs.runCommand "smtp-password" { } ''
+      smtp.passwordFile = "${pkgs.runCommand "smtp-password" {} ''
         echo "${secrets.email.smtp-password}" > $out
       ''}";
 
@@ -56,6 +56,6 @@ in
       };
     };
 
-    users.groups.mastodon.members = [ config.services.nginx.user ];
+    users.groups.mastodon.members = [config.services.nginx.user];
   };
 }

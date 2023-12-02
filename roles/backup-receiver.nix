@@ -36,6 +36,6 @@ in
       repos;
 
     # Don't backup the backups.
-    my.backup.extraExclude = [ cfg.basePath ];
+    my.backup.extraExclude = [cfg.basePath];
   };
 }

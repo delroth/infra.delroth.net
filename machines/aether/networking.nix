@@ -1,4 +1,4 @@
-{ config, ... }:
+{config, ...}:
 
 {
   # Rename interfaces to logical semantic names.

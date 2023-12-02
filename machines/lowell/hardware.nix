@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{lib, pkgs, ...}:
 
 {
   hardware.enableRedistributableFirmware = true;
@@ -10,8 +10,8 @@
     "sd_mod"
     "rtsx_pci_sdmmc"
   ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot.kernelModules = ["kvm-intel"];
+  boot.extraModulePackages = [];
 
   boot.loader.systemd-boot.enable = true;
 
@@ -40,8 +40,8 @@
   # Fix S3 sleep support -- don't wake up on XHCI events.
   systemd.services.disable-xhci-wakeup = {
     description = "Disables XHCI wakeup for S3 sleep support.";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "multi-user.target" ];
+    wantedBy = ["multi-user.target"];
+    after = ["multi-user.target"];
     serviceConfig.Type = "oneshot";
     script = ''
       if ${pkgs.gnugrep}/bin/grep -q 'XHCI.*enabled' /proc/acpi/wakeup; then

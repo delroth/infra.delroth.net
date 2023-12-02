@@ -47,8 +47,8 @@ in
                   ];
                   publicKey = peer.key;
                 }
-                // lib.optionalAttrs (peer ? externalIp) { endpoint = "${peer.externalIp}:${toString port}"; }
-                // lib.optionalAttrs (!(thisPeer ? externalIp)) { persistentKeepalive = 10; }
+                // lib.optionalAttrs (peer ? externalIp) {endpoint = "${peer.externalIp}:${toString port}";}
+                // lib.optionalAttrs (!(thisPeer ? externalIp)) {persistentKeepalive = 10;}
               )
               otherPeers;
         };
@@ -56,7 +56,7 @@ in
         nat = lib.optionalAttrs (thisPeer ? externalIp) {
           enable = true;
           externalInterface = config.my.networking.externalInterface;
-          internalInterfaces = [ iface ];
+          internalInterfaces = [iface];
         };
 
         firewall.allowedUDPPorts = lib.optional (thisPeer ? externalIp) port;

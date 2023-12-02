@@ -7,7 +7,7 @@
 }:
 
 let
-  sasl-db = pkgs.runCommand "sasl.db" { } ''
+  sasl-db = pkgs.runCommand "sasl.db" {} ''
     echo "${secrets.email.smtp-password}" | \
       ${pkgs.cyrus_sasl}/bin/saslpasswd2 \
         -f $out \
@@ -21,7 +21,7 @@ let
     mech_list: PLAIN LOGIN CRAM-MD5 DIGEST-MD5 NTLM
     sasldb_path: ${sasl-db}
   '';
-  sasl-conf-dir = pkgs.runCommand "sasl-conf.d" { } ''
+  sasl-conf-dir = pkgs.runCommand "sasl-conf.d" {} ''
     mkdir $out
     ln -s ${sasl-conf} $out/smtpd.conf
   '';
@@ -88,7 +88,7 @@ in
       '';
     };
 
-    networking.firewall.allowedTCPPorts = [ config.services.postfix.relayPort ];
+    networking.firewall.allowedTCPPorts = [config.services.postfix.relayPort];
 
     security.acme.certs = {
       "${config.my.networking.fqdn}".postRun = ''

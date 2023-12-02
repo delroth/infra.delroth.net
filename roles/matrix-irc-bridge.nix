@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{config, lib, ...}:
 
 let
   cfg = config.my.roles.matrix-irc-bridge;
@@ -23,7 +23,7 @@ in
       "/var/lib/heisenbridge/registration.yml"
     ];
 
-    networking.firewall.allowedTCPPorts = [ config.services.heisenbridge.identd.port ];
+    networking.firewall.allowedTCPPorts = [config.services.heisenbridge.identd.port];
 
     services.nginx = {
       enable = true;

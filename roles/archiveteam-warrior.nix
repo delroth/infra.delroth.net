@@ -16,7 +16,7 @@ in
 
     virtualisation.oci-containers.containers.archiveteam-warrior = {
       image = "atdr.meo.ws/archiveteam/warrior-dockerfile";
-      ports = [ "127.0.0.1:8001:8001" ];
+      ports = ["127.0.0.1:8001:8001"];
       cmd = [
         "--concurrent=5"
         "delroth"

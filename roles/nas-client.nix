@@ -47,7 +47,7 @@ in
       {
         description = "Automount for NAS ${cfg.server}";
         where = cfg.mountPoint;
-        wantedBy = [ "multi-user.target" ];
+        wantedBy = ["multi-user.target"];
       }
     ];
   };

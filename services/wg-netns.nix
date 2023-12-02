@@ -56,7 +56,7 @@ in
 
     isolateServices = mkOption {
       type = types.listOf types.str;
-      default = [ ];
+      default = [];
       description = ''
         Names of systemd services to "patch" to force them to run inside the
         Wireguard network namespace.
@@ -65,7 +65,7 @@ in
 
     forwardPorts = mkOption {
       type = types.listOf types.port;
-      default = [ ];
+      default = [];
       description = ''
         Port numbers that services listen on in the Wireguard netns and that
         should be exposed (listening on ::1 only) in the outer netns.
@@ -74,14 +74,14 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    boot.kernelModules = [ "wireguard" ];
+    boot.kernelModules = ["wireguard"];
 
     systemd =
       let
         patchedServices = lib.genAttrs cfg.isolateServices (
           svcname: {
-            bindsTo = [ "wireguard.service" ];
-            after = [ "wireguard.service" ];
+            bindsTo = ["wireguard.service"];
+            after = ["wireguard.service"];
             unitConfig.JoinsNamespaceOf = "wireguard-netns.service";
             serviceConfig = {
               PrivateNetwork = true;
@@ -98,7 +98,7 @@ in
             (port: {
               name = "wireguard-netns-forward-${toString port}";
               value = {
-                wantedBy = [ "sockets.target" ];
+                wantedBy = ["sockets.target"];
                 socketConfig.ListenStream = port;
               };
             })
@@ -110,8 +110,8 @@ in
             (port: rec {
               name = "wireguard-netns-forward-${toString port}";
               value = {
-                requires = [ "${name}.socket" ];
-                after = [ "${name}.socket" ];
+                requires = ["${name}.socket"];
+                after = ["${name}.socket"];
                 unitConfig.JoinsNamespaceOf = "wireguard-netns.service";
                 serviceConfig = {
                   PrivateNetwork = true;
@@ -129,7 +129,7 @@ in
           // {
             wireguard-netns = {
               description = "wireguard netns manager";
-              before = [ "network.target" ];
+              before = ["network.target"];
               serviceConfig = {
                 Type = "oneshot";
                 RemainAfterExit = true;
@@ -149,9 +149,9 @@ in
 
             wireguard = {
               description = "wireguard VPN client";
-              bindsTo = [ "wireguard-netns.service" ];
-              requires = [ "network-online.target" ];
-              after = [ "wireguard-netns.service" ];
+              bindsTo = ["wireguard-netns.service"];
+              requires = ["network-online.target"];
+              after = ["wireguard-netns.service"];
               serviceConfig = {
                 Type = "oneshot";
                 RemainAfterExit = true;

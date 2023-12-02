@@ -60,7 +60,7 @@
                 targets;
             relabel_configs = [
               {
-                source_labels = [ "target" ];
+                source_labels = ["target"];
                 target_label = "__param_target";
               }
             ];
@@ -93,7 +93,7 @@
                 targets;
             relabel_configs = [
               {
-                source_labels = [ "target" ];
+                source_labels = ["target"];
                 target_label = "__param_target";
               }
             ];
@@ -145,21 +145,21 @@
         (blackboxTargets {
           job_name = "http_probe";
           scrape_interval = "1m";
-          modules = [ "https_2xx" ];
-          targets = [ "https://delroth.net" ];
+          modules = ["https_2xx"];
+          targets = ["https://delroth.net"];
         })
 
         (blackboxTargets {
           job_name = "smtp_probe";
           scrape_interval = "1m";
-          modules = [ "smtp_starttls" ];
-          targets = [ "chaos.delroth.net:25" ];
+          modules = ["smtp_starttls"];
+          targets = ["chaos.delroth.net:25"];
         })
 
         (blackboxTargets {
           job_name = "icmp_probe";
           scrape_interval = "1m";
-          modules = [ "icmp" ];
+          modules = ["icmp"];
           targets = [
             "8.8.8.8"
             "2001:4860:4860::8844"
@@ -172,7 +172,7 @@
         (snmpTargets {
           job_name = "snmp_homenet";
           scrape_interval = "1m";
-          modules = [ "if_mib" ];
+          modules = ["if_mib"];
           targets = [
             "192.168.1.52" # sw-living-room
           ];
@@ -184,7 +184,7 @@
           scheme = "https";
           metrics_path = "/api/prometheus";
           bearer_token = secrets.iot.token;
-          static_configs = [ { targets = [ "hass.delroth.net:443" ]; } ];
+          static_configs = [{targets = ["hass.delroth.net:443"];}];
         }
       ];
 
@@ -196,7 +196,7 @@
       webExternalUrl = "https://am.delroth.net";
 
       # AM clustering doesn't like when the machine doesn't have an RFC1918 IP.
-      extraFlags = [ "--cluster.listen-address=''" ];
+      extraFlags = ["--cluster.listen-address=''"];
 
       configuration = {
         global = {
@@ -212,21 +212,17 @@
         receivers = [
           {
             name = "email";
-            email_configs = [ { to = "delroth+chaos-alerts@gmail.com"; } ];
+            email_configs = [{to = "delroth+chaos-alerts@gmail.com";}];
           }
         ];
       };
     };
 
     alertmanagers = [
-      {
-        static_configs = [
-          { targets = [ "${alertmanager.listenAddress}:${toString alertmanager.port}" ]; }
-        ];
-      }
+      {static_configs = [{targets = ["${alertmanager.listenAddress}:${toString alertmanager.port}"];}];}
     ];
 
-    ruleFiles = [ ./monitoring.rules ];
+    ruleFiles = [./monitoring.rules];
   };
 
   services.grafana = {

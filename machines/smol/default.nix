@@ -39,7 +39,7 @@ in
   networking.interfaces.enp0s2.useDHCP = true;
 
   # ZFS configuration.
-  boot.supportedFilesystems = [ "zfs" ];
+  boot.supportedFilesystems = ["zfs"];
   fileSystems."/data" = {
     device = "ds/data";
     fsType = "zfs";
