@@ -220,11 +220,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1700900274,
-        "narHash": "sha256-KWoKDP5I1viHR4bG3ENnJ7H1DD16tXWH4ROvS0IfXw8=",
+        "lastModified": 1701433070,
+        "narHash": "sha256-Gf9JStfENaUQ7YWFz3V7x/srIwr4nlnVteqaAxtwpgM=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "a462e7315deaa8194b0821f726709bb7e51a850c",
+        "rev": "4a8545f5e737a6338814a4676dc8e18c7f43fc57",
         "type": "github"
       },
       "original": {
@@ -287,11 +287,11 @@
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1700348034,
-        "narHash": "sha256-j28MwKtP+W8jFi6OHE/8TqhRZr9rIZTJKXxjN58Fc8E=",
+        "lastModified": 1701471106,
+        "narHash": "sha256-FcPJRZZdufz1IwhtLLRbM8cqeqTlK/GChuo9HeyFKYc=",
         "owner": "piegamesde",
         "repo": "nixfmt",
-        "rev": "4ef4c39acd501a9a1b06b3a151b36be5daebcef3",
+        "rev": "21ef16e7fe9011ecd77ba05fa5873287e4c0d2a4",
         "type": "github"
       },
       "original": {
@@ -335,11 +335,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1701012762,
-        "narHash": "sha256-Nrj/ZLLCzuc7P1+th4MWa+A7WXcQUfJtzI17Skg+v/Y=",
+        "lastModified": 1701506023,
+        "narHash": "sha256-bk3FN+GXVNtverfr81GT4pgnzhMMAu7lSCIFQJIPvs8=",
         "ref": "refs/heads/master",
-        "rev": "bc5c75e9ee5a2ec0437159a4e11861fe31436931",
-        "revCount": 552915,
+        "rev": "702c081780f31ad7792d97aa32c4593601dfb6f2",
+        "revCount": 555308,
         "type": "git",
         "url": "file:///home/delroth/work/nixpkgs"
       },
