@@ -47,7 +47,7 @@ in
     (lib.mkIf x86 {
       # Use the hardened kernel but keep IA32 emulation.
       boot.kernelPackages = pkgs.linuxPackagesFor (
-        pkgs.linux_5_15_hardened.override {features.ia32Emulation = true;}
+        pkgs.linux_6_5_hardened.override {features.ia32Emulation = true;}
       );
       boot.kernelPatches = [
         {
