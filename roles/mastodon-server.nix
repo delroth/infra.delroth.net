@@ -22,6 +22,8 @@ in
       enable = true;
       localDomain = "delroth.net";
 
+      streamingProcesses = 4;
+
       smtp.host = "chaos.delroth.net";
       smtp.fromAddress = "mastodon@delroth.net";
       smtp.authenticate = true;
