@@ -300,7 +300,7 @@ in
             type filter hook forward priority filter
             policy drop
 
-            ip6 nexthdr { tcp, udp } flow offload @f;
+            ip protocol { tcp, udp } flow offload @f;
 
             iifname . oifname {
               "${cfg.downstreamBridge}" . "${cfg.downstreamBridge}",
