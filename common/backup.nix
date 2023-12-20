@@ -11,7 +11,7 @@
   options.my.backup = with lib; {
     extraPaths = mkOption {
       type = types.listOf types.str;
-      default = [];
+      default = [ ];
       description = ''
         Extra system paths to include in daily backups.
       '';
@@ -19,7 +19,7 @@
 
     extraExclude = mkOption {
       type = types.listOf types.str;
-      default = [];
+      default = [ ];
       description = ''
         Extra system paths to exclude from daily backups.
       '';
@@ -106,12 +106,12 @@
       };
     };
 
-    systemd.services.borgbackup-job-default.wants = ["network-online.target"];
+    systemd.services.borgbackup-job-default.wants = [ "network-online.target" ];
 
     # Be a bit more resilient to transient network failures.
     systemd.services.borgbackup-job-default.serviceConfig.Restart = "on-failure";
 
     # To allow mounting remote backups.
-    boot.kernelModules = ["fuse"];
+    boot.kernelModules = [ "fuse" ];
   };
 }

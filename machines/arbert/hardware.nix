@@ -6,7 +6,7 @@
 }:
 
 let
-  kernelPackages = import ./kernel.nix {inherit pkgs;};
+  kernelPackages = import ./kernel.nix { inherit pkgs; };
 in
 {
   hardware.enableRedistributableFirmware = true;
@@ -19,8 +19,8 @@ in
     "sd_mod"
     "sdhci_pci"
   ];
-  boot.kernelModules = ["kvm-intel"];
-  boot.blacklistedKernelModules = ["dvb_usb_rtl28xxu"];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.blacklistedKernelModules = [ "dvb_usb_rtl28xxu" ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = false;
@@ -39,14 +39,14 @@ in
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   boot.kernelPackages = lib.mkForce kernelPackages;
-  boot.extraModulePackages = [kernelPackages.intel_nuc_led];
+  boot.extraModulePackages = [ kernelPackages.intel_nuc_led ];
   boot.kernel.sysctl."net.core.bpf_jit_enable" = null;
 
   # Disable annoying gamer LEDs.
   systemd.services.disable-leds = {
     description = "Disable NUC LEDs";
-    wantedBy = ["multi-user.target"];
-    after = ["multi-user.target"];
+    wantedBy = [ "multi-user.target" ];
+    after = [ "multi-user.target" ];
     serviceConfig.Type = "oneshot";
     script = ''
       echo set_indicator,2,6 > /proc/acpi/nuc_led

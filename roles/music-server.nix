@@ -1,4 +1,4 @@
-{config, lib, ...}:
+{ config, lib, ... }:
 
 let
   cfg = config.my.roles.music-server;

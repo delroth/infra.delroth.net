@@ -14,7 +14,7 @@ let
         timeout = "5s";
         http = {
           method = "GET";
-          valid_status_codes = [];
+          valid_status_codes = [ ];
           fail_if_not_ssl = true;
         };
       };
@@ -23,15 +23,15 @@ let
         prober = "tcp";
         timeout = "5s";
         tcp.query_response = [
-          {expect = "^220 ([^ ]+) ESMTP (.+)$";}
-          {send = "EHLO prober";}
-          {expect = "^250-STARTTLS";}
-          {send = "STARTTLS";}
-          {expect = "^220";}
-          {starttls = true;}
-          {send = "EHLO prober";}
-          {expect = "^250-AUTH";}
-          {send = "QUIT";}
+          { expect = "^220 ([^ ]+) ESMTP (.+)$"; }
+          { send = "EHLO prober"; }
+          { expect = "^250-STARTTLS"; }
+          { send = "STARTTLS"; }
+          { expect = "^220"; }
+          { starttls = true; }
+          { send = "EHLO prober"; }
+          { expect = "^250-AUTH"; }
+          { send = "QUIT"; }
         ];
       };
 

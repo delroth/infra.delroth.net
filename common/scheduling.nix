@@ -1,4 +1,4 @@
-{...}:
+{ ... }:
 {
   # Make CFS less stupid and apply niceness across task groups.
   boot.kernel.sysctl = {

@@ -361,8 +361,8 @@ in
     };
 
     # XXX: https://github.com/NixOS/nixpkgs/issues/141802
-    systemd.services.nftables.before = lib.mkForce [];
-    systemd.services.nftables.after = ["network-pre.target"];
+    systemd.services.nftables.before = lib.mkForce [ ];
+    systemd.services.nftables.after = [ "network-pre.target" ];
 
     # Enable IPv6 forwarding.
     boot.kernel.sysctl = {

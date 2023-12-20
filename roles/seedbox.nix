@@ -17,7 +17,7 @@ let
   downloadBase = "/data/seedbox";
 in
 {
-  options.my.roles.seedbox = with lib; {enable = mkEnableOption "Seedbox";};
+  options.my.roles.seedbox = with lib; { enable = mkEnableOption "Seedbox"; };
 
   config = lib.mkIf cfg.enable {
     my.services.wg-netns = {
@@ -32,7 +32,7 @@ in
         "transmission"
         "protonvpn-pmp-transmission"
       ];
-      forwardPorts = [transmissionRpcPort];
+      forwardPorts = [ transmissionRpcPort ];
     };
 
     services.transmission = {
@@ -67,8 +67,8 @@ in
 
     systemd.services.protonvpn-pmp-transmission = {
       description = "ProtonVPN PMP Transmission notifier";
-      after = ["network.target"];
-      wantedBy = ["multi-user.target"];
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Type = "simple";
         DynamicUser = true;
@@ -81,18 +81,18 @@ in
       user = "transmission";
       homeDir = "/var/lib/transmission";
       systemScheduler = false;
-      config = secrets.flexget-config {inherit config;};
+      config = secrets.flexget-config { inherit config; };
     };
 
     services.minidlna = {
       enable = true;
-      mediaDirs = ["${downloadBase}/watchqueue"];
+      mediaDirs = [ "${downloadBase}/watchqueue" ];
       announceInterval = 10;
     };
 
-    users.users.minidlna.extraGroups = ["nas"];
+    users.users.minidlna.extraGroups = [ "nas" ];
 
-    my.backup.extraExclude = [downloadBase];
+    my.backup.extraExclude = [ downloadBase ];
 
     services.nginx.virtualHosts."${hostname}" = {
       forceSSL = true;

@@ -16,13 +16,13 @@ buildPythonPackage rec {
     sha256 = "1djwyhib31vqacq4ipfr260krmq44893mgmvrlfbd8m6mr5x2511";
   };
 
-  propagatedBuildInputs = [cryptography];
-  pythonImportsCheck = ["pyglome"];
+  propagatedBuildInputs = [ cryptography ];
+  pythonImportsCheck = [ "pyglome" ];
 
   meta = with lib; {
     description = "A Python implementation of the GLOME protocol";
     license = licenses.asl20;
     homepage = "https://github.com/google/glome";
-    maintainers = with maintainers; [delroth];
+    maintainers = with maintainers; [ delroth ];
   };
 }

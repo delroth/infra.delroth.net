@@ -22,8 +22,8 @@ in
   config = lib.mkIf cfg.enable {
     systemd.services.repology-notifier = {
       description = "Repology outdated notifier";
-      after = ["network.target"];
-      wantedBy = ["multi-user.target"];
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
         Type = "simple";

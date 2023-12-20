@@ -19,7 +19,7 @@ in
       "127.0.0.0/24"
       "::1/128"
     ];
-    forwarders = ["127.0.0.53 port 53"];
+    forwarders = [ "127.0.0.53 port 53" ];
     extraOptions = ''
       notify yes;
     '';
@@ -57,6 +57,6 @@ in
       })
       secrets.dnssec;
 
-  networking.firewall.allowedTCPPorts = [53];
-  networking.firewall.allowedUDPPorts = [53];
+  networking.firewall.allowedTCPPorts = [ 53 ];
+  networking.firewall.allowedUDPPorts = [ 53 ];
 }

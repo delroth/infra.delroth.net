@@ -26,10 +26,10 @@ in
           server_port = port;
           base_url = "https://${hostname}";
           use_x_forwarded_for = true;
-          trusted_proxies = ["127.0.0.1"];
+          trusted_proxies = [ "127.0.0.1" ];
         };
-        frontend = {};
-        history = {};
+        frontend = { };
+        history = { };
 
         netatmo = {
           api_key = secrets.iot.netatmo.api_key;
@@ -37,7 +37,7 @@ in
           username = secrets.iot.netatmo.username;
           password = secrets.iot.netatmo.password;
         };
-        prometheus = {};
+        prometheus = { };
 
         sensor = [
           {
@@ -53,7 +53,7 @@ in
               "sleep/efficiency"
             ];
           }
-          {platform = "netatmo";}
+          { platform = "netatmo"; }
         ];
       };
     };

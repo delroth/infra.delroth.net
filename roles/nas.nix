@@ -65,6 +65,6 @@ in
       ];
     };
 
-    my.backup.extraPaths = [cfg.root];
+    my.backup.extraPaths = [ cfg.root ];
   };
 }

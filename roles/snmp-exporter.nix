@@ -14,7 +14,7 @@ let
     url = "https://raw.githubusercontent.com/prometheus/snmp_exporter/0caff5465662870282e8637b68ad52189a40933d/snmp.yml";
     sha256 = "sha256-JRUEsFJQZB1XNohf4YR7WxGRRoTvFw0V7YO/jp9y3P4=";
   };
-  snmpConfig = pkgs.runCommand "snmp-config" {} ''
+  snmpConfig = pkgs.runCommand "snmp-config" { } ''
     ${pkgs.yq-go}/bin/yq eval \
       '. * {"if_mib": {"auth": { "community": "${communityString}" }}}' \
       ${defaultSnmpConfig} > $out

@@ -52,7 +52,7 @@ in
 
     systems = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = [config.nixpkgs.localSystem.system];
+      default = [ config.nixpkgs.localSystem.system ];
       description = ''
         System types that this builder can build for. Example: x86_64-linux,
         aarch64-linux, etc.
@@ -64,11 +64,11 @@ in
     users.users."${cfg.user}" = {
       isSystemUser = true;
       shell = pkgs.bash;
-      openssh.authorizedKeys.keys = [secrets.distbuild.ssh-public];
+      openssh.authorizedKeys.keys = [ secrets.distbuild.ssh-public ];
       group = cfg.user;
     };
-    users.groups."${cfg.user}" = {};
+    users.groups."${cfg.user}" = { };
 
-    nix.settings.trusted-users = [cfg.user];
+    nix.settings.trusted-users = [ cfg.user ];
   };
 }

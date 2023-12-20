@@ -52,8 +52,8 @@ in
   # module instead which provides fan PWM control, but that's for later.
   systemd.services.spin-fans = {
     description = "Spin up the fans, full throttle.";
-    wantedBy = ["multi-user.target"];
-    after = ["multi-user.target"];
+    wantedBy = [ "multi-user.target" ];
+    after = [ "multi-user.target" ];
     serviceConfig.Type = "oneshot";
     script = ''
       ${pkgs.coreutils}/bin/stty -F /dev/ttyS1 115200

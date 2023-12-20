@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
     sha256 = "1l37ri25kn8bm76ydzm16lirkxjnhc1i6j50dsbnnfv1yaab826f";
   };
 
-  nativeBuildInputs = [makeWrapper];
+  nativeBuildInputs = [ makeWrapper ];
   pythonDeps = with python3Packages; [
     cryptography
     pyglome
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
   meta = with lib; {
     description = "A simple Python script using pyglome to generate glome-login authorization tokens.";
     homepage = "https://github.com/delroth/glome-login-authorize";
-    license = with licenses; [mit];
-    maintainers = with maintainers; [delroth];
+    license = with licenses; [ mit ];
+    maintainers = with maintainers; [ delroth ];
   };
 }

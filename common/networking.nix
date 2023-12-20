@@ -27,7 +27,7 @@
     networking.hostName = machineName;
     networking.domain = "delroth.net";
     my.networking.fqdn = "${machineName}.delroth.net";
-    networking.search = ["delroth.net"];
+    networking.search = [ "delroth.net" ];
 
     networking.firewall.allowPing = true;
 
@@ -63,7 +63,7 @@
     };
 
     # Useful networking tools which really ought to be everywhere.
-    boot.kernelModules = ["af_packet"];
+    boot.kernelModules = [ "af_packet" ];
     environment.systemPackages = with pkgs; [
       mtr
       tcpdump

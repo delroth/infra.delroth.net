@@ -8,7 +8,7 @@
 let
   my = import ../.;
 
-  secrets = my.secrets {inherit pkgs;};
+  secrets = my.secrets { inherit pkgs; };
 in
 {
   documentation = {
@@ -40,7 +40,7 @@ in
 
   # Support using nix-shell for temporary package installs on infra machines.
   environment.etc.nixpkgs.source = lib.cleanSource pkgs.path;
-  nix.nixPath = ["nixpkgs=/etc/nixpkgs"];
+  nix.nixPath = [ "nixpkgs=/etc/nixpkgs" ];
 
   # Add custom package set to overlays.
   nixpkgs.overlays = [
@@ -59,7 +59,7 @@ in
         sha256 = "sha256-ca8tlBaVowbYJKoHQb8T4FdYccaGODeKPdEz/L0EbJM=";
       };
     in
-    pkgs.runCommand "programs.sqlite" {} ''
+    pkgs.runCommand "programs.sqlite" { } ''
       tar xf ${channelTarball} --wildcards "nixos*/programs.sqlite" -O > $out
     '';
 

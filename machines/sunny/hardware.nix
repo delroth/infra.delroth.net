@@ -13,7 +13,7 @@ let
   };
 in
 {
-  imports = ["${modulesPath}/profiles/qemu-guest.nix"];
+  imports = [ "${modulesPath}/profiles/qemu-guest.nix" ];
 
   nixpkgs.localSystem = lib.systems.examples.aarch64-multiplatform;
   boot.kernelPackages = pkgsCross.linuxPackages_latest;
@@ -47,7 +47,7 @@ in
     "uhci_hcd"
     "xen_blkfront"
   ];
-  boot.initrd.kernelModules = ["nvme"];
+  boot.initrd.kernelModules = [ "nvme" ];
 
   nix.settings.max-jobs = lib.mkDefault 4;
 }

@@ -41,10 +41,10 @@ in
     "ftdi_sio"
     "pl2303"
   ];
-  environment.systemPackages = with pkgs; [picocom];
+  environment.systemPackages = with pkgs; [ picocom ];
 
   services.atftpd.enable = true;
-  networking.firewall.allowedUDPPorts = [69];
+  networking.firewall.allowedUDPPorts = [ 69 ];
 
   # Home temperature monitoring.
   services.prometheus.exporters.rtl_433.enable = true;

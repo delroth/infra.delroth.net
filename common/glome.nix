@@ -1,4 +1,4 @@
-{secrets, ...}:
+{ secrets, ... }:
 
 {
   security.glome-login.enable = true;

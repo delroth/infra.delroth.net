@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 
 let
   canaryHash = builtins.hashFile "sha256" ./secrets/canary;

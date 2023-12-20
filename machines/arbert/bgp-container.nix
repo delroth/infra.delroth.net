@@ -8,32 +8,32 @@
   networking.wireguard.interfaces.wg-bgp-transit = {
     listenPort = 51821;
     privateKey = secrets.bgp.tunnel.privkey;
-    ips = ["fd00:2::2/64"];
+    ips = [ "fd00:2::2/64" ];
     allowedIPsAsRoutes = false;
     peers = [
       {
         name = "bgp-transit";
         endpoint = secrets.bgp.tunnel.endpoint;
         publicKey = secrets.bgp.tunnel.pubkey;
-        allowedIPs = ["::/0"];
+        allowedIPs = [ "::/0" ];
       }
     ];
   };
-  networking.firewall.allowedUDPPorts = [51821];
+  networking.firewall.allowedUDPPorts = [ 51821 ];
 
   containers.bgp = {
     autoStart = true;
     privateNetwork = true;
-    interfaces = ["wg-bgp-transit"];
+    interfaces = [ "wg-bgp-transit" ];
     config = {
       networking = {
         hostName = "bgp";
         useHostResolvConf = false;
         useNetworkd = true;
 
-        nameservers = ["2001:4860:4860::8844"];
+        nameservers = [ "2001:4860:4860::8844" ];
         domain = "delroth.net";
-        search = ["delroth.net"];
+        search = [ "delroth.net" ];
 
         interfaces.wg-bgp-transit = {
           ipv6.addresses = [
@@ -56,7 +56,7 @@
         firewall = {
           allowPing = true;
           logRefusedConnections = false;
-          allowedTCPPorts = [179];
+          allowedTCPPorts = [ 179 ];
         };
       };
 
@@ -153,6 +153,6 @@
 
   # Add some dependencies on the VPN tunnel being properly configured before
   # stealing the network interface from the host.
-  systemd.services."container@bgp".after = ["wireguard-wg-bgp-transit.service"];
-  systemd.services."container@bgp".bindsTo = ["wireguard-wg-bgp-transit.service"];
+  systemd.services."container@bgp".after = [ "wireguard-wg-bgp-transit.service" ];
+  systemd.services."container@bgp".bindsTo = [ "wireguard-wg-bgp-transit.service" ];
 }

@@ -43,7 +43,7 @@ in
   services.postgresql.package = pkgs.postgresql_14;
 
   # Extra paths to backup.
-  my.backup.extraPaths = ["/srv"];
+  my.backup.extraPaths = [ "/srv" ];
 
   my.roles = {
     blackbox-prober.enable = true;

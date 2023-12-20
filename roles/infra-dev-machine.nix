@@ -18,7 +18,7 @@ in
 
     extraBuilders = mkOption {
       type = types.listOf types.attrs;
-      default = [];
+      default = [ ];
       description = ''
         Extra builders to configure outside of the infra.delroth.net
         deployment. The distbuild ssh key is automatically set.
@@ -49,7 +49,7 @@ in
           );
 
           extraNodes = lib.flip builtins.map cfg.extraBuilders (
-            node: {sshKey = "/etc/${distbuildPrivKeyEtcPath}";} // node
+            node: { sshKey = "/etc/${distbuildPrivKeyEtcPath}"; } // node
           );
         in
         lib.flip builtins.map builderNodes (

@@ -41,13 +41,13 @@ in
         listeners = [
           # Federation
           {
-            bind_addresses = ["127.0.0.1"];
+            bind_addresses = [ "127.0.0.1" ];
             port = federationPort.private;
             tls = false; # Terminated by nginx.
             x_forwarded = true;
             resources = [
               {
-                names = ["federation"];
+                names = [ "federation" ];
                 compress = false;
               }
             ];
@@ -55,13 +55,13 @@ in
 
           # Client
           {
-            bind_addresses = ["127.0.0.1"];
+            bind_addresses = [ "127.0.0.1" ];
             port = clientPort.private;
             tls = false; # Terminated by nginx.
             x_forwarded = true;
             resources = [
               {
-                names = ["client"];
+                names = [ "client" ];
                 compress = false;
               }
             ];
@@ -79,7 +79,7 @@ in
 
       virtualHosts =
         let
-          passToMatrix = port: {proxyPass = "http://127.0.0.1:${toString port}";};
+          passToMatrix = port: { proxyPass = "http://127.0.0.1:${toString port}"; };
         in
         {
           "matrix.${domain}" = {
@@ -113,7 +113,7 @@ in
     };
 
     # For administration tools.
-    environment.systemPackages = [pkgs.matrix-synapse];
+    environment.systemPackages = [ pkgs.matrix-synapse ];
 
     networking.firewall.allowedTCPPorts = [
       clientPort.public

@@ -44,7 +44,7 @@
 
     i18n.inputMethod = {
       enabled = "ibus";
-      ibus.engines = with pkgs.ibus-engines; [mozc];
+      ibus.engines = with pkgs.ibus-engines; [ mozc ];
     };
 
     hardware.opengl = {
@@ -56,7 +56,7 @@
       ];
     };
 
-    environment.systemPackages = with pkgs; [alacritty];
+    environment.systemPackages = with pkgs; [ alacritty ];
     environment.sessionVariables.TERMINAL = "alacritty";
   };
 }

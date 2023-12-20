@@ -67,7 +67,7 @@
                   present = true;
                 }
               ];
-              allow = ["@root"];
+              allow = [ "@root" ];
             }
             {
               rules = [
@@ -76,7 +76,7 @@
                   equals = "grafana";
                 }
               ];
-              allow = ["@dashboard"];
+              allow = [ "@dashboard" ];
             }
           ];
         };
@@ -102,7 +102,7 @@
         '';
 
         withSso =
-          {appName, vhost}:
+          { appName, vhost }:
           vhost
           // {
             extraConfig =
@@ -166,7 +166,7 @@
       {
 
         # Used for ACME to generate a TLS cert for the MX.
-        "${config.my.networking.fqdn}" = withSsl {};
+        "${config.my.networking.fqdn}" = withSsl { };
 
         "login.delroth.net" = localReverseProxy sso.configuration.listen.port;
 

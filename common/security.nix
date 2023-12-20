@@ -33,7 +33,7 @@ in
       boot.kernel.randstructSeed = "${secrets.randstructSeed}";
 
       # Imported from hardened.nix.
-      nix.settings.allowed-users = lib.mkDefault ["@users"];
+      nix.settings.allowed-users = lib.mkDefault [ "@users" ];
       security.lockKernelModules = lib.mkDefault true;
       security.protectKernelImage = lib.mkDefault true;
       security.unprivilegedUsernsClone = lib.mkDefault true;
@@ -47,7 +47,7 @@ in
     (lib.mkIf x86 {
       # Use the hardened kernel but keep IA32 emulation.
       boot.kernelPackages = pkgs.linuxPackagesFor (
-        pkgs.linux_6_5_hardened.override {features.ia32Emulation = true;}
+        pkgs.linux_6_5_hardened.override { features.ia32Emulation = true; }
       );
       boot.kernelPatches = [
         {

@@ -7,12 +7,12 @@ rec {
   services = import ./services;
 
   modules =
-    {pkgs, ...}:
+    { pkgs, ... }:
     {
       imports = [
         common
         roles
-        (secrets {inherit pkgs;}).roles
+        (secrets { inherit pkgs; }).roles
         services
       ];
     };

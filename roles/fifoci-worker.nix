@@ -75,7 +75,7 @@ let
         ${pkgs.gnused}/bin/sed -ri 's/^(export PATH=.*)"$/\1:$PATH"/' $out/share/rcfile
       '';
 
-  workerPackage = pkgs.runCommand "fifoci-buildbot-worker" {} ''
+  workerPackage = pkgs.runCommand "fifoci-buildbot-worker" { } ''
     mkdir $out
     ${pkgs.python3Packages.buildbot-worker}/bin/buildbot-worker \
         create-worker \
@@ -88,7 +88,7 @@ let
     EOF
   '';
 
-  fifociPython = pkgs.python3.withPackages (p: [p.buildbot-worker]);
+  fifociPython = pkgs.python3.withPackages (p: [ p.buildbot-worker ]);
 
   fifociEnvPackages = with pkgs; [
     bash
@@ -119,19 +119,19 @@ in
 
     users.users.fifoci = {
       group = "fifoci";
-      extraGroups = ["video"];
+      extraGroups = [ "video" ];
       isSystemUser = true;
       home = homeDir;
       createHome = true;
       shell = fifociShell;
       packages = fifociEnvPackages;
     };
-    users.groups.fifoci = {};
+    users.groups.fifoci = { };
 
     systemd.services.fifoci-buildbot-worker = {
       description = "FifoCI Buildbot Worker";
-      after = ["network.target"];
-      wantedBy = ["multi-user.target"];
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
       path = fifociEnvPackages;
       environment.PYTHONPATH = "${fifociPython}/${fifociPython.sitePackages}";
 
