@@ -19,7 +19,6 @@ in
     # TODO: Move most of these to generic roles.
     ./dns.nix
     ./http.nix
-    ./monitoring.nix
     ./networking.nix
   ];
 
@@ -54,6 +53,7 @@ in
     matrix-signal-bridge.enable = true;
     matrix-synatainer.enable = true;
     matrix-synapse.enable = true;
+    monitoring.enable = true;
     music-server.enable = true;
     nix-builder.enable = true;
     publibike-locator.enable = true;

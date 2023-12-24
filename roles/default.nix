@@ -16,6 +16,7 @@
     ./matrix-signal-bridge.nix
     ./matrix-synatainer.nix
     ./matrix-synapse.nix
+    ./monitoring
     ./music-server.nix
     ./nas.nix
     ./nas-client.nix
