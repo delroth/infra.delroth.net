@@ -31,6 +31,7 @@ in
       distributedBuilds = true;
       extraOptions = ''
         builders-use-substitutes = true
+        allowed-uris = https://github.com/ github:NixOS/
       '';
 
       buildMachines =
