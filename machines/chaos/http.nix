@@ -208,7 +208,7 @@
 
           locations."/.well-known/matrix/client" = {
             extraConfig = ''
-              return 200 '{"m.homeserver": {"base_url": "https://matrix.delroth.net"}}';
+              return 200 '{"m.homeserver": {"base_url": "https://matrix.delroth.net"}, "org.matrix.msc3575.proxy": {"url": "https://matrix-sync.delroth.net"}}';
               add_header Content-Type application/json;
               add_header Access-Control-Allow-Origin *;
             '';
