@@ -43,7 +43,7 @@ in
     picocom
     whois
     transmission
-    scrot
+    escrotum
     imgurbash2
     vim_delroth
     gnome.eog
