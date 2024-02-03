@@ -42,6 +42,17 @@ in
     services.nginx = {
       enable = true;
 
+      upstreams.mastodon-streaming = {
+        extraConfig = ''
+          least_conn;
+        '';
+
+        servers = builtins.listToAttrs (map (i: {
+          name = "unix:/run/mastodon-streaming/streaming-${toString i}.socket";
+          value = {};
+        }) (lib.range 1 config.services.mastodon.streamingProcesses));
+      };
+
       virtualHosts."mastodon.delroth.net" = {
         root = "${config.services.mastodon.package}/public/";
         forceSSL = true;
@@ -53,7 +64,7 @@ in
         locations."@proxy".proxyPass = "http://unix:/run/mastodon-web/web.socket";
         locations."@proxy".proxyWebsockets = true;
 
-        locations."/api/v1/streaming/".proxyPass = "http://unix:/run/mastodon-streaming/streaming.socket";
+        locations."/api/v1/streaming/".proxyPass = "http://mastodon-streaming";
         locations."/api/v1/streaming/".proxyWebsockets = true;
       };
     };
