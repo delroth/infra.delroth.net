@@ -55,7 +55,7 @@ in
         in
         lib.flip builtins.map builderNodes (
           node: {
-            hostName = node.config.networking.hostName;
+            hostName = "${node.config.my.networking.fqdn}";
             sshUser = node.config.my.roles.nix-builder.user;
             sshKey = "/etc/${distbuildPrivKeyEtcPath}";
             protocol = "ssh-ng";
