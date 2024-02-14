@@ -25,6 +25,17 @@
     allowDiscards = true;
   };
 
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 1024;
+    }
+  ];
+  zramSwap = {
+    enable = true;
+    memoryPercent = 25;
+  };
+
   services.fstrim.enable = true;
 
   fileSystems."/boot" = {
