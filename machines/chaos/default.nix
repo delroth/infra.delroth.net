@@ -71,10 +71,10 @@ in
     "i686-linux"
   ];
 
-  services.label-approved = {
-    enable = true;
-    environmentFile = pkgs.writeText "label-approved-env" ''
-      GITHUB_TOKEN=${secrets.gh-token}
-    '';
-  };
+#  services.label-approved = {
+#    enable = true;
+#    environmentFile = pkgs.writeText "label-approved-env" ''
+#      GITHUB_TOKEN=${secrets.gh-token}
+#    '';
+#  };
 }
