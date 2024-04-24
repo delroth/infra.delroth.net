@@ -2,7 +2,7 @@
   # TODO: Figure out how to override this locally.
   inputs.nixpkgs.url = "git+file:///home/delroth/work/nixpkgs";
 
-  inputs.poetry2nix.url = "github:K900/poetry2nix/new-bootstrap-fixes";
+  inputs.poetry2nix.url = "github:nix-community/poetry2nix";
   inputs.poetry2nix.inputs.nixpkgs.follows = "nixpkgs";
 
   inputs.home-manager.url = "github:nix-community/home-manager";
