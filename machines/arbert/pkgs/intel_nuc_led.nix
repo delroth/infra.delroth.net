@@ -12,18 +12,9 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "nomego";
     repo = "intel_nuc_led";
-    rev = "master";
-    sha256 = "1swpkxyn2i6xq8giqdv4pp0zv9d0hgpa77hsyadvpvvcb42f1z0x";
+    rev = "14b9b0062de3d25fd908ff86848e801f7f1001fe";
+    hash = "sha256-NbQuMzrvb6ckqAiRRIO+S4Oj9DLcxz5289yvqjx0EVU=";
   };
-
-  patches =
-    [
-      # proc: convert to struct proc_ops
-      (fetchpatch {
-        url = "https://github.com/nomego/intel_nuc_led/commit/4e0aefc83d29b9df6e10224a3f21a9c8ba91b4a5.patch";
-        sha256 = "03fx1s6rhmvpnkwvyqscy2b3nxwdkdqglyvv8jyv0lfijrpbifwz";
-      })
-    ];
 
   nativeBuildInputs = kernel.moduleBuildDependencies;
 
