@@ -11,12 +11,12 @@ let
   # configuration.
   communityString = "PUBLIC";
   defaultSnmpConfig = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/prometheus/snmp_exporter/0caff5465662870282e8637b68ad52189a40933d/snmp.yml";
-    sha256 = "sha256-JRUEsFJQZB1XNohf4YR7WxGRRoTvFw0V7YO/jp9y3P4=";
+    url = "https://raw.githubusercontent.com/prometheus/snmp_exporter/1242b20f9e2050f4d3011818ad3cd0f9d195b78e/snmp.yml";
+    sha256 = "sha256-4mfQYSmLH/WAw4M30XZt4P6AkWEIYoN8VU6Hz958yUc=";
   };
   snmpConfig = pkgs.runCommand "snmp-config" { } ''
     ${pkgs.yq-go}/bin/yq eval \
-      '. * {"if_mib": {"auth": { "community": "${communityString}" }}}' \
+      '. * {"auths": {"public_v2": { "community": "${communityString}" }}}' \
       ${defaultSnmpConfig} > $out
   '';
 in
