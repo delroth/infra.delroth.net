@@ -26,7 +26,6 @@ in
     seedbox.enable = true;
     syncthing-mirror.enable = true;
     wild-eagle.enable = true;
-    zrepl-receiver.enable = true;
   };
 
   my.homenet = {

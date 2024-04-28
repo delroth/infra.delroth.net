@@ -30,6 +30,5 @@
     ./syncthing-relay.nix
     ./tor-relay.nix
     ./wireguard-peer.nix
-    ./zrepl-receiver.nix
   ];
 }
