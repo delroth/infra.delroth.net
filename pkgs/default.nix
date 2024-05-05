@@ -1,5 +1,6 @@
 self: super: {
   blitzloop = super.callPackage ./blitzloop.nix { };
+  edulo = super.callPackage ./edulo.nix { };
   repology-notifier = super.callPackage ./repology-notifier.nix { };
   vim_delroth = super.callPackage ./vim.nix { };
 

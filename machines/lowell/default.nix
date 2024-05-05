@@ -55,6 +55,7 @@ in
     glome
     file
     unzip
+    edulo
 
     config.boot.kernelPackages.perf
   ];
