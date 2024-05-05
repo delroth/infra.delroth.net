@@ -14,7 +14,7 @@
   inputs.glome-nixos.url = "github:delroth/glome-nixos";
   inputs.glome-nixos.inputs.nixpkgs.follows = "nixpkgs";
 
-  inputs.nixfmt-rfc.url = "github:piegamesde/nixfmt/rfc101-style";
+  inputs.nixfmt.url = "github:NixOS/nixfmt";
 
   inputs.protonvpn-pmp-transmission.url = "github:delroth/protonvpn-pmp-transmission";
   inputs.protonvpn-pmp-transmission.inputs.nixpkgs.follows = "nixpkgs";
@@ -35,12 +35,12 @@
       nixpkgs,
       home-manager,
       label-approved,
-      nixfmt-rfc,
+      nixfmt,
       protonvpn-pmp-transmission,
       ...
     }@attrs:
     {
-      formatter.x86_64-linux = nixfmt-rfc.packages.x86_64-linux.default;
+      formatter.x86_64-linux = nixfmt.packages.x86_64-linux.default;
 
       colmena =
         let
