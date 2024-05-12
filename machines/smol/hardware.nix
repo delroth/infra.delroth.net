@@ -57,7 +57,7 @@ in
     serviceConfig.Type = "oneshot";
     script = ''
       ${pkgs.coreutils}/bin/stty -F /dev/ttyS1 115200
-      echo -ne '\x34' > /dev/ttyS1
+      echo -ne '\x35' > /dev/ttyS1
     '';
   };
 
