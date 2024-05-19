@@ -15,14 +15,26 @@ in
 {
   services.bind = {
     enable = true;
+
     cacheNetworks = [
       "127.0.0.0/24"
       "::1/128"
     ];
     forwarders = [ "127.0.0.53 port 53" ];
+
     extraOptions = ''
       notify yes;
     '';
+
+    extraConfig = ''
+      ${lib.concatStrings (lib.mapAttrsToList (name: attrs: ''
+        key "${name}." {
+          algorithm ${attrs.algo};
+          secret "${attrs.secret}";
+        };
+      '') secrets.dnsupdate)}
+    '';
+
     zones = [
       {
         master = true;
@@ -33,6 +45,12 @@ in
           key-directory "/etc/bind/keys";
           auto-dnssec maintain;
           inline-signing yes;
+
+          update-policy {
+            grant s3-role. name _acme-challenge.delroth.net. txt;
+            grant s3-role. name _acme-challenge.s3.delroth.net. txt;
+            grant s3-role. name _acme-challenge.s3-web.delroth.net. txt;
+          };
         '';
       }
       {

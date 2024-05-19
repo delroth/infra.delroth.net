@@ -24,6 +24,7 @@ else
     dnssec = pkgs.lib.genAttrs (builtins.attrNames (builtins.readDir ./secrets/dnssec)) (
       f: builtins.readFile (./secrets/dnssec + "/${f}")
     );
+    dnsupdate = import ./secrets/dnsupdate.nix;
     email = import ./secrets/email.nix;
     flexget-config = import ./secrets/flexget-config.nix;
     gh-token = builtins.readFile ./secrets/gh-token;
