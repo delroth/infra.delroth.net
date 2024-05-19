@@ -65,6 +65,7 @@ in
   users.users.delroth.shell = pkgs.zsh;
 
   programs.gnupg.agent.enable = true;
+  programs.gnupg.agent.pinentryPackage = pkgs.pinentry-tty;
   programs.ssh.startAgent = true;
 
   boot.kernelModules = [
