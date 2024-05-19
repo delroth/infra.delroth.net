@@ -81,12 +81,6 @@ in
     };
 
     services.nginx = {
-      enable = true;
-
-      recommendedGzipSettings = true;
-      recommendedTlsSettings = true;
-      recommendedProxySettings = true;
-
       virtualHosts =
         let
           passToMatrix = port: { proxyPass = "http://127.0.0.1:${toString port}"; };

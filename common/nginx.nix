@@ -1,13 +1,18 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   services.nginx = {
     enable = true;
     statusPage = true; # For monitoring scraping.
 
+    recommendedBrotliSettings = true;
     recommendedGzipSettings = true;
     recommendedOptimisation = true;
     recommendedTlsSettings = true;
+    recommendedProxySettings = true;
+    recommendedZstdSettings = true;
+
+    package = pkgs.nginxQuic;
   };
 
   services.prometheus.exporters.nginx = {

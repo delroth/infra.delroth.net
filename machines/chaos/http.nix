@@ -8,13 +8,6 @@
 
 {
   services.nginx = rec {
-    enable = true;
-    package = pkgs.nginxMainline;
-
-    recommendedGzipSettings = true;
-    recommendedOptimisation = true;
-    recommendedTlsSettings = true;
-
     sso = {
       enable = true;
       configuration = {
