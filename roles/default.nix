@@ -23,6 +23,7 @@
     ./nix-builder.nix
     ./publibike-locator.nix
     ./repology-notifier.nix
+    ./s3.nix
     ./seedbox.nix
     ./smtp-server.nix
     ./snmp-exporter.nix

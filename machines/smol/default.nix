@@ -23,6 +23,10 @@ in
       root = "/data";
       shareName = "data";
     };
+    s3 = {
+      enable = true;
+      dataRoot = "/data/s3";
+    };
     seedbox.enable = true;
     syncthing-mirror.enable = true;
     wild-eagle.enable = true;

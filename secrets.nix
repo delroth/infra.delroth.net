@@ -39,6 +39,7 @@ else
     randstructSeed = builtins.readFile ./secrets/randstruct-seed;
     repologyNotifierGhToken = builtins.readFile ./secrets/repology-notifier-gh-token;
     roles = import ./secrets/roles;
+    s3 = import ./secrets/s3.nix;
     seedbox-vpn = import ./secrets/seedbox-vpn.nix;
     shadowHash = builtins.readFile ./secrets/shadow-hash;
     sso = {
