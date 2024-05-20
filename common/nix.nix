@@ -2,6 +2,7 @@
   lib,
   machineName,
   pkgs,
+  secrets,
   ...
 }:
 
@@ -46,6 +47,18 @@ in
     my.pkgs
     secrets.pkgs
   ];
+
+  # Provide S3 credentials. Ugly because Nix apparently doesn't support
+  # anything else declarative?!
+  systemd.services.nix-daemon.environment = {
+    AWS_ACCESS_KEY_ID = secrets.nixCache.s3.accessKeyId;
+    AWS_SECRET_ACCESS_KEY = secrets.nixCache.s3.accessKeySecret;
+    AWS_DEFAULT_REGION = secrets.nixCache.s3.region;
+    AWS_ENDPOINT_URL = secrets.nixCache.s3.endpoint;
+  };
+  nix.settings.secret-key-files = pkgs.writeText "nix-secret.key" secrets.nixCache.privKey;
+  nix.settings.substituters = [ secrets.nixCache.bucket ];
+  nix.settings.trusted-public-keys = [ secrets.nixCache.pubKey ];
 
   # Add support for command-not-found. For simplicity, hardcode a Nix channel
   # revision that has the programs.sqlite pregenerated instead of building it

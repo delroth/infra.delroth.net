@@ -34,6 +34,7 @@ else
     iot = import ./secrets/iot.nix;
     matrix = import ./secrets/matrix.nix;
     nasPassword = builtins.readFile ./secrets/nas-password;
+    nixCache = import ./secrets/nix-cache.nix;
     nodeMetricsKey = builtins.readFile ./secrets/node-metrics-key;
     pkgs = import ./secrets/pkgs;
     randstructSeed = builtins.readFile ./secrets/randstruct-seed;
