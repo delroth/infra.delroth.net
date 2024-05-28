@@ -17,4 +17,15 @@
   nix.settings.max-jobs = lib.mkDefault 8;
 
   virtualisation.hypervGuest.enable = true;
+
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 1024;
+    }
+  ];
+  zramSwap = {
+    enable = true;
+    memoryPercent = 25;
+  };
 }
