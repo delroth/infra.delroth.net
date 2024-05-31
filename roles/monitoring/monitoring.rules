@@ -47,15 +47,6 @@ groups:
       summary: "systemd unit {{ $labels.name }} failed"
       description: "The systemd unit {{ $labels.name }} on {{ $labels.instance }} has been down for more than 5 minutes."
 
-  - alert: TorUnreachable
-    expr: tor_network_liveness == 0
-    for: 1h
-    labels:
-      severity: ticket
-    annotations:
-      summary: "tor network unreachable"
-      description: "The Tor node on {{ $labels.instance }} has been unreachable for more than 1h."
-
   - alert: ProbeFailed
     expr: avg(probe_success) by (job, target) < 0.5
     for: 5m

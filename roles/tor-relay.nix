@@ -43,18 +43,12 @@ in
         Nickname = "${builtins.replaceStrings [ "-" ] [ "" ] machineName}Delroth";
         NumCPUs = 0;
         ORPort = [ { port = 143; } ];
+
+        # TODO: MetricsPort
       };
     };
 
     systemd.services.tor.serviceConfig.Nice = 5;
-
-    # Monitoring.
-    services.prometheus.exporters.tor = {
-      enable = true;
-      torControlPort = config.services.tor.settings.ControlPort;
-      listenAddress = "127.0.0.1";
-      port = 9130;
-    };
 
     my.homenet.ip4TcpPortForward = [ 143 ];
 
