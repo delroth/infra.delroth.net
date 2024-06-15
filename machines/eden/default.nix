@@ -11,6 +11,8 @@ in
     my.modules
   ];
 
+  my.networking.sshPublicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU1DYWpiOVNDVEVSM1dBUmF1VWU0TytqbFNnNmRUUEZneElBRXM5bVpLKzAgcm9vdEBlZGVuLmRlbHJvdGgubmV0Cg==";
+
   my.roles = {
     blackbox-prober.enable = true;
     syncthing-relay.enable = true;

@@ -18,6 +18,8 @@ in
     my.modules
   ];
 
+  my.networking.sshPublicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUtFbE83UVgyRlZQNWt1WFRkVjJGaUxjSE9zS1FZSmpVMmk3cHdXNWtRU3cgcm9vdEBhZXRoZXIK";
+
   my.roles = {
     homenet-gateway = {
       enable = true;

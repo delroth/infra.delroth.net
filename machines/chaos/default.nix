@@ -23,6 +23,7 @@ in
   ];
 
   my.stateless.enable = false;
+  my.networking.sshPublicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUlNTmFGUjVBWm9aQnN5dkV2VUwzYVBvNzFtblVoSFliOVkvMXhkSmpuY3ggcm9vdEBjaGFvcwo=";
 
   environment.systemPackages = with pkgs; [
     wget

@@ -63,6 +63,7 @@ in
             maxJobs = node.config.my.roles.nix-builder.maxJobs;
             speedFactor = node.config.my.roles.nix-builder.speedFactor;
             supportedFeatures = node.config.my.roles.nix-builder.supportedFeatures;
+            publicHostKey = node.config.my.networking.sshPublicHostKey;
           }
         )
         ++ extraNodes;

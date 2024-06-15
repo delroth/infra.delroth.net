@@ -17,6 +17,7 @@ in
   ];
 
   my.laptop.enable = true;
+  my.networking.sshPublicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUd6YUtpcUIyRUJHSVJKdFh6NXJFb2lrdEtKazZZdWo4d0YzV2ZVV2J1Rkwgcm9vdEBsb3dlbGwuZGVscm90aC5uZXQK";
 
   nixpkgs.config.allowUnfree = true;
 

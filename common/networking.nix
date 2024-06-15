@@ -21,6 +21,11 @@
       type = types.str;
       description = "FQDN of the machine.";
     };
+
+    sshPublicHostKey = mkOption {
+      type = types.str;
+      description = "SSH public host key of the machine.";
+    };
   };
 
   config = {

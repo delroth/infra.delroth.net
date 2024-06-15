@@ -17,6 +17,7 @@ in
   ];
 
   my.networking.externalInterface = "eno1";
+  my.networking.sshPublicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU42a29TMWF1NjNPUk5GZUNXOEVxSCsxcmV2SmpmUDFVM0Y3SHVxdDg1bDQgcm9vdEBhcmJlcnQK";
 
   my.roles = {
     archiveteam-warrior.enable = true;

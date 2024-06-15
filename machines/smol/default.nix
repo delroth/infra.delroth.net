@@ -16,6 +16,8 @@ in
     my.modules
   ];
 
+  my.networking.sshPublicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUQ5VGE0RFlFM1l4WHpWNTdzNlRYNktFYklhM080cmUrSjROekFUQ09pWGIgcm9vdEBzbW9sCg==";
+
   my.roles = {
     backup-receiver.enable = true;
     nas = {

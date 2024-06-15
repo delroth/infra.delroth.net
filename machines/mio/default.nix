@@ -11,6 +11,7 @@ in
   ];
 
   my.networking.externalInterface = "eth0";
+  my.networking.sshPublicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUNMTlFVdjFDNEZMTk5EcjRodEhLOXluSHJTRUJFdUpwdHRQQ00rSjlkMHAgcm9vdEBuaXhvcwo=";
 
   my.roles = {
     infra-dev-machine.enable = true;
@@ -30,4 +31,6 @@ in
   ];
 
   my.monitoring.roaming = true; # Host regularly goes to sleep.
+
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 }
