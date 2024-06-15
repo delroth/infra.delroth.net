@@ -81,6 +81,11 @@ in
     environment.systemPackages = with pkgs; [
       colmena
       diffoscope
+      file
+      gitFull
+      git-crypt
+      gnupg
+      hexedit
       qemu
       nixpkgs-review
     ];

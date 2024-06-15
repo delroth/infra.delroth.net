@@ -29,12 +29,10 @@ in
     feh
     lxqt.pavucontrol-qt
     acpi
-    gitFull
     dex
     gnupg
     cifs-utils
     tpm2-tools
-    git-crypt
     python3
     pwgen
     keepassxc
@@ -50,11 +48,9 @@ in
     gnome.eog
     evince
     libnotify
-    hexedit
     wireguard-tools
     notify-osd
     glome
-    file
     unzip
     edulo
 
