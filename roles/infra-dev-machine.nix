@@ -47,6 +47,7 @@ in
               node.config
             )
             && node.config.my.roles.nix-builder.enable
+            && (node.config.my.networking.fqdn != config.my.networking.fqdn)
           );
 
           extraNodes = lib.flip builtins.map cfg.extraBuilders (
