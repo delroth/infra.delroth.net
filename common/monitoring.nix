@@ -41,7 +41,10 @@
           let
             enabledExporters =
               lib.filterAttrs (exporterName: exporter: (exporter ? enable) && exporter.enable)
-                config.services.prometheus.exporters;
+                (lib.removeAttrs config.services.prometheus.exporters [
+                  "unifi-poller"
+                  "minio"
+                ]);
           in
           (lib.mapAttrsToList
             (exporterName: exporter: {
