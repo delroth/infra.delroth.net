@@ -57,7 +57,6 @@ in
     AWS_ENDPOINT_URL = secrets.nixCache.s3.endpoint;
   };
   nix.settings.secret-key-files = pkgs.writeText "nix-secret.key" secrets.nixCache.privKey;
-  nix.settings.substituters = [ secrets.nixCache.bucket ];
   nix.settings.trusted-public-keys = [ secrets.nixCache.pubKey ];
 
   # Add support for command-not-found. For simplicity, hardcode a Nix channel
