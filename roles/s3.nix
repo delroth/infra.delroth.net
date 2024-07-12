@@ -66,6 +66,14 @@ in {
 
     my.backup.extraExclude = [ cfg.dataRoot ];
 
+    services.nginx.appendConfig = ''
+      worker_processes auto;
+    '';
+
+    services.nginx.eventsConfig = ''
+      worker_connections 8192;
+    '';
+
     services.nginx.virtualHosts = {
       "s3.delroth.net" = {
         forceSSL = true;
