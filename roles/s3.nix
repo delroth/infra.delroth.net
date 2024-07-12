@@ -32,7 +32,6 @@ in {
         data_dir = cfg.dataRoot;
 
         replication_factor = 1;
-        metadata_fsync = true;
 
         rpc_bind_addr = "[::]:${toString rpcPort}";
         rpc_secret = secrets.s3.rpc_secret;
