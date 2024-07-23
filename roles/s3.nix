@@ -100,6 +100,19 @@ in {
           proxyPass = "http://127.0.0.1:${toString webPort}";
         };
       };
+
+      # Special domain serving setup for forkos.
+      "cache.forkos.org" = {
+        enableACME = true;
+        forceSSL = true;
+
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:${toString webPort}";
+          extraConfig = ''
+            proxy_set_header Host bagel-cache.s3-web.delroth.net;
+          '';
+        };
+      };
     };
 
     security.acme.certs = let
