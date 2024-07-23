@@ -48,6 +48,13 @@ in
     ];
   };
 
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 8192;
+    }
+  ];
+
   # Set fans at full speed on startup. Ideally this should be done by a kernel
   # module instead which provides fan PWM control, but that's for later.
   systemd.services.spin-fans = {
