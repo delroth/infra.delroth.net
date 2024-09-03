@@ -341,11 +341,11 @@
         "flake-utils": "flake-utils_5"
       },
       "locked": {
-        "lastModified": 1725024120,
-        "narHash": "sha256-oAWYno+JY0YFIJ5FYUBWe+RtZeIk0yAIWokxHi7g6sY=",
+        "lastModified": 1725388257,
+        "narHash": "sha256-Yy57pGG6LNsyY+1+Imq2ZGYQ3OPH667J7OtRKThjrn0=",
         "owner": "NixOS",
         "repo": "nixfmt",
-        "rev": "458402c5d3f474e56db5ba845bd98b4d86852702",
+        "rev": "3e8eef7b73fdedd8458433ee5f9af60fa138a8a3",
         "type": "github"
       },
       "original": {
@@ -356,11 +356,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1725371346,
-        "narHash": "sha256-Wz19ZlrqwoODFqNf2SpzkZGqUP7I4k9qih4gtjx1BpA=",
+        "lastModified": 1725374387,
+        "narHash": "sha256-YmSWxN60KgW+5nDsALzRLbPOOoHuTB9phqfowezbrdo=",
         "ref": "refs/heads/master",
-        "rev": "3736dd89d4c831157739051315be405e87ed9249",
-        "revCount": 675490,
+        "rev": "d35861831b004df393babd76c54e9a85c5c12bf1",
+        "revCount": 675491,
         "type": "git",
         "url": "file:///home/delroth/work/nixpkgs"
       },
