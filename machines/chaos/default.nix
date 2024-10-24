@@ -33,7 +33,7 @@ in
     openssl
     binutils
     ncdu
-    youtube-dl
+    yt-dlp
     whois
     gnupg
     git-crypt
