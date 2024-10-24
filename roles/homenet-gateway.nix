@@ -61,16 +61,13 @@ let
             ip = info.ip;
           })
           cfg.homenetExtraHosts;
-
-      lines =
-        builtins.map
-          (
-            info:
-            "dhcp-host=${info.mac},${cfg.homenetIp4}${toString info.ip},[::${toString info.ip}],${info.name}"
-          )
-          (homenetHosts ++ extraHosts);
     in
-    builtins.concatStringsSep "\n" lines;
+      builtins.map
+        (
+          info:
+          "${info.mac},${cfg.homenetIp4}${toString info.ip},[::${toString info.ip}],${info.name}"
+        )
+        (homenetHosts ++ extraHosts);
 
   formatPortsList =
     l:
@@ -381,29 +378,27 @@ in
     services.dnsmasq = {
       enable = true;
       resolveLocalQueries = false;
-      extraConfig = ''
-        port=0  # Disable DNS
+      settings = {
+        port = 0;
+        interface = [ cfg.downstreamBridge "pub" ];
+        bind-interfaces = true;
 
-        interface=${cfg.downstreamBridge}
-        interface=pub
-        bind-interfaces
+        dhcp-authoritative = true;
+        dhcp-range = [
+          "set:downstream,${cfg.homenetDhcp4Start},${cfg.homenetDhcp4End},15m"
+          "set:downstream,::ff00,::ffff,constructor:downstream,slaac,15m"
+          "pub,192.168.99.50,192.168.99.100,15m"
+        ];
+        dhcp-option = [
+          "tag:downstream,option:router,${cfg.homenetGatewayIp4}"
+          "pub,option:router,192.168.99.254"
+          "option:dns-server,8.8.8.8,8.8.4.4"
+          "option6:dns-server,2001:4860:4860::8888,2001:4860:4860::8844"
+        ];
+        dhcp-host = dhcpHosts;
 
-        dhcp-authoritative
-        dhcp-range=set:downstream,${cfg.homenetDhcp4Start},${cfg.homenetDhcp4End},15m
-        dhcp-range=set:downstream,::ff00,::ffff,constructor:downstream,slaac,15m
-
-        dhcp-option=tag:downstream,option:router,${cfg.homenetGatewayIp4}
-
-        dhcp-range=pub,192.168.99.50,192.168.99.100,15m
-        dhcp-option=pub,option:router,192.168.99.254
-
-        dhcp-option=option:dns-server,8.8.8.8,8.8.4.4
-        dhcp-option=option6:dns-server,2001:4860:4860::8888,2001:4860:4860::8844
-
-        ${dhcpHosts}
-
-        enable-ra
-      '';
+        enable-ra = true;
+      };
     };
   };
 }
