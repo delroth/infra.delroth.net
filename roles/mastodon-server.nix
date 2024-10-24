@@ -24,6 +24,13 @@ in
 
       streamingProcesses = 4;
 
+      package = pkgs.mastodon.overrideAttrs (final: prev: {
+        postPatch = (prev.postPatch or "") + ''
+          substituteInPlace app/models/concerns/attachmentable.rb \
+              --replace-fail 33_177_600 60_000_000
+        '';
+      });
+
       smtp.host = "chaos.delroth.net";
       smtp.fromAddress = "mastodon@delroth.net";
       smtp.authenticate = true;
