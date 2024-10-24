@@ -17,7 +17,6 @@ let
     public = 443;
     private = 11339;
   };
-  syncPort = 8002;
 
   domain = "delroth.net";
 
@@ -70,14 +69,6 @@ in
           }
         ];
       };
-
-      sliding-sync = {
-        enable = true;
-        environmentFile = "/dev/null";
-        settings.SYNCV3_BINDADDR = "127.0.0.1:${toString syncPort}";
-        settings.SYNCV3_SECRET = secrets.matrix.syncSecret;
-        settings.SYNCV3_SERVER = "https://matrix.${domain}";
-      };
     };
 
     services.nginx = {
@@ -91,13 +82,6 @@ in
             enableACME = true;
 
             locations."/" = passToMatrix clientPort.private;
-          };
-
-          "matrix-sync.${domain}" = {
-            forceSSL = true;
-            enableACME = true;
-
-            locations."/" = passToMatrix syncPort;
           };
 
           "matrix.${domain}_federation" = rec {
