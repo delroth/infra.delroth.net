@@ -66,6 +66,10 @@ in
 
         locations."/api/v1/streaming/".proxyPass = "http://mastodon-streaming";
         locations."/api/v1/streaming/".proxyWebsockets = true;
+
+        extraConfig = ''
+          client_max_body_size 100m;
+        '';
       };
     };
 
