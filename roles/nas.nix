@@ -34,15 +34,15 @@ in
     services.samba = {
       enable = true;
       enableWinbindd = false;
-      extraConfig = ''
-        log level = 2
-        logging = systemd
+      settings.global = {
+        "log level" = 2;
+        "logging" = "systemd";
 
-        server min protocol = SMB2
-        smb encrypt = mandatory
-        client signing = mandatory
-        server signing = mandatory
-      '';
+        "server min protocol" = "SMB2";
+        "smb encrypt" = "mandatory";
+        "client signing" = "mandatory";
+        "server signing" = "mandatory";
+      };
       shares."${cfg.shareName}" = {
         path = cfg.root;
         comment = "Serving from ${machineName}:${cfg.root}";
