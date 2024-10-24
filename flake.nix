@@ -55,6 +55,7 @@
               glome-nixos.overlay
               protonvpn-pmp-transmission.overlay
             ];
+            config.allowInsecurePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "olm" ];
             config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "elasticsearch" ];
           };
 
