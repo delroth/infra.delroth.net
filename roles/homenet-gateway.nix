@@ -249,6 +249,17 @@ in
       ipv6SendRAConfig.Managed = true;
     };
 
+    # Run Avahi in reflector mode to bridge mDNS between main and IOT internal
+    # networks.
+    services.avahi = {
+      enable = true;
+      allowInterfaces = [ cfg.downstreamBridge "iot" ];
+      openFirewall = false;
+      ipv4 = true;
+      ipv6 = false;
+      reflector = true;
+    };
+
     # We define our own nftables-based firewall ruleset.
     networking.nat.enable = false;
     networking.firewall.enable = false;
@@ -286,6 +297,9 @@ in
             udp dport @udp_open_ports accept
             meta l4proto ipv6-icmp accept
             meta l4proto icmp accept
+
+            # Only expose Avahi on internal interfaces that need mDNS bridging.
+            iifname { "${cfg.downstreamBridge}", "iot" } udp dport 5353 accept
           }
 
           chain output {
