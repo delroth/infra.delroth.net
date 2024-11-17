@@ -425,11 +425,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1699145086,
-        "narHash": "sha256-A1xo3xB/M1p2HTUrTRCJWRDtrHmUiHuALfdyfR0Z/0A=",
+        "lastModified": 1731884647,
+        "narHash": "sha256-sxUVJ2vIMFlaxLBMOEOCrd/JZu6KHgk98BIRTFF/YZA=",
         "owner": "delroth",
         "repo": "publibike-locator",
-        "rev": "ffaf989677722509ac3290f4f407621cf358662b",
+        "rev": "979c953cc9058be11fdd9d0195b9cf3ca3ab18c6",
         "type": "github"
       },
       "original": {
