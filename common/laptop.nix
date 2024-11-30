@@ -24,6 +24,7 @@
       "${pkgs.coreutils}/bin/true"
     ];
 
+    services.thermald.enable = true;
     services.tlp.enable = true;
     services.upower.enable = true;
 
