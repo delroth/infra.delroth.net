@@ -41,7 +41,7 @@ in
     lm_sensors
     picocom
     whois
-    transmission
+    transmission_4
     escrotum
     imgurbash2
     vim_delroth

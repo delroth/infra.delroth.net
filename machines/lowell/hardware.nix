@@ -46,7 +46,7 @@
   nix.settings.max-jobs = lib.mkDefault 4;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
-  services.xserver.xkbOptions = "compose:prsc";
+  services.xserver.xkb.options = "compose:prsc";
 
   # Fix S3 sleep support -- don't wake up on XHCI events.
   systemd.services.disable-xhci-wakeup = {
