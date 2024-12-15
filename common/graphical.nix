@@ -19,8 +19,8 @@
     };
 
     fonts = {
-      enableDefaultFonts = true;
-      fonts = with pkgs; [
+      enableDefaultPackages = true;
+      packages = with pkgs; [
         google-fonts
         liberation_ttf
         open-sans
@@ -33,21 +33,24 @@
     services.xserver = {
       enable = true;
 
-      layout = "ca";
-      xkbVariant = "multix";
-      xkbOptions = "caps:escape";
-      libinput.enable = true;
+      xkb.layout = "ca";
+      xkb.variant = "multix";
+      xkb.options = "caps:escape";
 
-      displayManager.sddm.enable = true;
       windowManager.i3.enable = true;
     };
 
+    services.displayManager.sddm.enable = true;
+
+    services.libinput.enable = true;
+
     i18n.inputMethod = {
-      enabled = "ibus";
+      enable = true;
+      type = "ibus";
       ibus.engines = with pkgs.ibus-engines; [ mozc ];
     };
 
-    hardware.opengl = {
+    hardware.graphics = {
       enable = true;
       extraPackages = with pkgs; [
         vaapiIntel
