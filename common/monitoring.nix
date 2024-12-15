@@ -42,8 +42,9 @@
             enabledExporters =
               lib.filterAttrs (exporterName: exporter: (exporter ? enable) && exporter.enable)
                 (lib.removeAttrs config.services.prometheus.exporters [
-                  "unifi-poller"
                   "minio"
+                  "tor"
+                  "unifi-poller"
                 ]);
           in
           (lib.mapAttrsToList
