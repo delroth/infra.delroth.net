@@ -45,7 +45,7 @@ in
     escrotum
     imgurbash2
     vim_delroth
-    gnome.eog
+    eog
     evince
     libnotify
     wireguard-tools
