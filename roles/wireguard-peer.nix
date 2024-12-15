@@ -2,6 +2,7 @@
   config,
   lib,
   machineName,
+  pkgs,
   secrets,
   ...
 }:
@@ -28,7 +29,7 @@ in
       {
         wireguard.interfaces."${iface}" = {
           listenPort = port;
-          privateKey = secrets.wireguard.privateKeys."${machineName}";
+          privateKeyFile = "${pkgs.writeText "wireguard-pkey" secrets.wireguard.privateKeys."${machineName}"}";
           ips = [
             "${wgcfg.subnet4}.${toString thisPeer.clientNum}/${toString wgcfg.mask4}"
             # Technically, should hex-convert clientNum... but holes are fine.
