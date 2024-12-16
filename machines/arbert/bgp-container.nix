@@ -7,7 +7,7 @@
 {
   networking.wireguard.interfaces.wg-bgp-transit = {
     listenPort = 51821;
-    privateKey = secrets.bgp.tunnel.privkey;
+    privateKeyFile = "${pkgs.writeText "wireguard-pkey" secrets.bgp.tunnel.privkey}";
     ips = [ "fd00:2::2/64" ];
     allowedIPsAsRoutes = false;
     peers = [
@@ -153,6 +153,10 @@
 
   # Add some dependencies on the VPN tunnel being properly configured before
   # stealing the network interface from the host.
-  systemd.services."container@bgp".after = [ "wireguard-wg-bgp-transit.service" ];
-  systemd.services."container@bgp".bindsTo = [ "wireguard-wg-bgp-transit.service" ];
+  systemd.services."container@bgp".after = [
+    "systemd-networkd.service"
+    "network-online.target"
+  ];
+  systemd.services."container@bgp".wants = [ "network-online.target" ];
+  systemd.services."container@bgp".bindsTo = [ "systemd-networkd.service" ];
 }
