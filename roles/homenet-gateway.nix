@@ -185,11 +185,9 @@ in
 
     systemd.network.networks."40-pub".routingPolicyRules = [
       {
-        routingPolicyRuleConfig = {
-          Family = "both";
-          IncomingInterface = "pub";
-          Table = "pub";
-        };
+        Family = "both";
+        IncomingInterface = "pub";
+        Table = "pub";
       }
     ];
 
@@ -204,11 +202,9 @@ in
       };
       wireguardPeers = [
         {
-          wireguardPeerConfig = {
-            PublicKey = secrets.homenet.public-vpn.public-key;
-            Endpoint = secrets.homenet.public-vpn.endpoint;
-            AllowedIPs = "0.0.0.0/0";
-          };
+          PublicKey = secrets.homenet.public-vpn.public-key;
+          Endpoint = secrets.homenet.public-vpn.endpoint;
+          AllowedIPs = "0.0.0.0/0";
         }
       ];
     };
@@ -221,10 +217,8 @@ in
       };
       routes = [
         {
-          routeConfig = {
-            Gateway = "0.0.0.0";
-            Table = "pub";
-          };
+          Gateway = "0.0.0.0";
+          Table = "pub";
         }
       ];
     };
