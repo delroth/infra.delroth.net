@@ -86,8 +86,15 @@ in
 
     services.minidlna = {
       enable = true;
-      mediaDirs = [ "${downloadBase}/watchqueue" ];
-      announceInterval = 10;
+      settings = {
+        media_dir = [
+          "${downloadBase}/watchqueue"
+          "${downloadBase}/default"
+        ];
+        notify_interval = 10;
+        inotify = "yes";
+      };
+      openFirewall = true;
     };
 
     users.users.minidlna.extraGroups = [ "nas" ];
