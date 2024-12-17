@@ -24,6 +24,7 @@ in
     blackbox-prober.enable = true;
     fiber7-prober.enable = true;
     nix-builder.enable = true;
+    syncthing-relay.enable = true;
     tor-relay.enable = true;
     wireguard-peer.enable = true;
   };
@@ -49,4 +50,7 @@ in
 
   # Home temperature monitoring.
   services.prometheus.exporters.rtl_433.enable = true;
+
+  services.syncthing.relay.globalRateBps = null;
+  services.syncthing.relay.perSessionRateBps = null;
 }
