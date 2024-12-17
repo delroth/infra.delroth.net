@@ -149,7 +149,6 @@ in
           (whiteboxJob "nginx")
           (whiteboxJob "node")
           (whiteboxJob "rtl_433")
-          (whiteboxJob "tor")
 
           (blackboxTargets {
             job_name = "http_probe";
