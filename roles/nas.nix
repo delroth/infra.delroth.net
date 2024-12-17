@@ -33,17 +33,21 @@ in
 
     services.samba = {
       enable = true;
-      enableWinbindd = false;
+      winbindd.enable = false;
       settings.global = {
-        "log level" = 2;
+        "log level" = 1;
         "logging" = "systemd";
 
-        "server min protocol" = "SMB2";
-        "smb encrypt" = "mandatory";
+        "server min protocol" = "SMB3";
+        "smb encrypt" = "required";
         "client signing" = "mandatory";
         "server signing" = "mandatory";
+
+        "socket options" = "TCP_NODELAY IPTOS_LOWDELAY";
+        "use sendfile" = true;
       };
-      shares."${cfg.shareName}" = {
+
+      settings."${cfg.shareName}" = {
         path = cfg.root;
         comment = "Serving from ${machineName}:${cfg.root}";
         "read only" = false;
