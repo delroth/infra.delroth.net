@@ -39,6 +39,9 @@ in
 
         registration_shared_secret = secrets.matrix.registrationSharedSecret;
 
+        # So Heisenbridge & co. still generate working media links.
+        enable_authenticated_media = false;
+
         listeners = [
           # Federation
           {
@@ -82,6 +85,12 @@ in
             enableACME = true;
 
             locations."/" = passToMatrix clientPort.private;
+
+            # Serve unauthenticated media only for delroth.net.
+            locations."/_matrix/media/v3/download/".extraConfig = "deny all;";
+            locations."/_matrix/media/v3/download/delroth.net/" = (passToMatrix clientPort.private) // {
+              extraConfig = "allow all;";
+            };
           };
 
           "matrix.${domain}_federation" = rec {
