@@ -23,6 +23,7 @@ in
 
   environment.systemPackages = with pkgs; [
     wget
+    captive-browser
     chromium
     most
     mpv
