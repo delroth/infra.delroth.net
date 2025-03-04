@@ -15,5 +15,6 @@ buildLinux (
 
     defconfig = "qnap-tsx32x_defconfig";
     kernelPatches = [ ];
+    ignoreConfigErrors = true;
   }
 )
