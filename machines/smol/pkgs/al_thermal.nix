@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
     owner = "delroth";
     repo = "al_thermal-standalone";
     rev = "master";
-    hash = "sha256-8CgOjsb7WVga84nD6YRe1OWHqjkILBPGDMt9XX+jTv8=";
+    hash = "sha256-xGnH6g47azBZ0174QB1xSZ3EH7oqZ8WpUo+z1sd4phw";
   };
 
   nativeBuildInputs = kernel.moduleBuildDependencies;
