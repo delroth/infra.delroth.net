@@ -240,11 +240,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1741056285,
-        "narHash": "sha256-/JKDMVqq8PIqcGonBVKbKq1SooV3kzGmv+cp3rKAgPA=",
+        "lastModified": 1741174782,
+        "narHash": "sha256-dYRebJk58/d5Ej1G6xTOadTfG6tU5zFgXYrLsRJlrgw=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "70fbbf05a5594b0a72124ab211bff1d502c89e3f",
+        "rev": "def0dbbcea715d4514ca343ab4d6d7f3a1742da0",
         "type": "github"
       },
       "original": {
@@ -356,11 +356,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1741103281,
-        "narHash": "sha256-fpDGNXSHvH3m9TeXlwzTZPezULDplQzc0TQBUYePXCA=",
+        "lastModified": 1741188635,
+        "narHash": "sha256-+sfAVyH6SYY/Vn/cPp0AqvGnynlcTWPFUG/An7gyB7Q=",
         "ref": "refs/heads/master",
-        "rev": "90b866b1293e65b3f0460a7f7719fea594fc13b5",
-        "revCount": 762545,
+        "rev": "37d58bc2e85034a3fd323dabe70d30632668d405",
+        "revCount": 762924,
         "type": "git",
         "url": "file:///home/delroth/work/nixpkgs"
       },
@@ -380,11 +380,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1739883580,
-        "narHash": "sha256-3ydikhrNaWy8j0cqHju/94PcD4GZ9T4Ju4rHh34oz3k=",
+        "lastModified": 1741163974,
+        "narHash": "sha256-QehWX1ik9vqkylkbvdpO5XZKaqf2fsE92iMEyRBW2qI=",
         "owner": "nix-community",
         "repo": "poetry2nix",
-        "rev": "d90f9db68a4bda31c346be16dfd8d3263be4547e",
+        "rev": "98293f0b368f24c48e05aaa2359dcc0de15e976f",
         "type": "github"
       },
       "original": {
