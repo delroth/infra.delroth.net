@@ -60,8 +60,8 @@
         };
       };
 
-      services.bird2.enable = true;
-      services.bird2.config = ''
+      services.bird.enable = true;
+      services.bird.config = ''
         router id 1.2.3.4;
 
         protocol device {
