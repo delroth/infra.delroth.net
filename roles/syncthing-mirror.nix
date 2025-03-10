@@ -15,7 +15,7 @@ let
       (name: info: {
         inherit name;
         id = info.id;
-        introducer = true;
+        introducer = false;
       })
       secrets.syncthing;
 in
