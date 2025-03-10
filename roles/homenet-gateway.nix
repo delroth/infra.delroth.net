@@ -220,7 +220,10 @@ in
           Gateway = "0.0.0.0";
           Table = "pub";
         }
-      ];
+      ] ++ (map (n: {
+        Gateway = "0.0.0.0";
+        Destination = n;
+      }) secrets.homenet.vpnRoutedNets);
     };
 
     systemd.services.systemd-networkd.environment.SYSTEMD_LOG_LEVEL = "debug";
@@ -322,8 +325,9 @@ in
             iifname . oifname {
               "${cfg.downstreamBridge}" . "${cfg.downstreamBridge}",
               "${cfg.downstreamBridge}" . "${cfg.upstreamIface}",
-              "pub" .  "pub",
+              "${cfg.downstreamBridge}" . "wg-pub",
               "${cfg.downstreamBridge}" . "pub",
+              "pub" .  "pub",
               "pub" . "wg-pub"
             } accept
 
@@ -367,6 +371,7 @@ in
             policy accept
 
             iifname "${cfg.downstreamBridge}" oifname "${cfg.upstreamIface}" masquerade
+            iifname "${cfg.downstreamBridge}" oifname "wg-pub" masquerade
             iifname "pub" oifname "wg-pub" masquerade
           }
         }
