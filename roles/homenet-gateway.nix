@@ -42,44 +42,57 @@ let
   tcpPortMap = makePortMap "ip4TcpPortForward";
   udpPortMap = makePortMap "ip4UdpPortForward";
 
-  dhcpHosts =
-    let
-      homenetHosts =
-        lib.mapAttrsToList
-          (name: node: {
-            inherit name;
-            mac = node.macAddress;
-            ip = node.ipSuffix;
-          })
-          homenetNodes;
+  homenetHosts =
+    lib.mapAttrsToList
+      (name: node: {
+        inherit name;
+        mac = node.macAddress;
+        ip = node.ipSuffix;
+      })
+      homenetNodes;
 
-      extraHosts =
-        lib.mapAttrsToList
-          (name: info: {
-            inherit name;
-            mac = info.mac;
-            ip = info.ip;
-          })
-          cfg.homenetExtraHosts;
-    in
-      builtins.map
-        (
-          info:
-          "${info.mac},${cfg.homenetIp4}${toString info.ip},[::${toString info.ip}],${info.name}"
-        )
-        (homenetHosts ++ extraHosts);
+  extraHosts =
+    lib.mapAttrsToList
+      (name: info: {
+        inherit name;
+        mac = info.mac;
+        ip = info.ip;
+      })
+      cfg.homenetExtraHosts;
+
+  dhcp4Reservations =
+    builtins.map
+      (
+        info: {
+          hw-address = info.mac;
+          ip-address = "${cfg.homenetIp4}${toString info.ip}";
+          hostname = info.name;
+        }
+      )
+      (homenetHosts ++ extraHosts);
+
+  dhcp6Reservations =
+    builtins.map
+      (
+        info: {
+          hw-address = info.mac;
+          ip-addresses = [ "${cfg.homenetIp6Prefix}0::${toString info.ip}" ];
+          hostname = info.name;
+        }
+      )
+      (homenetHosts ++ extraHosts);
 
   formatPortsList =
     l:
     let
-      strL = builtins.map builtins.toString l;
+      strL = builtins.map toString l;
     in
     builtins.concatStringsSep ", " strL;
 
   formatPortRangesList =
     l:
     let
-      strL = builtins.map (a: "${builtins.toString a.from}-${builtins.toString a.to}") l;
+      strL = builtins.map (a: "${toString a.from}-${toString a.to}") l;
     in
     (if builtins.length l == 0 then "" else ", ") + builtins.concatStringsSep ", " strL;
 in
@@ -121,6 +134,17 @@ in
     homenetDhcp4End = mkOption {
       type = types.str;
       description = "Last IPv4 that can be allocated as dynamic DHCPv4 address.";
+    };
+
+    homenetIp6Prefix = mkOption {
+      type = types.str;
+      description = "IPv6 prefix allocated to the home network.";
+      example = "2000:1234:5678:";
+    };
+
+    homenetIp6Cidr = mkOption {
+      type = types.int;
+      description = "CIDR of the IPv6 prefix allocated to the home network.";
     };
 
     homenetExtraHosts = mkOption {
@@ -355,7 +379,7 @@ in
                 map
                   (
                     e:
-                    ''iifname "${cfg.upstreamIface}" tcp dport ${builtins.toString e.sourcePort} dnat to ${e.destination}''
+                    ''iifname "${cfg.upstreamIface}" tcp dport ${toString e.sourcePort} dnat to ${e.destination}''
                   )
                   tcpPortMap
               )
@@ -366,7 +390,7 @@ in
                 map
                   (
                     e:
-                    ''ifname "${cfg.upstreamIface}" udp dport ${builtins.toString e.sourcePort} dnat to ${e.destination}''
+                    ''ifname "${cfg.upstreamIface}" udp dport ${toString e.sourcePort} dnat to ${e.destination}''
                   )
                   udpPortMap
               )
@@ -407,29 +431,82 @@ in
       547
     ];
 
-    services.dnsmasq = {
-      enable = true;
-      resolveLocalQueries = false;
-      settings = {
-        port = 0;
-        interface = [ cfg.downstreamBridge "pub" ];
-        bind-interfaces = true;
+    services.kea = {
+      dhcp4 = {
+        enable = true;
+        settings = {
+          interfaces-config.interfaces = [ cfg.downstreamBridge "iot" "pub" ];
 
-        dhcp-authoritative = true;
-        dhcp-range = [
-          "set:downstream,${cfg.homenetDhcp4Start},${cfg.homenetDhcp4End},15m"
-          "set:downstream,::ff00,::ffff,constructor:downstream,slaac,15m"
-          "pub,192.168.99.50,192.168.99.100,15m"
-        ];
-        dhcp-option = [
-          "tag:downstream,option:router,${cfg.homenetGatewayIp4}"
-          "pub,option:router,192.168.99.254"
-          "option:dns-server,8.8.8.8,8.8.4.4"
-          "option6:dns-server,2001:4860:4860::8888,2001:4860:4860::8844"
-        ];
-        dhcp-host = dhcpHosts;
+          lease-database = {
+            type = "memfile";
+            persist = true;
+            name = "/var/lib/kea/dhcp4.leases";
+          };
 
-        enable-ra = true;
+          option-data = [
+            { name = "domain-name-servers"; data = "8.8.8.8, 8.8.4.4"; }
+          ];
+
+          subnet4 = [
+            # Main subnet.
+            {
+              id = 1;
+              interface = cfg.downstreamBridge;
+              subnet = "${cfg.homenetGatewayIp4}/${toString cfg.homenetIp4Cidr}";
+              pools = [ { pool = "${cfg.homenetDhcp4Start} - ${cfg.homenetDhcp4End}"; } ];
+              reservations = dhcp4Reservations;
+              option-data = [ { name = "routers"; data = cfg.homenetGatewayIp4; } ];
+            }
+
+            # IoT subnet.
+            {
+              id = 66;
+              interface = "iot";
+              subnet = "192.168.66.0/24";
+              pools = [ { pool = "192.168.66.50 - 192.168.66.200"; } ];
+              option-data = [ { name = "routers"; data = "192.168.66.254"; } ];
+            }
+
+            # Public subnet.
+            {
+              id = 99;
+              interface = "pub";
+              subnet = "192.168.99.0/24";
+              pools = [ { pool = "192.168.99.50 - 192.168.99.200"; } ];
+              option-data = [ { name = "routers"; data = "192.168.99.254"; } ];
+            }
+          ];
+        };
+      };
+
+      dhcp6 = {
+        enable = true;
+        settings = {
+          interfaces-config.interfaces = [ cfg.downstreamBridge "iot" "pub" ];
+
+          lease-database = {
+            type = "memfile";
+            persist = true;
+            name = "/var/lib/kea/dhcp6.leases";
+          };
+
+          option-data = [
+            { name = "dns-servers"; data = "2001:4860:4860::8888, 2001:4860:4860::8844"; }
+          ];
+
+          subnet6 = [
+            # Main subnet.
+            {
+              id = 1;
+              interface = cfg.downstreamBridge;
+              subnet = "${cfg.homenetIp6Prefix}0::/64";
+              pools = [ { pool = "${cfg.homenetIp6Prefix}0::ff00 - ${cfg.homenetIp6Prefix}0::ffff"; }];
+              reservations = dhcp6Reservations;
+            }
+
+            # TODO: Public and IoT networks.
+          ];
+        };
       };
     };
   };
