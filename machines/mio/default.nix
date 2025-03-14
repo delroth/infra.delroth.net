@@ -13,6 +13,8 @@ in
   my.networking.externalInterface = "eth0";
   my.networking.sshPublicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUNMTlFVdjFDNEZMTk5EcjRodEhLOXluSHJTRUJFdUpwdHRQQ00rSjlkMHAgcm9vdEBuaXhvcwo=";
 
+  systemd.network.networks."99-ethernet-default-dhcp".dhcpV6Config.DUIDType = "link-layer";
+
   my.roles = {
     infra-dev-machine.enable = true;
     nix-builder.enable = true;

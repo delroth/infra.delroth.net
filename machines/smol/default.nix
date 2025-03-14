@@ -44,6 +44,12 @@ in
   networking.useDHCP = false;
   networking.interfaces.enp0s2.useDHCP = true;
 
+  # QNAP didn't bother registering OUIs for the MAC address burned into the
+  # NIC, which means they're not considered global. This causes Kea to ignore
+  # the LL addresses when trying to locate the MAC address to match the DHCP
+  # reservation. Change DUID type to one that is MAC based to simplify.
+  systemd.network.networks."40-enp0s2".dhcpV6Config.DUIDType = "link-layer";
+
   # ZFS configuration.
   boot.supportedFilesystems = [ "zfs" ];
   fileSystems."/data" = {
