@@ -33,7 +33,7 @@ let
           map
             (port: {
               sourcePort = port;
-              destination = "${cfg.homenetIp4}${toString node.ipSuffix}";
+              destination = "192.168.${toString cfg.mainSubnet}.${toString node.ipSuffix}";
             })
             node."${mapName}"
         )
@@ -58,14 +58,14 @@ let
         mac = info.mac;
         ip = info.ip;
       })
-      cfg.homenetExtraHosts;
+      secrets.homenet.extraHosts;
 
   dhcp4Reservations =
     builtins.map
       (
         info: {
           hw-address = info.mac;
-          ip-address = "${cfg.homenetIp4}${toString info.ip}";
+          ip-address = "192.168.${toString cfg.mainSubnet}.${toString info.ip}";
           hostname = info.name;
         }
       )
@@ -110,32 +110,6 @@ in
       description = "Interface (usually a bridge) used as the downstream network for the gateway.";
     };
 
-    homenetGatewayIp4 = mkOption {
-      type = types.str;
-      description = "IPv4 address used as the internal gateway IP.";
-    };
-
-    homenetIp4 = mkOption {
-      type = types.str;
-      description = "IPv4 network used as the internal gateway network.";
-      example = "192.168.1.";
-    };
-
-    homenetIp4Cidr = mkOption {
-      type = types.int;
-      description = "CIDR of the IPv4 network used as the internal gateway network.";
-    };
-
-    homenetDhcp4Start = mkOption {
-      type = types.str;
-      description = "First IPv4 that can be allocated as dynamic DHCPv4 address.";
-    };
-
-    homenetDhcp4End = mkOption {
-      type = types.str;
-      description = "Last IPv4 that can be allocated as dynamic DHCPv4 address.";
-    };
-
     homenetIp6Prefix = mkOption {
       type = types.str;
       description = "IPv6 prefix allocated to the home network.";
@@ -147,19 +121,19 @@ in
       description = "CIDR of the IPv6 prefix allocated to the home network.";
     };
 
-    homenetExtraHosts = mkOption {
-      type = types.attrs;
-      description = "Extra hosts to include in the home network configuration for DNS / DHCP.";
-      example = {
-        host1 = {
-          mac = "11:22:33:44:55:66";
-          ipSuffix = 42;
-        };
-        host2 = {
-          mac = "1a:2a:3a:4a:5a:6a";
-          ipSuffix = 51;
-        };
-      };
+    mainSubnet = mkOption {
+      type = types.int;
+      description = "Subnet id of the main privileged subnet.";
+    };
+
+    iotSubnet = mkOption {
+      type = types.int;
+      description = "Subnet id of the IoT subnet.";
+    };
+
+    pubSubnet = mkOption {
+      type = types.int;
+      description = "Subnet id of the public subnet.";
     };
   };
 
@@ -173,20 +147,20 @@ in
     networking.interfaces."${cfg.downstreamBridge}" = {
       ipv4.addresses = [
         {
-          address = cfg.homenetGatewayIp4;
-          prefixLength = cfg.homenetIp4Cidr;
+          address = "192.168.${toString cfg.mainSubnet}.254";
+          prefixLength = 24;
         }
       ];
     };
 
     networking.vlans.iot = {
-      id = 66;
+      id = cfg.iotSubnet;
       interface = cfg.downstreamBridge;
     };
     networking.interfaces.iot = {
       ipv4.addresses = [
         {
-          address = "192.168.66.254";
+          address = "192.168.${toString cfg.iotSubnet}.254";
           prefixLength = 24;
         }
       ];
@@ -195,13 +169,13 @@ in
     systemd.network.config.routeTables.pub = 99;
 
     networking.vlans.pub = {
-      id = 99;
+      id = cfg.pubSubnet;
       interface = cfg.downstreamBridge;
     };
     networking.interfaces.pub = {
       ipv4.addresses = [
         {
-          address = "192.168.99.254";
+          address = "192.168.${toString cfg.pubSubnet}.254";
           prefixLength = 24;
         }
       ];
@@ -450,30 +424,30 @@ in
           subnet4 = [
             # Main subnet.
             {
-              id = 1;
+              id = cfg.mainSubnet;
               interface = cfg.downstreamBridge;
-              subnet = "${cfg.homenetGatewayIp4}/${toString cfg.homenetIp4Cidr}";
-              pools = [ { pool = "${cfg.homenetDhcp4Start} - ${cfg.homenetDhcp4End}"; } ];
+              subnet = "192.168.${toString cfg.mainSubnet}.0/24";
+              pools = [ { pool = "192.168.${toString cfg.mainSubnet}.100 - 192.168.${toString cfg.mainSubnet}.200"; } ];
               reservations = dhcp4Reservations;
-              option-data = [ { name = "routers"; data = cfg.homenetGatewayIp4; } ];
+              option-data = [ { name = "routers"; data = "192.168.${toString cfg.mainSubnet}.254"; } ];
             }
 
             # IoT subnet.
             {
-              id = 66;
+              id = cfg.iotSubnet;
               interface = "iot";
-              subnet = "192.168.66.0/24";
-              pools = [ { pool = "192.168.66.50 - 192.168.66.200"; } ];
-              option-data = [ { name = "routers"; data = "192.168.66.254"; } ];
+              subnet = "192.168.${toString cfg.iotSubnet}.0/24";
+              pools = [ { pool = "192.168.${toString cfg.iotSubnet}.50 - 192.168.${toString cfg.iotSubnet}.200"; } ];
+              option-data = [ { name = "routers"; data = "192.168.${toString cfg.iotSubnet}.254"; } ];
             }
 
             # Public subnet.
             {
-              id = 99;
+              id = cfg.pubSubnet;
               interface = "pub";
-              subnet = "192.168.99.0/24";
-              pools = [ { pool = "192.168.99.50 - 192.168.99.200"; } ];
-              option-data = [ { name = "routers"; data = "192.168.99.254"; } ];
+              subnet = "192.168.${toString cfg.pubSubnet}.0/24";
+              pools = [ { pool = "192.168.${toString cfg.pubSubnet}.50 - 192.168.${toString cfg.pubSubnet}.200"; } ];
+              option-data = [ { name = "routers"; data = "192.168.${toString cfg.pubSubnet}.254"; } ];
             }
           ];
         };
@@ -497,7 +471,7 @@ in
           subnet6 = [
             # Main subnet.
             {
-              id = 1;
+              id = cfg.mainSubnet;
               interface = cfg.downstreamBridge;
               subnet = "${cfg.homenetIp6Prefix}0::/64";
               pools = [ { pool = "${cfg.homenetIp6Prefix}0::ff00 - ${cfg.homenetIp6Prefix}0::ffff"; }];

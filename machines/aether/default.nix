@@ -27,13 +27,12 @@ in
       upstreamIface = "upstream";
       downstreamBridge = "downstream";
 
-      homenetGatewayIp4 = "192.168.1.254";
-      homenetIp4 = "192.168.1.";
-      homenetIp4Cidr = 24;
-      homenetDhcp4Start = "192.168.1.100";
-      homenetDhcp4End = "192.168.1.200";
+      homenetIp6Prefix = "2a02:168:6426:";
+      homenetIp6Cidr = 48;
 
-      homenetExtraHosts = secrets.homenet.extraHosts;
+      mainSubnet = 1;
+      iotSubnet = 66;
+      pubSubnet = 99;
     };
     nix-builder.enable = true;
     snmp-exporter.enable = true;
