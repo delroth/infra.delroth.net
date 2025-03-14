@@ -322,6 +322,13 @@ in
 
             ip protocol { tcp, udp } flow offload @f;
 
+            # Never try to forward link-local traffic. It is bound to fail. I'm
+            # not sure why Linux even tries to allow this.
+            #
+            # https://mastodon.delroth.net/@delroth/114161473282235619
+            ip saddr 169.254.0.0/16 drop
+            ip daddr 169.254.0.0/16 drop
+
             iifname . oifname {
               "${cfg.downstreamBridge}" . "${cfg.downstreamBridge}",
               "${cfg.downstreamBridge}" . "${cfg.upstreamIface}",
