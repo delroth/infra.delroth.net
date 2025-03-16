@@ -376,9 +376,14 @@ in
             type nat hook postrouting priority srcnat
             policy accept
 
+            # Standard v4 NAT.
             iifname "${cfg.downstreamBridge}" oifname "${cfg.upstreamIface}" masquerade
             iifname "${cfg.downstreamBridge}" oifname "wg-pub" masquerade
             iifname "pub" oifname "wg-pub" masquerade
+
+            # Also NAT from homenet to IoT to 1. mask internal devices; 2.
+            # allow control of devices that check source IP.
+            iifname "${cfg.downstreamBridge}" oifname "iot" masquerade
           }
         }
       '';
