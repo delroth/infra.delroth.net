@@ -186,6 +186,15 @@ in
             ];
           })
 
+          (snmpTargets {
+            job_name = "snmp_printer";
+            scrape_interval = "1m";
+            modules = [ "printer_mib" ];
+            targets = [
+              "192.168.66.101" # brother-printer
+            ];
+          })
+
           (baseScrapeConfig // {
             job_name = "hass";
             scrape_interval = "1m";
