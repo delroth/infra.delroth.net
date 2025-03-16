@@ -22,6 +22,8 @@ in
 
       extraComponents = [
         "aranet"
+        "lifx"
+        "xiaomi_miio"
       ];
 
       config = {
