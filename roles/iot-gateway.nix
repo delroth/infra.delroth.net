@@ -20,6 +20,10 @@ in
     services.home-assistant = {
       enable = true;
 
+      extraComponents = [
+        "aranet"
+      ];
+
       config = {
         default_config = {};
 
@@ -36,8 +40,6 @@ in
           # Handled separately.
           requires_auth = false;
         };
-
-        sensor = [];
       };
     };
 
