@@ -60,12 +60,12 @@ let
       })
       secrets.homenet.extraHosts;
 
-  dhcp4Reservations =
+  dhcp4ReservationsForNet = net:
     builtins.map
       (
         info: {
           hw-address = info.mac;
-          ip-address = "192.168.${toString cfg.mainSubnet}.${toString info.ip}";
+          ip-address = "192.168.${toString net}.${toString info.ip}";
           hostname = info.name;
         }
       )
@@ -428,7 +428,7 @@ in
               interface = cfg.downstreamBridge;
               subnet = "192.168.${toString cfg.mainSubnet}.0/24";
               pools = [ { pool = "192.168.${toString cfg.mainSubnet}.100 - 192.168.${toString cfg.mainSubnet}.200"; } ];
-              reservations = dhcp4Reservations;
+              reservations = dhcp4ReservationsForNet cfg.mainSubnet;
               option-data = [ { name = "routers"; data = "192.168.${toString cfg.mainSubnet}.254"; } ];
             }
 
@@ -437,7 +437,8 @@ in
               id = cfg.iotSubnet;
               interface = "iot";
               subnet = "192.168.${toString cfg.iotSubnet}.0/24";
-              pools = [ { pool = "192.168.${toString cfg.iotSubnet}.50 - 192.168.${toString cfg.iotSubnet}.200"; } ];
+              pools = [ { pool = "192.168.${toString cfg.iotSubnet}.100 - 192.168.${toString cfg.iotSubnet}.200"; } ];
+              reservations = dhcp4ReservationsForNet cfg.iotSubnet;
               option-data = [ { name = "routers"; data = "192.168.${toString cfg.iotSubnet}.254"; } ];
             }
 
@@ -446,7 +447,8 @@ in
               id = cfg.pubSubnet;
               interface = "pub";
               subnet = "192.168.${toString cfg.pubSubnet}.0/24";
-              pools = [ { pool = "192.168.${toString cfg.pubSubnet}.50 - 192.168.${toString cfg.pubSubnet}.200"; } ];
+              pools = [ { pool = "192.168.${toString cfg.pubSubnet}.100 - 192.168.${toString cfg.pubSubnet}.200"; } ];
+              reservations = dhcp4ReservationsForNet cfg.pubSubnet;
               option-data = [ { name = "routers"; data = "192.168.${toString cfg.pubSubnet}.254"; } ];
             }
           ];
