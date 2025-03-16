@@ -21,6 +21,8 @@ in
       enable = true;
 
       config = {
+        default_config = {};
+
         http = {
           server_host = "127.0.0.1";
           server_port = port;
@@ -29,36 +31,17 @@ in
           trusted_proxies = [ "127.0.0.1" ];
         };
         frontend = { };
-        history = { };
 
-        netatmo = {
-          api_key = secrets.iot.netatmo.api_key;
-          secret_key = secrets.iot.netatmo.secret_key;
-          username = secrets.iot.netatmo.username;
-          password = secrets.iot.netatmo.password;
+        prometheus = {
+          # Handled separately.
+          requires_auth = false;
         };
-        prometheus = { };
 
-        sensor = [
-          {
-            platform = "fitbit";
-            monitored_resources = [
-              "activities/calories"
-              "activities/distance"
-              "activities/floors"
-              "activities/heart"
-              "activities/steps"
-              "body/weight"
-              "devices/battery"
-              "sleep/efficiency"
-            ];
-          }
-          { platform = "netatmo"; }
-        ];
+        sensor = [];
       };
     };
 
-    services.nginx.virtualHosts."${hostname}" = {
+    services.nginx.virtualHosts."${hostname}" = rec {
       forceSSL = true;
       enableACME = true;
 
@@ -74,6 +57,14 @@ in
           proxy_buffering off;
         '';
       };
+
+      locations."/api/prometheus" = locations."/" // {
+        basicAuth = {
+          prometheus = secrets.nodeMetricsKey;
+        };
+      };
     };
+
+    hardware.bluetooth.enable = true;
   };
 }

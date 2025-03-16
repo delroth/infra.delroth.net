@@ -23,6 +23,7 @@ in
     archiveteam-warrior.enable = true;
     blackbox-prober.enable = true;
     fiber7-prober.enable = true;
+    iot-gateway.enable = true;
     nix-builder.enable = true;
     syncthing-relay.enable = true;
     tor-relay.enable = true;

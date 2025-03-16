@@ -186,14 +186,12 @@ in
             ];
           })
 
-          {
+          (baseScrapeConfig // {
             job_name = "hass";
             scrape_interval = "1m";
-            scheme = "https";
             metrics_path = "/api/prometheus";
-            bearer_token = secrets.iot.token;
             static_configs = [ { targets = [ "hass.delroth.net:443" ]; } ];
-          }
+          })
         ];
 
       alertmanager = {
