@@ -332,6 +332,7 @@ in
               "${cfg.downstreamBridge}" . "${cfg.upstreamIface}",
               "${cfg.downstreamBridge}" . "wg-pub",
               "${cfg.downstreamBridge}" . "pub",
+              "${cfg.downstreamBridge}" . "iot",
               "pub" .  "pub",
               "pub" . "wg-pub"
             } accept
