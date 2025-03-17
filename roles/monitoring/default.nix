@@ -80,6 +80,7 @@ in
               job_name,
               scrape_interval,
               modules,
+              auth,
               targets,
             }:
             let
@@ -91,6 +92,7 @@ in
               scrape_interval = scrape_interval;
               metrics_path = "/snmp/snmp";
               params = {
+                auth = [ auth ];
                 module = modules;
               };
               static_configs =
@@ -181,6 +183,7 @@ in
             job_name = "snmp_homenet";
             scrape_interval = "1m";
             modules = [ "if_mib" ];
+            auth = "public_v2";
             targets = [
               "192.168.1.52" # sw-living-room
             ];
@@ -190,8 +193,9 @@ in
             job_name = "snmp_printer";
             scrape_interval = "1m";
             modules = [ "printer_mib" ];
+            auth = "public_v1";
             targets = [
-              "192.168.66.101" # brother-printer
+              "192.168.1.65" # brother-printer
             ];
           })
 
