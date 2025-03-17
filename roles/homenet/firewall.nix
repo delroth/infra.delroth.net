@@ -142,6 +142,10 @@ in
             type nat hook prerouting priority dstnat
             policy accept
 
+            # SNI Proxy redirects.
+            iifname != "lo" tcp dport 443 dnat to 127.0.0.1:4443
+            iifname != "lo" udp dport 443 dnat to 127.0.0.1:4443
+
             ${
               builtins.concatStringsSep "\n" (
                 map

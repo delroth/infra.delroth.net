@@ -10,6 +10,7 @@
     ./ifaces.nix
     ./igmp.nix
     ./mdns.nix
+    ./sniproxy.nix
   ];
 
   options.my.roles.homenet-gateway = with lib; {
