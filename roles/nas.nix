@@ -31,6 +31,8 @@ in
       isSystemUser = true;
     };
 
+    services.avahi.enable = true;
+
     services.samba = {
       enable = true;
       winbindd.enable = false;
