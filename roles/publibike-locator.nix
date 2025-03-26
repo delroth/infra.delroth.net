@@ -36,6 +36,27 @@ in
         };
       };
 
+      # Used to bypass CORS.
+      "velospot-api.delroth.net" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/customer/public/api" = {
+          # Don't use the proxyPass option to avoid adding the recommended
+          # proxy headers. We explicitly don't want them as they will re-add
+          # Host and Origin with wrong values.
+          extraConfig = ''
+            proxy_pass https://velospot.info:443;
+            proxy_set_header Host velospot.info;
+            proxy_set_header Origin "";
+            proxy_set_header Referer "";
+
+            if ($http_origin ~* "^https://(publibike[.])?delroth[.]net$") {
+              add_header Access-Control-Allow-Origin "$http_origin";
+            }
+          '';
+        };
+      };
+
       "delroth.net" = {
         forceSSL = true;
         enableACME = true;
