@@ -57,6 +57,9 @@ in
       };
     };
 
+    # Bump the open files limit, too low normally.
+    systemd.services.transmission.serviceConfig.LimitNOFILE = 1000000;
+
     systemd.services.protonvpn-pmp-transmission = {
       description = "ProtonVPN PMP Transmission notifier";
       after = [ "network.target" ];
