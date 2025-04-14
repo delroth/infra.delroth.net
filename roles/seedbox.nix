@@ -15,6 +15,14 @@ let
   transmissionRpcPort = 9091;
 
   downloadBase = "/data/seedbox";
+
+  verifyScript = pkgs.runCommand "verifyScript" {} ''
+    cat >$out <<EOF
+    #!/bin/sh
+    exec transmission-remote -n delroth:${secrets.transmissionPassword} -t $TR_TORRENT_ID --verify
+    EOF
+    chmod +x $out
+  '';
 in
 {
   options.my.roles.seedbox = with lib; { enable = mkEnableOption "Seedbox"; };
@@ -48,6 +56,10 @@ in
         download-queue-size = 25;
         peer-limit-global = 500;
         upload-slots-per-torrent = 16;
+
+        # Verify after download completion.
+        script-torrent-done-enabled = true;
+        script-torrent-done-filename = "${verifyScript}";
 
         rpc-enabled = true;
         rpc-port = transmissionRpcPort;
