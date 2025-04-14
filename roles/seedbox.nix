@@ -44,6 +44,11 @@ in
         download-dir = "${downloadBase}/default";
         incomplete-dir = "${downloadBase}/incomplete";
 
+        cache-size-mb = 256;
+        download-queue-size = 25;
+        peer-limit-global = 500;
+        upload-slots-per-torrent = 16;
+
         rpc-enabled = true;
         rpc-port = transmissionRpcPort;
         rpc-authentication-required = true;
