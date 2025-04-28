@@ -21,6 +21,7 @@
     ./nas.nix
     ./nas-client.nix
     ./nix-builder.nix
+    ./print-server.nix
     ./publibike-locator.nix
     ./repology-notifier.nix
     ./s3.nix

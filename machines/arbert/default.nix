@@ -25,6 +25,7 @@ in
     fiber7-prober.enable = true;
     iot-gateway.enable = true;
     nix-builder.enable = true;
+    print-server.enable = true;
     syncthing-relay.enable = true;
     tor-relay.enable = true;
     wireguard-peer.enable = true;
@@ -54,4 +55,18 @@ in
 
   services.syncthing.relay.globalRateBps = null;
   services.syncthing.relay.perSessionRateBps = null;
+
+  # Printer configuration.
+  hardware.printers = {
+    ensureDefaultPrinter = "Brother_HL-L2400DW";
+    ensurePrinters = [
+      {
+        name = "Brother_HL-L2400DW";
+        location = "Office";
+        model = "everywhere";
+        deviceUri = "ipp://192.168.66.65:631";
+        ppdOptions.PageSize = "A4";
+      }
+    ];
+  };
 }

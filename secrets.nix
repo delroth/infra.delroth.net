@@ -37,6 +37,7 @@ else
     nixCache = import ./secrets/nix-cache.nix;
     nodeMetricsKey = builtins.readFile ./secrets/node-metrics-key;
     pkgs = import ./secrets/pkgs;
+    printKey = builtins.readFile ./secrets/print-key;
     randstructSeed = builtins.readFile ./secrets/randstruct-seed;
     repologyNotifierGhToken = builtins.readFile ./secrets/repology-notifier-gh-token;
     roles = import ./secrets/roles;
