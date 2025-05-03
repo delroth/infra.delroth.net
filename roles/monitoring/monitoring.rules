@@ -74,6 +74,15 @@ groups:
       summary: "{{ $labels.instance }} {{ $labels.chip }} HDD temperature too high"
       description: "The temperature of {{ $labels.chip }} on {{ $labels.instance }} is above 45°C."
 
+  - alert: ZpoolBadState
+    expr: node_zfs_zpool_state{state!~"online|removed"} > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      summary: "{{ $labels.instance }} {{ $labels.zpool }} in state {{ $labels.state }}"
+      description: "The zpool {{ $labels.zpool }} on {{ $labels.instance }} is in bad state {{ $labels.state }}."
+
   - alert: ThermometerBatteryLow
     expr: rtl_433_battery{model="Ambientweather-F007TH",channel=~"[123]"} == 0
     for: 15m
