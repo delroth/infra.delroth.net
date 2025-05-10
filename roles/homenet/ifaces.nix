@@ -82,6 +82,7 @@ in
           PublicKey = secrets.homenet.public-vpn.public-key;
           Endpoint = secrets.homenet.public-vpn.endpoint;
           AllowedIPs = "0.0.0.0/0";
+          PersistentKeepalive = 30;
         }
       ];
     };
