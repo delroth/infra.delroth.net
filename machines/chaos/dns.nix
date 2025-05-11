@@ -33,6 +33,14 @@ in
           secret "${attrs.secret}";
         };
       '') secrets.dnsupdate)}
+
+      dnssec-policy "delroth-net" {
+        keys {
+          ksk key-directory lifetime unlimited algorithm 13;
+          zsk key-directory lifetime unlimited algorithm 13;
+        };
+        nsec3param;
+      };
     '';
 
     zones = [
@@ -43,7 +51,7 @@ in
         slaves = secondaryDnsServers;
         extraConfig = ''
           key-directory "/etc/bind/keys";
-          auto-dnssec maintain;
+          dnssec-policy "delroth-net";
           inline-signing yes;
 
           update-policy {
