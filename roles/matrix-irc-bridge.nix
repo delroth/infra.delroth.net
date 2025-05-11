@@ -23,6 +23,12 @@ in
       "/var/lib/heisenbridge/registration.yml"
     ];
 
+    # To prevent ordering issues on startup...
+    systemd.services.heisenbridge.serviceConfig = {
+      Restart = "on-failure";
+      RestartSec = "30s";
+    };
+
     networking.firewall.allowedTCPPorts = [ config.services.heisenbridge.identd.port ];
 
     services.nginx = {
