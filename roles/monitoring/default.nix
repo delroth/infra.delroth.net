@@ -195,7 +195,7 @@ in
             modules = [ "printer_mib" ];
             auth = "public_v1";
             targets = [
-              "192.168.1.65" # brother-printer
+              "192.168.66.65" # brother-printer
             ];
           })
 
