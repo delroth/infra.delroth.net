@@ -44,6 +44,7 @@ else
     s3 = import ./secrets/s3.nix;
     seedbox-vpn = import ./secrets/seedbox-vpn.nix;
     shadowHash = builtins.readFile ./secrets/shadow-hash;
+    snmpWifiApPassword = builtins.readFile ./secrets/snmp-wifi-ap-password;
     sso = {
       users = import ./secrets/sso-users.nix;
       groups = import ./secrets/sso-groups.nix;
