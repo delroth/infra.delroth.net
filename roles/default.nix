@@ -5,6 +5,7 @@
     ./blackbox-prober.nix
     ./fiber7-prober.nix
     ./fifoci-worker.nix
+    ./foundryvtt.nix
     ./gaming-client.nix
     ./homenet
     ./infra-dev-machine.nix

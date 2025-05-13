@@ -47,6 +47,7 @@ in
 
   my.roles = {
     blackbox-prober.enable = true;
+    foundryvtt.enable = true;
     irc-client.enable = true;
     mastodon-server.enable = true;
     matrix-client.enable = true;
