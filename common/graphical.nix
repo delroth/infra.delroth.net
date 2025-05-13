@@ -40,6 +40,8 @@
       windowManager.i3.enable = true;
     };
 
+    programs.i3lock.enable = true;
+
     services.displayManager.sddm.enable = true;
 
     services.libinput.enable = true;
