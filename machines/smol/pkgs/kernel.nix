@@ -1,4 +1,4 @@
-{ buildLinux, fetchFromGitHub, ... }@args:
+{ buildLinux, fetchFromGitHub, fetchpatch, ... }@args:
 
 buildLinux (
   args
@@ -14,7 +14,12 @@ buildLinux (
     };
 
     defconfig = "qnap-tsx32x_defconfig";
-    kernelPatches = [ ];
+    kernelPatches = [
+      {
+        name = "drm-panic-rust-compile-fix";
+        patch = ./drm-panic-rust-compile-fix.patch;
+      }
+    ];
     ignoreConfigErrors = true;
   }
 )

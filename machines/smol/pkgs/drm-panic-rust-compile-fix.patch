@@ -1,0 +1,15 @@
+diff --git a/drivers/gpu/drm/drm_panic_qr.rs b/drivers/gpu/drm/drm_panic_qr.rs
+index ef2d490965ba..39ddb431b361 100644
+--- a/drivers/gpu/drm/drm_panic_qr.rs
++++ b/drivers/gpu/drm/drm_panic_qr.rs
+@@ -931,7 +932,7 @@ fn draw_all(&mut self, data: impl Iterator<Item = u8>) {
+ /// They must remain valid for the duration of the function call.
+ #[no_mangle]
+ pub unsafe extern "C" fn drm_panic_qr_generate(
+-    url: *const i8,
++    url: *const core::ffi::c_char,
+     data: *mut u8,
+     data_len: usize,
+     data_size: usize,
+-- 
+2.48.1
