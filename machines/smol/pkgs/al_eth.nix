@@ -11,8 +11,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "delroth";
     repo = "al_eth-standalone";
-    rev = "master";
-    hash = "sha256-SkA+C2ltnGLEPZqKS1PPPPW+6uwRg9BVaKdHAyY/jhY";
+    rev = "7dd31aa5fca0e2dedb5d4048ab9e87025b972059";
+    hash = "sha256-oqXiqJ3/8rdiUQgjKjcDYj2s69edT0w5gH2JBjIenKs=";
   };
 
   nativeBuildInputs = kernel.moduleBuildDependencies;

@@ -11,8 +11,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "delroth";
     repo = "al_thermal-standalone";
-    rev = "master";
-    hash = "sha256-xGnH6g47azBZ0174QB1xSZ3EH7oqZ8WpUo+z1sd4phw";
+    rev = "0980089917f31cb11f2bf47f9796ab72d978848b";
+    hash = "sha256-8CgOjsb7WVga84nD6YRe1OWHqjkILBPGDMt9XX+jTv8=";
   };
 
   nativeBuildInputs = kernel.moduleBuildDependencies;
