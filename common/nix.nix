@@ -20,7 +20,7 @@ in
   };
 
   nix.extraOptions = ''
-    experimental-features = nix-command flakes
+    experimental-features = nix-command flakes coerce-integers
   '';
 
   nix.settings = {
