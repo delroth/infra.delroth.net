@@ -7,12 +7,12 @@ let
   wgcfg = secrets.wireguard.cfg;
 
   lowellPeer = secrets.wireguard.peers.lowell.clientNum;
-  lowellVpn4 = "${wgcfg.subnet4}.${toString lowellPeer}";
-  lowellVpn6 = "${wgcfg.subnet6}::${toString lowellPeer}";
+  lowellVpn4 = "${wgcfg.subnet4}.${lowellPeer}";
+  lowellVpn6 = "${wgcfg.subnet6}::${lowellPeer}";
 
   chaosPeer = secrets.wireguard.peers.chaos.clientNum;
-  chaosVpn4 = "${wgcfg.subnet4}.${toString chaosPeer}";
-  chaosVpn6 = "${wgcfg.subnet6}::${toString chaosPeer}";
+  chaosVpn4 = "${wgcfg.subnet4}.${chaosPeer}";
+  chaosVpn6 = "${wgcfg.subnet6}::${chaosPeer}";
 in
 {
   networking.useDHCP = false;

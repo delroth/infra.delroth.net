@@ -33,22 +33,22 @@ in {
 
         replication_factor = 1;
 
-        rpc_bind_addr = "[::]:${toString rpcPort}";
+        rpc_bind_addr = "[::]:${rpcPort}";
         rpc_secret = secrets.s3.rpc_secret;
 
         s3_api = {
-          api_bind_addr = "127.0.0.1:${toString apiPort}";
+          api_bind_addr = "127.0.0.1:${apiPort}";
           s3_region = "garage";
           root_domain = "s3.delroth.net";
         };
 
         s3_web = {
-          bind_addr = "127.0.0.1:${toString webPort}";
+          bind_addr = "127.0.0.1:${webPort}";
           root_domain = "s3-web.delroth.net";
         };
 
         admin = {
-          api_bind_addr = "127.0.0.1:${toString adminPort}";
+          api_bind_addr = "127.0.0.1:${adminPort}";
           admin_token = secrets.s3.admin_token;
         };
       };
@@ -82,7 +82,7 @@ in {
         serverAliases = [ "~^([^.]*)[.]s3[.]delroth[.]net$" ];
 
         locations."/" = {
-          proxyPass = "http://127.0.0.1:${toString apiPort}";
+          proxyPass = "http://127.0.0.1:${apiPort}";
           extraConfig = ''
             proxy_max_temp_file_size 0;
             client_max_body_size 5G;
@@ -97,7 +97,7 @@ in {
         serverAliases = [ "~^([^.]*)[.]s3-web[.]delroth[.]net$" ];
 
         locations."/" = {
-          proxyPass = "http://127.0.0.1:${toString webPort}";
+          proxyPass = "http://127.0.0.1:${webPort}";
         };
       };
 
@@ -107,7 +107,7 @@ in {
         forceSSL = true;
 
         locations."/" = {
-          proxyPass = "http://127.0.0.1:${toString webPort}";
+          proxyPass = "http://127.0.0.1:${webPort}";
           extraConfig = ''
             proxy_set_header Host bagel-cache.s3-web.delroth.net;
           '';

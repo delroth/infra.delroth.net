@@ -37,7 +37,7 @@ in
       virtualHosts."matrix-irc.delroth.net" = {
         forceSSL = true;
         enableACME = true;
-        locations."/".proxyPass = "http://127.0.0.1:${toString config.services.heisenbridge.port}";
+        locations."/".proxyPass = "http://127.0.0.1:${config.services.heisenbridge.port}";
       };
     };
   };

@@ -96,7 +96,7 @@ in
         forwardSockets = builtins.listToAttrs (
           map
             (port: {
-              name = "wireguard-netns-forward-${toString port}";
+              name = "wireguard-netns-forward-${port}";
               value = {
                 wantedBy = [ "sockets.target" ];
                 socketConfig.ListenStream = port;
@@ -108,14 +108,14 @@ in
         forwardServices = builtins.listToAttrs (
           map
             (port: rec {
-              name = "wireguard-netns-forward-${toString port}";
+              name = "wireguard-netns-forward-${port}";
               value = {
                 requires = [ "${name}.socket" ];
                 after = [ "${name}.socket" ];
                 unitConfig.JoinsNamespaceOf = "wireguard-netns.service";
                 serviceConfig = {
                   PrivateNetwork = true;
-                  ExecStart = "${pkgs.systemd}/lib/systemd/systemd-socket-proxyd 127.0.0.1:${toString port}";
+                  ExecStart = "${pkgs.systemd}/lib/systemd/systemd-socket-proxyd 127.0.0.1:${port}";
                 };
               };
             })

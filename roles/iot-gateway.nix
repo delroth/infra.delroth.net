@@ -50,7 +50,7 @@ in
       enableACME = true;
 
       locations."/" = {
-        proxyPass = "http://localhost:${toString port}";
+        proxyPass = "http://localhost:${port}";
         extraConfig = ''
           proxy_http_version 1.1;
           proxy_redirect http:// https://;

@@ -45,7 +45,7 @@ let
       (
         info: {
           hw-address = info.mac;
-          ip-address = "192.168.${toString net}.${toString info.ip}";
+          ip-address = "192.168.${net}.${info.ip}";
           hostname = info.name;
         }
       )
@@ -56,7 +56,7 @@ let
       (
         info: {
           hw-address = info.mac;
-          ip-addresses = [ "${cfg.homenetIp6Prefix}0::${toString info.ip}" ];
+          ip-addresses = [ "${cfg.homenetIp6Prefix}0::${info.ip}" ];
           hostname = info.name;
         }
       )
@@ -92,30 +92,30 @@ in
             {
               id = cfg.mainSubnet;
               interface = cfg.downstreamBridge;
-              subnet = "192.168.${toString cfg.mainSubnet}.0/24";
-              pools = [ { pool = "192.168.${toString cfg.mainSubnet}.100 - 192.168.${toString cfg.mainSubnet}.200"; } ];
+              subnet = "192.168.${cfg.mainSubnet}.0/24";
+              pools = [ { pool = "192.168.${cfg.mainSubnet}.100 - 192.168.${cfg.mainSubnet}.200"; } ];
               reservations = dhcp4ReservationsForNet cfg.mainSubnet;
-              option-data = [ { name = "routers"; data = "192.168.${toString cfg.mainSubnet}.254"; } ];
+              option-data = [ { name = "routers"; data = "192.168.${cfg.mainSubnet}.254"; } ];
             }
 
             # IoT subnet.
             {
               id = cfg.iotSubnet;
               interface = "iot";
-              subnet = "192.168.${toString cfg.iotSubnet}.0/24";
-              pools = [ { pool = "192.168.${toString cfg.iotSubnet}.100 - 192.168.${toString cfg.iotSubnet}.200"; } ];
+              subnet = "192.168.${cfg.iotSubnet}.0/24";
+              pools = [ { pool = "192.168.${cfg.iotSubnet}.100 - 192.168.${cfg.iotSubnet}.200"; } ];
               reservations = dhcp4ReservationsForNet cfg.iotSubnet;
-              option-data = [ { name = "routers"; data = "192.168.${toString cfg.iotSubnet}.254"; } ];
+              option-data = [ { name = "routers"; data = "192.168.${cfg.iotSubnet}.254"; } ];
             }
 
             # Public subnet.
             {
               id = cfg.pubSubnet;
               interface = "pub";
-              subnet = "192.168.${toString cfg.pubSubnet}.0/24";
-              pools = [ { pool = "192.168.${toString cfg.pubSubnet}.100 - 192.168.${toString cfg.pubSubnet}.200"; } ];
+              subnet = "192.168.${cfg.pubSubnet}.0/24";
+              pools = [ { pool = "192.168.${cfg.pubSubnet}.100 - 192.168.${cfg.pubSubnet}.200"; } ];
               reservations = dhcp4ReservationsForNet cfg.pubSubnet;
-              option-data = [ { name = "routers"; data = "192.168.${toString cfg.pubSubnet}.254"; } ];
+              option-data = [ { name = "routers"; data = "192.168.${cfg.pubSubnet}.254"; } ];
             }
           ];
         };

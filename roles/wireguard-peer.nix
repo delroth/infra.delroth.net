@@ -31,9 +31,9 @@ in
           listenPort = port;
           privateKeyFile = "${pkgs.writeText "wireguard-pkey" secrets.wireguard.privateKeys."${machineName}"}";
           ips = [
-            "${wgcfg.subnet4}.${toString thisPeer.clientNum}/${toString wgcfg.mask4}"
+            "${wgcfg.subnet4}.${thisPeer.clientNum}/${wgcfg.mask4}"
             # Technically, should hex-convert clientNum... but holes are fine.
-            "${wgcfg.subnet6}::${toString thisPeer.clientNum}/${toString wgcfg.mask6}"
+            "${wgcfg.subnet6}::${thisPeer.clientNum}/${wgcfg.mask6}"
           ];
 
           peers =
@@ -43,12 +43,12 @@ in
                 {
                   inherit name;
                   allowedIPs = [
-                    "${wgcfg.subnet4}.${toString peer.clientNum}/32"
-                    "${wgcfg.subnet6}::${toString peer.clientNum}/128"
+                    "${wgcfg.subnet4}.${peer.clientNum}/32"
+                    "${wgcfg.subnet6}::${peer.clientNum}/128"
                   ];
                   publicKey = peer.key;
                 }
-                // lib.optionalAttrs (peer ? externalIp) { endpoint = "${peer.externalIp}:${toString port}"; }
+                // lib.optionalAttrs (peer ? externalIp) { endpoint = "${peer.externalIp}:${port}"; }
                 // lib.optionalAttrs (!(thisPeer ? externalIp)) { persistentKeepalive = 10; }
               )
               otherPeers;

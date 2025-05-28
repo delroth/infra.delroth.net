@@ -31,7 +31,7 @@ let
           map
             (port: {
               sourcePort = port;
-              destination = "192.168.${toString cfg.mainSubnet}.${toString node.ipSuffix}";
+              destination = "192.168.${cfg.mainSubnet}.${node.ipSuffix}";
             })
             node."${mapName}"
         )
@@ -50,7 +50,7 @@ let
   formatPortRangesList =
     l:
     let
-      strL = builtins.map (a: "${toString a.from}-${toString a.to}") l;
+      strL = builtins.map (a: "${a.from}-${a.to}") l;
     in
     (if builtins.length l == 0 then "" else ", ") + builtins.concatStringsSep ", " strL;
 in
@@ -151,7 +151,7 @@ in
                 map
                   (
                     e:
-                    ''iifname "${cfg.upstreamIface}" tcp dport ${toString e.sourcePort} dnat to ${e.destination}''
+                    ''iifname "${cfg.upstreamIface}" tcp dport ${e.sourcePort} dnat to ${e.destination}''
                   )
                   tcpPortMap
               )
@@ -162,7 +162,7 @@ in
                 map
                   (
                     e:
-                    ''ifname "${cfg.upstreamIface}" udp dport ${toString e.sourcePort} dnat to ${e.destination}''
+                    ''ifname "${cfg.upstreamIface}" udp dport ${e.sourcePort} dnat to ${e.destination}''
                   )
                   udpPortMap
               )

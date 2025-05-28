@@ -26,7 +26,7 @@ in
     networking.interfaces."${cfg.downstreamBridge}" = {
       ipv4.addresses = [
         {
-          address = "192.168.${toString cfg.mainSubnet}.254";
+          address = "192.168.${cfg.mainSubnet}.254";
           prefixLength = 24;
         }
       ];
@@ -39,7 +39,7 @@ in
     networking.interfaces.iot = {
       ipv4.addresses = [
         {
-          address = "192.168.${toString cfg.iotSubnet}.254";
+          address = "192.168.${cfg.iotSubnet}.254";
           prefixLength = 24;
         }
       ];
@@ -54,7 +54,7 @@ in
     networking.interfaces.pub = {
       ipv4.addresses = [
         {
-          address = "192.168.${toString cfg.pubSubnet}.254";
+          address = "192.168.${cfg.pubSubnet}.254";
           prefixLength = 24;
         }
       ];

@@ -240,7 +240,7 @@ in
       alertmanagers = [
         {
           static_configs = [
-            { targets = [ "${alertmanager.listenAddress}:${toString alertmanager.port}" ]; }
+            { targets = [ "${alertmanager.listenAddress}:${alertmanager.port}" ]; }
           ];
         }
       ];

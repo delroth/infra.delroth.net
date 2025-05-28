@@ -119,7 +119,7 @@
             };
 
             locations."/sso-auth" = {
-              proxyPass = "http://localhost:${toString sso.configuration.listen.port}/auth";
+              proxyPass = "http://localhost:${sso.configuration.listen.port}/auth";
               extraConfig = ''
                 internal;
 
@@ -154,7 +154,7 @@
               extraConfig = reverseProxyHeaders;
             };
           };
-        localReverseProxy = port: localReverseProxyAddr "127.0.0.1:${toString port}";
+        localReverseProxy = port: localReverseProxyAddr "127.0.0.1:${port}";
       in
       {
 

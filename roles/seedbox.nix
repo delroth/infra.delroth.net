@@ -84,7 +84,7 @@ in
       serviceConfig = {
         Type = "simple";
         DynamicUser = true;
-        ExecStart = "${pkgs.protonvpn-pmp-transmission}/bin/protonvpn-pmp-transmission --transmission_url http://delroth:${secrets.transmissionPassword}@127.0.0.1:${toString transmissionRpcPort} --pmp_gateway ${secrets.seedbox-vpn.gatewayIp4}";
+        ExecStart = "${pkgs.protonvpn-pmp-transmission}/bin/protonvpn-pmp-transmission --transmission_url http://delroth:${secrets.transmissionPassword}@127.0.0.1:${transmissionRpcPort} --pmp_gateway ${secrets.seedbox-vpn.gatewayIp4}";
       };
     };
 
@@ -118,7 +118,7 @@ in
       enableACME = true;
 
       locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString transmissionRpcPort}";
+        proxyPass = "http://127.0.0.1:${transmissionRpcPort}";
       };
     };
   };

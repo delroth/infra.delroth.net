@@ -29,7 +29,7 @@ let
         # TODO: Detect stuff like wildcards (e.g. s3).
         {
           hostname = vName;
-          ipv6 = "${cfg.homenetIp6Prefix}0::${toString node.my.homenet.ipSuffix}";
+          ipv6 = "${cfg.homenetIp6Prefix}0::${node.my.homenet.ipSuffix}";
         }
       ) node.services.nginx.virtualHosts
     ) homenetNodes

@@ -51,7 +51,7 @@
             (exporterName: exporter: {
               name = "/metrics/${exporterName}";
               value = {
-                proxyPass = "http://127.0.0.1:${toString exporter.port}/metrics";
+                proxyPass = "http://127.0.0.1:${exporter.port}/metrics";
               };
             })
             enabledExporters
@@ -60,7 +60,7 @@
             (exporterName: exporter: {
               name = "/probe/${exporterName}";
               value = {
-                proxyPass = "http://127.0.0.1:${toString exporter.port}/probe";
+                proxyPass = "http://127.0.0.1:${exporter.port}/probe";
               };
             })
             enabledExporters
@@ -69,7 +69,7 @@
             (exporterName: exporter: {
               name = "/snmp/${exporterName}";
               value = {
-                proxyPass = "http://127.0.0.1:${toString exporter.port}/snmp";
+                proxyPass = "http://127.0.0.1:${exporter.port}/snmp";
               };
             })
             enabledExporters
