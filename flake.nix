@@ -2,8 +2,12 @@
   # TODO: Figure out how to override this locally.
   inputs.nixpkgs.url = "git+file:///home/delroth/work/nixpkgs";
 
-  inputs.lix.url = "git+https://git@git.lix.systems/lix-project/nixos-module";
-  inputs.lix.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.lix.url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
+  inputs.lix.flake = false;
+
+  inputs.lix-module.url = "git+https://git@git.lix.systems/lix-project/nixos-module";
+  inputs.lix-module.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.lix-module.inputs.lix.follows = "lix";
 
   inputs.poetry2nix.url = "github:nix-community/poetry2nix";
   inputs.poetry2nix.inputs.nixpkgs.follows = "nixpkgs";
@@ -33,7 +37,7 @@
   outputs =
     {
       self,
-      lix,
+      lix-module,
       delroth-net,
       glome-nixos,
       nixpkgs,
@@ -73,7 +77,7 @@
                   glome-nixos.nixosModules.glome
                   home-manager.nixosModules.home-manager
                   label-approved.nixosModules.default
-                  lix.nixosModules.default
+                  lix-module.nixosModules.default
 
                   machineMod
                 ];
