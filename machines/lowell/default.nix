@@ -66,6 +66,9 @@ in
   programs.gnupg.agent.pinentryPackage = pkgs.pinentry-tty;
   programs.ssh.startAgent = true;
 
+  hardware.sane.enable = true;
+  users.users.delroth.extraGroups = [ "scanner" ];
+
   boot.kernelModules = [
     # FTDI / Serial
     "ftdi_sio"
