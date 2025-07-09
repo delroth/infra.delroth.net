@@ -14,7 +14,6 @@
     ./mastodon-server.nix
     ./matrix-client.nix
     ./matrix-irc-bridge.nix
-    ./matrix-signal-bridge.nix
     ./matrix-synatainer.nix
     ./matrix-synapse.nix
     ./monitoring
