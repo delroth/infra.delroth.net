@@ -46,8 +46,6 @@ in
 
       domain = config.networking.domain;
 
-      sslCert = "/var/lib/acme/${config.my.networking.fqdn}/fullchain.pem";
-      sslKey = "/var/lib/acme/${config.my.networking.fqdn}/key.pem";
 
       recipientDelimiter = "+";
       rootAlias = "delroth";
@@ -57,6 +55,11 @@ in
         smtpd_sasl_auth_enable = true;
         smtpd_tls_auth_only = true;
         smtpd_sasl_local_domain = config.my.networking.fqdn;
+
+        smtpd_tls_chain_files = [
+          "/var/lib/acme/${config.my.networking.fqdn}/key.pem"
+          "/var/lib/acme/${config.my.networking.fqdn}/fullchain.pem"
+        ];
 
         smtpd_milters = "unix:/run/opendkim/opendkim.sock";
         non_smtpd_milters = smtpd_milters;
