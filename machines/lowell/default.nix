@@ -111,4 +111,19 @@ in
     macAddress = "4c:03:4f:fc:48:38";
     ipSuffix = 10;
   };
+
+  # For local web development on a secure origin.
+  services.nginx.virtualHosts."port8080.lowell.delroth.net" = {
+    forceSSL = true;
+    enableACME = true;
+
+      extraConfig = ''
+        client_max_body_size 256m;
+      '';
+
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8080";
+        proxyWebsockets = true;
+      };
+  };
 }
