@@ -63,6 +63,7 @@ in
   # revision that has the programs.sqlite pregenerated instead of building it
   # ourselves since that's expensive.
   environment.variables.NIX_AUTO_RUN = "1";
+  programs.command-not-found.enable = true;
   programs.command-not-found.dbPath =
     let
       channelTarball = pkgs.fetchurl {
