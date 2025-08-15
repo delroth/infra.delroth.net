@@ -10,7 +10,6 @@
     recommendedOptimisation = true;
     recommendedTlsSettings = true;
     recommendedProxySettings = true;
-    recommendedZstdSettings = true;
 
     package = pkgs.nginxQuic;
   };
