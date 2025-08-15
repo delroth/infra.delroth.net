@@ -206,11 +206,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1752286566,
-        "narHash": "sha256-A4nftqiNz2bNihz0bKY94Hq/6ydR6UQOcGioeL7iymY=",
+        "lastModified": 1755229570,
+        "narHash": "sha256-soZegto0xXzG2zYlu/zjknDHv0Z7tRS5EQs+Z/VRTBg=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "392ddb642abec771d63688c49fa7bcbb9d2a5717",
+        "rev": "11626a4383b458f8dc5ea3237eaa04e8ab1912f3",
         "type": "github"
       },
       "original": {
@@ -222,11 +222,11 @@
     "lix": {
       "flake": false,
       "locked": {
-        "lastModified": 1752289320,
-        "narHash": "sha256-egjQR8l9UiElIiaL+SsTsFpK9jSVXvX/DaqoXjHeVAg=",
-        "rev": "ae00b1298353a43a10bbecea8220471731db10ec",
+        "lastModified": 1755273906,
+        "narHash": "sha256-VipXs4NfozaKVlTMYn6nxB9xmiFKds7SHJwvHwQisfE=",
+        "rev": "935901cd460cf5a20705633317ed11e9f2555b1e",
         "type": "tarball",
-        "url": "https://git.lix.systems/api/v1/repos/lix-project/lix/archive/ae00b1298353a43a10bbecea8220471731db10ec.tar.gz?rev=ae00b1298353a43a10bbecea8220471731db10ec"
+        "url": "https://git.lix.systems/api/v1/repos/lix-project/lix/archive/935901cd460cf5a20705633317ed11e9f2555b1e.tar.gz?rev=935901cd460cf5a20705633317ed11e9f2555b1e"
       },
       "original": {
         "type": "tarball",
@@ -284,11 +284,11 @@
         "flake-utils": "flake-utils_4"
       },
       "locked": {
-        "lastModified": 1752010789,
-        "narHash": "sha256-+AjZnRLtpz57s4feuK3FbNslXeL/z1RvtlOh84BDJ10=",
+        "lastModified": 1754422905,
+        "narHash": "sha256-kDRSxTk/R4QXYRnvDAiy+d2BPIPp2+65f7pXzoQInzc=",
         "owner": "NixOS",
         "repo": "nixfmt",
-        "rev": "3f27e217d30e0b9fbdc6d6226b15b74bfd4626cc",
+        "rev": "2381bca22e7c8cea02fd5dac3b581f099c058677",
         "type": "github"
       },
       "original": {
@@ -299,11 +299,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1752333948,
-        "narHash": "sha256-8yGC6rpuYUcJLIEg3JKDJhvVOaESOgCZRyZduKvLlvA=",
+        "lastModified": 1755277374,
+        "narHash": "sha256-2t+8OS5kKJVHhM87xzkF/A7jWuUQodWYPdOWlIzDnSc=",
         "ref": "refs/heads/master",
-        "rev": "060d53cda38b8c6bace9d2733cafa366c4d853e9",
-        "revCount": 828658,
+        "rev": "484c4db05027a5c08d183aa350e1714d5db9e783",
+        "revCount": 845042,
         "type": "git",
         "url": "file:///home/delroth/work/nixpkgs"
       },
