@@ -91,7 +91,7 @@ in
       '';
     };
 
-    networking.firewall.allowedTCPPorts = [ config.services.postfix.relayPort ];
+    networking.firewall.allowedTCPPorts = [ 25 ];
 
     security.acme.certs = {
       "${config.my.networking.fqdn}".postRun = ''
