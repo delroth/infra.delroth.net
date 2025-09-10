@@ -15,9 +15,9 @@ in
     boot.kernelPatches = [{
       name = "enable_ip_mroute";
       patch = null;
-      extraStructuredConfig = {
-        IP_MROUTE = lib.kernel.yes;
-      };
+      extraConfig = ''
+        IP_MROUTE y
+      '';
     }];
   };
 }
