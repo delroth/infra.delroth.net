@@ -108,7 +108,7 @@ in
 
     # TODO: Expose this as a proper nixos option later down the line.
     systemd.network.networks."40-${cfg.upstreamIface}" = {
-      networkConfig.KeepConfiguration = "dhcp";
+      networkConfig.KeepConfiguration = "dynamic";
       dhcpV6Config.PrefixDelegationHint = "::/48";
       # XXX: This should not be needed, but for some reason part of networkd
       # isn't seeing the RAs and not triggering DHCPv6. Even though some other
