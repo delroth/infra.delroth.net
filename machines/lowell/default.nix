@@ -112,6 +112,9 @@ in
     ipSuffix = 10;
   };
 
+  virtualisation.podman.enable = true;
+  virtualisation.podman.autoPrune.enable = true;
+
   # For local web development on a secure origin.
   services.nginx.virtualHosts."port8080.lowell.delroth.net" = {
     forceSSL = true;
