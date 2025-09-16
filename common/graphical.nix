@@ -30,19 +30,11 @@
       ];
     };
 
-    services.xserver = {
-      enable = true;
-
-      xkb.layout = "ca";
-      xkb.variant = "multix";
-      xkb.options = "caps:escape";
-
-      windowManager.i3.enable = true;
-    };
-
-    programs.i3lock.enable = true;
+    programs.sway.enable = true;
+    programs.sway.wrapperFeatures.gtk = true;
 
     services.displayManager.sddm.enable = true;
+    services.displayManager.sddm.wayland.enable = true;
 
     services.libinput.enable = true;
 
@@ -61,7 +53,7 @@
       ];
     };
 
-    environment.systemPackages = with pkgs; [ alacritty ];
+    environment.systemPackages = with pkgs; [ alacritty tofi ];
     environment.sessionVariables.TERMINAL = "alacritty";
   };
 }
