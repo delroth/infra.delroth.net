@@ -76,6 +76,11 @@ in
 
     iptables -t nat -A POSTROUTING -d ${lowellVpn4} -j SNAT --to-source ${chaosVpn4}
     ip6tables -t nat -A POSTROUTING -d ${lowellVpn6} -j SNAT --to-source ${chaosVpn6}
+
+    # Hetzner's netscan alerting really doesn't like these Tor relays.
+    iptables -A OUTPUT -d 64.65.0.0/16 -j DROP
+    iptables -A OUTPUT -d 96.9.98.0/24 -j DROP
+    iptables -A OUTPUT -d 216.181.20.0/24 -j DROP
   '';
   networking.firewall.extraStopCommands = ''
     iptables -t nat -F PREROUTING
