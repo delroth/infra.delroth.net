@@ -175,7 +175,6 @@ in
               "2001:4860:4860::8844"
               "aether.delroth.net"
               "chaos.delroth.net"
-              "eden.delroth.net"
             ];
           })
 
