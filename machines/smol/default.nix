@@ -52,6 +52,7 @@ in
 
   # ZFS configuration.
   boot.supportedFilesystems = [ "zfs" ];
+  boot.zfs.package = pkgs.zfs_2_4;
   fileSystems."/data" = {
     device = "ds/data";
     fsType = "zfs";
