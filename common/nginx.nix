@@ -10,8 +10,6 @@
     recommendedOptimisation = true;
     recommendedTlsSettings = true;
     recommendedProxySettings = true;
-
-    package = pkgs.nginxQuic;
   };
 
   services.prometheus.exporters.nginx = {
