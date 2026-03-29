@@ -26,7 +26,7 @@ in {
     services.garage = {
       enable = true;
 
-      package = pkgs.garage_1_x;
+      package = pkgs.garage_2;
 
       settings = {
         data_dir = cfg.dataRoot;
