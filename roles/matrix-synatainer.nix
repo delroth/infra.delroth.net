@@ -40,7 +40,7 @@ let
         path = [
           pkgs.curl
           pkgs.jq
-          pkgs.rust-synapse-state-compress
+          pkgs.rust-synapse-compress-state
           pkgs.postgresql
         ];
 
