@@ -5,14 +5,14 @@ let
 
   hostname = "foundry.delroth.net";
   port = 30000;
-  version = "13.342";
+  version = "13.351";
   nodejs = pkgs.nodejs_24;
 
   dataPath = "/var/lib/foundryvtt";
 
   upstreamArchive = pkgs.fetchurl {
     url = "https://delroth.net/foundryvtt-${version}-${secrets.foundryvtt.downloadUrlSecret}.zip";
-    hash = "sha256-6iyH7+62WC08VSw2MzA/iX7Xg9nRUsE57oBifnPPThw=";
+    hash = "sha256-BWxKwTqjVQwzY0euV0/oWEXKVM7cYWdCfjBihRNsqQA=";
   };
 
   pkg = pkgs.runCommand "foundryvtt-${version}" {} ''
