@@ -68,7 +68,7 @@
     };
 
     # Useful networking tools which really ought to be everywhere.
-    boot.kernelModules = [ "af_packet" ];
+    boot.kernelModules = [ "af_packet" "af_packet_diag" "tun" ];
     environment.systemPackages = with pkgs; [
       mtr
       tcpdump
