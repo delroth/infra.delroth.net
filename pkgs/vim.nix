@@ -1,6 +1,6 @@
-{ vim_configurable, vimPlugins }:
+{ vim-full, vimPlugins }:
 
-vim_configurable.customize {
+vim-full.customize {
   name = "vim";
   vimrcConfig = {
     vam = {
