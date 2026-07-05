@@ -43,6 +43,7 @@
               lib.filterAttrs (exporterName: exporter: (exporter ? enable) && exporter.enable)
                 (lib.removeAttrs config.services.prometheus.exporters [
                   "minio"
+                  "rspamd"
                   "tor"
                   "unifi-poller"
                 ]);
