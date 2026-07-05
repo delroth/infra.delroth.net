@@ -55,6 +55,9 @@ in
     }
   ];
 
+  systemd.tpm2.enable = false;
+  boot.initrd.systemd.tpm2.enable = false;
+
   # Set fans at full speed on startup. Ideally this should be done by a kernel
   # module instead which provides fan PWM control, but that's for later.
   systemd.services.spin-fans = {
