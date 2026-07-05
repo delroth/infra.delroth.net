@@ -49,7 +49,7 @@
               delroth-net.overlay
               glome-nixos.overlay
             ];
-            config.allowInsecurePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "olm" ];
+            config.allowInsecurePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "olm" "opendkim" ];
             config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "elasticsearch" ];
           };
 
