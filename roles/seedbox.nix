@@ -4,6 +4,7 @@
   machineName,
   pkgs,
   secrets,
+  protonvpn-pmp-transmission,
   ...
 }:
 
@@ -84,7 +85,7 @@ in
       serviceConfig = {
         Type = "simple";
         DynamicUser = true;
-        ExecStart = "${pkgs.protonvpn-pmp-transmission}/bin/protonvpn-pmp-transmission --transmission_url http://delroth:${secrets.transmissionPassword}@127.0.0.1:${transmissionRpcPort} --pmp_gateway ${secrets.seedbox-vpn.gatewayIp4}";
+        ExecStart = "${protonvpn-pmp-transmission.packages.${pkgs.system}.default}/bin/protonvpn-pmp-transmission --transmission_url http://delroth:${secrets.transmissionPassword}@127.0.0.1:${transmissionRpcPort} --pmp_gateway ${secrets.seedbox-vpn.gatewayIp4}";
       };
     };
 
