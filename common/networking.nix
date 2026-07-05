@@ -44,9 +44,7 @@
     services.resolved = {
       enable = true;
       dnssec = "false";
-      extraConfig = ''
-        DNSOverTLS=yes
-      '';
+      settings.Resolve.DNSOverTLS = true;
     };
 
     # Used by systemd-resolved, not directly by resolv.conf.
