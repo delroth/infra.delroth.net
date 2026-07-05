@@ -9,9 +9,6 @@
   inputs.lix-module.inputs.nixpkgs.follows = "nixpkgs";
   inputs.lix-module.inputs.lix.follows = "lix";
 
-  inputs.poetry2nix.url = "github:nix-community/poetry2nix";
-  inputs.poetry2nix.inputs.nixpkgs.follows = "nixpkgs";
-
   inputs.home-manager.url = "github:nix-community/home-manager";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -25,7 +22,6 @@
 
   inputs.protonvpn-pmp-transmission.url = "github:delroth/protonvpn-pmp-transmission";
   inputs.protonvpn-pmp-transmission.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.protonvpn-pmp-transmission.inputs.poetry2nix.follows = "poetry2nix";
 
   inputs.publibike-locator.url = "github:delroth/publibike-locator";
   inputs.publibike-locator.inputs.nixpkgs.follows = "nixpkgs";
@@ -52,7 +48,6 @@
             overlays = [
               delroth-net.overlay
               glome-nixos.overlay
-              protonvpn-pmp-transmission.overlay
             ];
             config.allowInsecurePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "olm" ];
             config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "elasticsearch" ];
