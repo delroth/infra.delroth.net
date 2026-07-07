@@ -53,20 +53,17 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Setup SFP+ network interfaces early so systemd can pick everything up.
-  boot.initrd.extraUtilsCommands = ''
-    copy_bin_and_libs ${restool}/bin/restool
-    copy_bin_and_libs ${restool}/bin/ls-main
-    copy_bin_and_libs ${restool}/bin/ls-addni
-
-    # Patch paths
-    sed -i "1i #!$out/bin/sh" $out/bin/ls-main
-  '';
-  boot.initrd.postDeviceCommands = ''
-    ls-addni dpmac.7
-    ls-addni dpmac.8
-    ls-addni dpmac.9
-    ls-addni dpmac.10
-  '';
+  boot.initrd.systemd.initrdBin = [ restool ];
+  boot.initrd.systemd.services.restool-addni = {
+    wantedBy = [ "initrd.target" ];
+    path = [ restool ];
+    script = ''
+      ls-addni dpmac.7
+      ls-addni dpmac.8
+      ls-addni dpmac.9
+      ls-addni dpmac.10
+    '';
+  };
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/root";
@@ -82,6 +79,7 @@ in
     fsType = "vfat";
   };
 
+  nix.settings.cores = 4;
   nix.settings.max-jobs = lib.mkDefault 16;
 
   services.apcupsd.enable = true;
