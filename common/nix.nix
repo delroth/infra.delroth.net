@@ -19,6 +19,8 @@ in
     nixos.enable = false;
   };
 
+  nix.package = pkgs.lixPackageSets.stable.lix;
+
   nix.extraOptions = ''
     experimental-features = nix-command flakes coerce-integers
   '';

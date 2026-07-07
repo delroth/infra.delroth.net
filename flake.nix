@@ -2,13 +2,6 @@
   # TODO: Figure out how to override this locally.
   inputs.nixpkgs.url = "git+file:///home/delroth/work/nixpkgs";
 
-  inputs.lix.url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
-  inputs.lix.flake = false;
-
-  inputs.lix-module.url = "git+https://git@git.lix.systems/lix-project/nixos-module";
-  inputs.lix-module.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.lix-module.inputs.lix.follows = "lix";
-
   inputs.home-manager.url = "github:nix-community/home-manager";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -29,7 +22,6 @@
   outputs =
     {
       self,
-      lix-module,
       delroth-net,
       glome-nixos,
       nixpkgs,
@@ -66,7 +58,6 @@
                 imports = [
                   glome-nixos.nixosModules.glome
                   home-manager.nixosModules.home-manager
-                  lix-module.nixosModules.default
 
                   machineMod
                 ];
