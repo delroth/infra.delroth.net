@@ -14,6 +14,7 @@
 
   boot.loader.systemd-boot.enable = true;
 
+  nix.settings.cores = 8;
   nix.settings.max-jobs = lib.mkDefault 8;
 
   virtualisation.hypervGuest.enable = true;
