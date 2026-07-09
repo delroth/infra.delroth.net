@@ -71,6 +71,9 @@ in
     '';
   };
 
+  # The default of 27 bits does not work on 16K pagesize systems.
+  boot.kernel.sysctl."vm.mmap_rnd_bits" = 24;
+
   nix.settings.max-jobs = lib.mkDefault 4;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 }
