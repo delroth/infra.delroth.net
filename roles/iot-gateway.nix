@@ -42,6 +42,10 @@ in
           # Handled separately.
           requires_auth = false;
         };
+
+        "automation ui" = "!include automations.yaml";
+        "scene ui" = "!include scenes.yaml";
+        "script ui" = "!include scripts.yaml";
       };
     };
 
